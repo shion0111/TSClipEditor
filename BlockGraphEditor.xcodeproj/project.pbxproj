@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		355EB46A1D5C2248004B4780 /* DarkWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EB4691D5C2248004B4780 /* DarkWindow.swift */; };
 		35E191991D41F2390071865C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E191981D41F2390071865C /* AppDelegate.swift */; };
 		35E1919B1D41F2390071865C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E1919A1D41F2390071865C /* ViewController.swift */; };
 		35E191A01D41F2390071865C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35E1919E1D41F2390071865C /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		355EB4691D5C2248004B4780 /* DarkWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkWindow.swift; sourceTree = "<group>"; };
 		35E191951D41F2390071865C /* BlockGraphEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlockGraphEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35E191981D41F2390071865C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35E1919A1D41F2390071865C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				35E191A91D42036E0071865C /* BlockFieldManager.swift */,
 				35E191AB1D420C1E0071865C /* BlockFieldView.swift */,
 				35E191B11D421F110071865C /* BlockView.swift */,
+				355EB4691D5C2248004B4780 /* DarkWindow.swift */,
 			);
 			path = BlockGraphEditor;
 			sourceTree = "<group>";
@@ -152,6 +155,7 @@
 				35E191AC1D420C1E0071865C /* BlockFieldView.swift in Sources */,
 				35E1919B1D41F2390071865C /* ViewController.swift in Sources */,
 				35E191B21D421F110071865C /* BlockView.swift in Sources */,
+				355EB46A1D5C2248004B4780 /* DarkWindow.swift in Sources */,
 				35E191991D41F2390071865C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +299,7 @@
 				35E191A61D41F2390071865C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
