@@ -19,8 +19,7 @@ class DarkWindow: NSWindow {
         self.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
         
         titleVisibility = NSWindowTitleVisibility.Hidden
-        //titlebarAppearsTransparent = true
-        //movableByWindowBackground  = true
+        
 
     }
     
@@ -29,7 +28,7 @@ class DarkWindow: NSWindow {
             if let view = newValue
             {
                 view.wantsLayer = true
-                let colorTop = NSColor(red: 31 / 255, green: 37 / 255, blue: 43 / 255, alpha: 1).CGColor
+                let colorTop = NSColor(red: 64 / 255, green: 64 / 255, blue: 64 / 255, alpha: 1).CGColor//31 / 255, green: 37 / 255, blue: 43 / 255, alpha: 1).CGColor
                 let colorBottom = NSColor(red: 41 / 255, green: 47 / 255, blue: 53 / 255, alpha: 1).CGColor
                 let gradient  = CAGradientLayer()
                 gradient.colors = [ colorTop, colorBottom]

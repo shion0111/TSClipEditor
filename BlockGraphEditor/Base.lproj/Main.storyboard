@@ -695,7 +695,7 @@
         <scene sceneID="uha-bf-YuN">
             <objects>
                 <customObject id="sKy-Wj-fa1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController id="T48-aw-ztw" sceneMemberID="viewController">
+                <viewController id="T48-aw-ztw" customClass="ViewController" customModule="BlockGraphEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="tlk-Jm-Be7">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -706,10 +706,17 @@
                                     <rect key="frame" x="0.0" y="0.0" width="210" height="300"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <collectionView id="o4T-1I-5Yh">
+                                        <collectionView allowsEmptySelection="NO" id="o4T-1I-5Yh">
                                             <rect key="frame" x="0.0" y="0.0" width="210" height="300"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="wJZ-vY-eQF">
+                                                <size key="itemSize" width="190" height="50"/>
+                                            </collectionViewFlowLayout>
+                                            <color key="primaryBackgroundColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                            <connections>
+                                                <outlet property="dataSource" destination="T48-aw-ztw" id="aac-0D-4c8"/>
+                                                <outlet property="delegate" destination="T48-aw-ztw" id="z5v-ws-sqb"/>
+                                            </connections>
                                         </collectionView>
                                     </subviews>
                                 </clipView>
@@ -732,22 +739,12 @@
                             <constraint firstItem="Rn3-dj-CBS" firstAttribute="top" secondItem="tlk-Jm-Be7" secondAttribute="top" id="X1x-7S-61O"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="blockItemList" destination="o4T-1I-5Yh" id="mUl-Pp-jDK"/>
+                    </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="263" y="935"/>
-        </scene>
-        <!--Collection View Item-->
-        <scene sceneID="35s-Qr-5GY">
-            <objects>
-                <collectionViewItem id="CQC-q3-0vL" sceneMemberID="viewController">
-                    <view key="view" identifier="BlockItemCell" id="6wR-vu-qku">
-                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </collectionViewItem>
-                <customObject id="KMY-zI-aQP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="574" y="835"/>
+            <point key="canvasLocation" x="243" y="696"/>
         </scene>
     </scenes>
 </document>
