@@ -1,9 +1,9 @@
 # TSClipEditor
 ![](https://github.com/shion0111/TSClipEditor/blob/master/view.jpg)
 
-A TS clip editing application (mostly for those huge MPEG2-TS) for OSX. User can set a certain range of a video and save clips from it by dragging slider thumbs.
+A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choose several ranges of a video on a customized slider by setting multiple thumbs and then save clips.
 
-** A hobby project, also a case-study about ffmpeg **
+** A hobby project and a case-study about ffmpeg **
 
 ## Prerequisites
 - [ffmpeg](https://github.com/FFmpeg)
@@ -12,7 +12,7 @@ A TS clip editing application (mostly for those huge MPEG2-TS) for OSX. User can
 - OS X 10.10 or later
 
 ## Tasks in progress
-- Memory consumming when decoding
+- Issue: memory consuming when decoding video
 - UI redesign 
 - Clip viewer
 
