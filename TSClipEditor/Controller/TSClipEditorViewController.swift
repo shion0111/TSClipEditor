@@ -65,22 +65,20 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     func loadVideoWithPath(path: String) -> Int {
         cleanContext()
         self.tsduration = Int(getVideoDurationWithLoc(path))
-        
-        var st = Int(ceil(Float(tsduration / 60)))
-        if (st < 10) { st = 10 }
-        if st > 20 {st = 20}
+    
+        let st = 20
         self.clipVC.setSliderRange(start: 0, end: Int(tsduration),calibration: st)
         return Int(tsduration)
     }
     
     //  Range of the focused thumb is changed. Notify Property VC.
     func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float,view:Bool){
-        let st = Int(ceil(Float(start/sliderlength)*Float(tsduration)))
-        let ed = Int(ceil(Float(end/sliderlength)*Float(tsduration)))
-        self.prtVC.clipRangeChanged(start: Float(st), end:Float(ed) )
+        let st = Float(start/sliderlength)*Float(tsduration)
+        let ed = Float(end/sliderlength)*Float(tsduration)
+        self.prtVC.clipRangeChanged(start: Float(st), end:Float((ed > Float(tsduration)) ? Float(tsduration) : ed) )
         
         //if view {
-        loadVideoThumbnails(start: st, end: ed)
+        loadVideoThumbnails(start: Int(st), end: Int(ed))
         //}
     }
     
@@ -136,11 +134,14 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         let thumb = getVideoThumbAtPosition(Double(start))!.takeUnretainedValue()
         self.clipVC.setThumbnailImage(image: thumb, isEnd: false)
         
+        
+        /*
         unowned let unownedSelf = self
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             let thumb = getVideoThumbAtPosition(Double(end))!.takeUnretainedValue()
             unownedSelf.clipVC.setThumbnailImage(image: thumb, isEnd: true)
         })
+         */
     }
     
 }

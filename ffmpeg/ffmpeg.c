@@ -193,9 +193,9 @@ CGImageRef getVideoThumbAtPosition(double second)
     int res = avcodec_parameters_to_context(pCodecCtx,pCodecPar);
     if (res < 0) return NULL;
     
-    // Find the decoder for the video stream
-    //=avcodec_find_decoder(pCodecCtx->codec_id);
     // Open video codec
+    // Find the decoder for the video stream
+    pCodec = avcodec_find_decoder(pCodecCtx->codec_id);
     if (avcodec_open2(pCodecCtx, pCodec,NULL) < 0)
     {
         avformat_free_context(fmt_ctx);
@@ -229,6 +229,7 @@ CGImageRef getVideoThumbAtPosition(double second)
         {
             //ss = avcodec_decode_video2(pCodecCtx, frame, &frame_end, &packet);
             
+            if (packet.buf == NULL) continue;
             
             int ret;
             
@@ -244,8 +245,11 @@ CGImageRef getVideoThumbAtPosition(double second)
             ret = avcodec_receive_frame(pCodecCtx, frame);
             if (ret < 0 && ret != AVERROR(EAGAIN) && ret != AVERROR_EOF)
                 return NULL;
+            else if (ret < 0)
+                printf("avcodec_receive_frame error (%f): %d,%s \n",second,ret,av_err2str(ret));
             if (ret >= 0)
             {
+                av_packet_unref(&packet);                
                 frame_end = 1;
                 break;
             }
@@ -253,7 +257,7 @@ CGImageRef getVideoThumbAtPosition(double second)
             
             
         }
-        //av_free_packet(&packet);
+        av_packet_unref(&packet);
     }
     //av_seek_frame(fmt_ctx, videoStream, 0, AVSEEK_FLAG_BYTE);
     avcodec_flush_buffers(pCodecCtx);
@@ -263,6 +267,7 @@ CGImageRef getVideoThumbAtPosition(double second)
     {
         sized = resize_frame(pCodecCtx, frame,width/4,height/4);
     }
+    avcodec_close(pCodecCtx);
     av_free(frame);
     CGImageRef thumb = imageFromAVFrame(sized, width/4, height/4);
     

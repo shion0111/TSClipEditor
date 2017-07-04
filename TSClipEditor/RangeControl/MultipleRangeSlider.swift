@@ -81,7 +81,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
     }
     func addClipSliderThumb(){
         // add new
-        let r = getRectByCalibration(self.calibration/2)
+        let r = findUnoccupiedRect()//getRectByCalibration(self.calibration/2)
         addThumbViewWithRect(rect: r)
         sliderDelegate?.focusedSliderChanged(start:Float(r.origin.x - xoffset) , end: Float(r.origin.x + r.width - xoffset),view: true)
     }
@@ -103,6 +103,20 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         }
         
     }
+    
+    //  minimal width of thumb is 35
+    func findUnoccupiedRect() -> NSRect{
+        let total = Int(self.horizontalline.frame.width / 35)
+        let y = self.horizontalline.frame.origin.y - 15
+        for i in 0..<total {
+            let rct = NSRect(x: i*35, y:Int(y) , width: 35, height: 30)
+            if !(self.isRectIntersectsOtherThumb(rect: rct, thumb: nil)) {
+                return rct
+            }
+        }
+        return NSZeroRect
+    }
+    
     // MARK: - ThumbPanDelegate functions
     func addThumbViewWithRect(rect: CGRect){
         
@@ -124,9 +138,9 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         
         return false
     }
-    private func isRectIntersectsOtherThumb(rect: NSRect, thumb: RangeSliderThumbView) -> Bool{
+    private func isRectIntersectsOtherThumb(rect: NSRect, thumb: RangeSliderThumbView?) -> Bool{
         for t in self.thumbs{
-            if t != thumb {
+            if (thumb == nil) || (t != thumb) {
                 if rect.intersects(t.frame){
                     return true
                 }

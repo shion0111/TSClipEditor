@@ -47,7 +47,7 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
         clipSlider.deleteFocusedThumb()
     }
     func focusedSliderChanged(start:Float, end:Float, view:Bool){
-        vidInfo?.focusedThumbRangeChanged(start: start, end: end, sliderlength: Float(clipSlider.frame.width), view: view)
+        vidInfo?.focusedThumbRangeChanged(start: start, end: end, sliderlength: Float(clipSlider.horizontalline.frame.width), view: view)
     }
     func getFocusedSliderRange() -> NSPoint{
         let r = clipSlider.getFocusedClipPortion()
