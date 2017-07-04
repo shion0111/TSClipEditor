@@ -6,8 +6,11 @@
 //  Copyright © 2017 shion. All rights reserved.
 //
 
-import Cocoa
+//
+// MARK: - TSPropertyViewController: VC for displaying video info and clip info
+//
 
+import Cocoa
 
 class TSPropertyViewController: NSViewController {
     

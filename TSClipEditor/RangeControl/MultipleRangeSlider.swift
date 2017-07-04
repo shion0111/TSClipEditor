@@ -5,8 +5,9 @@
 //  Created by Antelis on 28/06/2017.
 //  Copyright © 2017 shion. All rights reserved.
 //
+
 // --------------------------------------------------
-// MARK: - A Slider with multiple thumbs, to mark up regions
+// MARK: - MultipleRangeSlider: A slider contains multiple thumbs to mark several regions
 // --------------------------------------------------
 
 import Cocoa

@@ -7,7 +7,7 @@
 //
 
 // --------------------------------------------------
-// MARK: - ClipExporter: Export clip in background with Stream
+// MARK: - ClipExporter: Export TS clip in background with Stream
 // --------------------------------------------------
 
 import Foundation

@@ -7,7 +7,7 @@
 //
 
 // --------------------------------------------------
-// MARK: - Thumb extended by pan gesture
+// MARK: - RangeSliderThumbView: Slider thumb can be extended by pan gesture
 // --------------------------------------------------
 
 import Cocoa

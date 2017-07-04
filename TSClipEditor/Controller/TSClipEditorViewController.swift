@@ -7,7 +7,7 @@
 //
 
 //
-// MARK: - major function handler
+// MARK: - TSClipEditorViewController: major function handler, info exchange
 //
 import Cocoa
 

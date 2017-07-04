@@ -6,6 +6,10 @@
 //  Copyright © 2017 shion. All rights reserved.
 //
 
+//
+// MARK: - ClipEditViewController: VC for displaying clip thumbnails and handling slider functions
+//
+
 import Cocoa
 protocol  MultipleRangeSliderDelegate {
     func focusedSliderChanged(start:Float, end:Float, view:Bool)
