@@ -6,6 +6,9 @@
 //  Copyright © 2017 shion. All rights reserved.
 //
 
+//
+// MARK: - major function handler
+//
 import Cocoa
 
 protocol VideoInfoProtocol {
@@ -13,15 +16,16 @@ protocol VideoInfoProtocol {
     func loadVideoWithPath(path : String) -> Int
     // callback for property to reflect multi-slider operation
     func updateClipThumbRange(index:Int, size:CGSize)
-    // Save Clip
+    // Save clip
     func saveClipAtLocation(source : String, dest:String)
-    // Delete Clip
+    // Delete clip
     func deleteClipThumb()
-    
+    //  Add new clip
     func addClipThumb()
     //  Range of focused thumb is changed. Notify Property VC.
-    func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float)
+    func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float, view:Bool)
     
+    func hasFocusedThumb() -> Bool
 }
 
 class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
@@ -49,14 +53,15 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         
         self.prtVC.vidInfo = self
         self.clipVC.vidInfo = self
-        //self.thumbViewHandler = clipVC.setThumbImage
+        
     }
     
     // callback for property to reflect multi-slider operation
     func updateClipThumbRange(index:Int, size:CGSize){
         
     }
-    //  retrieve video  metadata via ffmpeg
+    
+    //  retrieve video duration/metadata via ffmpeg
     func loadVideoWithPath(path: String) -> Int {
         cleanContext()
         self.tsduration = Int(getVideoDurationWithLoc(path))
@@ -64,24 +69,29 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         var st = Int(ceil(Float(tsduration / 60)))
         if (st < 10) { st = 10 }
         if st > 20 {st = 20}
-        self.clipVC.setSliderRange(start: 0, end: Int(tsduration),step: st)
+        self.clipVC.setSliderRange(start: 0, end: Int(tsduration),calibration: st)
         return Int(tsduration)
     }
-    //  Range of focused thumb is changed. Notify Property VC.
-    func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float){
+    
+    //  Range of the focused thumb is changed. Notify Property VC.
+    func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float,view:Bool){
         let st = Int(ceil(Float(start/sliderlength)*Float(tsduration)))
         let ed = Int(ceil(Float(end/sliderlength)*Float(tsduration)))
         self.prtVC.clipRangeChanged(start: Float(st), end:Float(ed) )
         
+        //if view {
         loadVideoThumbnails(start: st, end: ed)
+        //}
     }
+    
     func addClipThumb(){
         self.clipVC.addClipSliderThumb()
     }
+    
     // Save Clip
     func saveClipAtLocation(source : String, dest:String) {
         
-        //  get clip range first
+        //  get clip range
         let r = self.clipVC.getFocusedSliderRange()
         //  get size of source
         guard
@@ -105,12 +115,6 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
                 self.prtVC.finishSaveProgress()
                 clipexporter.closeExporter()
                 
-                /*
-                let alert = NSAlert()
-                alert.messageText = "Clip is saved!"
-                alert.alertStyle = NSAlert.Style.informational
-                alert.runModal()
-                */
             }
         }
         
@@ -120,7 +124,12 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     func deleteClipThumb(){
         self.clipVC.deleteFocusedSliderThumb()
     }
+    func hasFocusedThumb() -> Bool{
+        let r = self.clipVC.getFocusedSliderRange()
+        return (r.y-r.x) > 0
+    }
     
+    // MARK: - memory issue...
     func loadVideoThumbnails(start:Int, end:Int){
         
         //  call clipVC to display thumb

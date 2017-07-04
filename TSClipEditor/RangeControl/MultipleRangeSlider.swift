@@ -5,33 +5,30 @@
 //  Created by Antelis on 28/06/2017.
 //  Copyright © 2017 shion. All rights reserved.
 //
+// --------------------------------------------------
+// MARK: - A Slider with multiple thumbs, to mark up regions
+// --------------------------------------------------
 
 import Cocoa
 
 class MultipleRangeSlider: NSView,ThumbPanDelegate {
     
     var sliderDelegate : MultipleRangeSliderDelegate?
+    
     var start : Int = 0
     var end : Int = 0
-    var step : Int = 0
-    //var thumbView: RangeSliderThumbView!
+    var calibration : Int = 0
+    
     var thumbs = [RangeSliderThumbView]()
     let horizontalline = NSBox()
     var xoffset : CGFloat = 0
-    /*
-    var right : CGFloat {
-        get {
-            return thumbView.frame.origin.x+thumbView.frame.size.width
-        }
-        set {}
-    }
- */
+    
     override func awakeFromNib() {
         
         horizontalline.boxType = .separator
         horizontalline.setFrameOrigin(NSPoint(x:12, y:self.frame.height/2))
         horizontalline.setFrameSize(NSSize(width:self.frame.width - 24,height:2))
-        self.addSubview(horizontalline)//, positioned:.below, relativeTo:self.thumbView)
+        self.addSubview(horizontalline)
         xoffset = 12
     }
     
@@ -39,14 +36,14 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         super.draw(dirtyRect)
         
         let r0 = self.horizontalline.frame
-        if self.step > 0 {
+        if self.calibration > 0 {
             
             let distance = r0.width//self.end - self.start
-            let r = CGFloat(distance / CGFloat(self.step))
+            let r = CGFloat(distance / CGFloat(self.calibration))
             
             NSColor.systemGray.setStroke()
             
-            for st in 0...self.step{
+            for st in 0...self.calibration{
                 let x = r0.origin.x + r*CGFloat(st)
                 let y = r0.origin.y - r0.height - 2
                 NSBezierPath.strokeLine(from: NSPoint(x:x,y:y), to: NSPoint(x:x, y: y-8))
@@ -54,24 +51,24 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         }
         
     }
-    func getRectByStep(_ st : Int) -> CGRect {
+    func getRectByCalibration(_ st : Int) -> CGRect {
         let r0 = self.horizontalline.frame
         let distance = r0.width//self.end - self.start
-        let r = CGFloat(distance / CGFloat(self.step))
+        let r = CGFloat(distance / CGFloat(self.calibration))
             
         return CGRect(x: CGFloat(st)*r+r0.origin.x, y:r0.origin.y-15 , width: r, height: 30)
         
     }
-    func setSliderRange(start: Int, end: Int, step : Int){
+    func setSliderRange(start: Int, end: Int, calibration : Int){
         resetThumbs()
         self.start = start
         self.end = end
-        self.step = step
+        self.calibration = calibration
         self.needsDisplay = true
         
-        let r = getRectByStep(0)
+        let r = getRectByCalibration(0)
         self.addThumbViewWithRect(rect: r)
-        //sliderDelegate?.focusedSliderChanged(start:Float(r.origin.x) , end: Float(r.origin.x + r.width))
+        
     }
     func resetThumbs(){
         
@@ -83,9 +80,9 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
     }
     func addClipSliderThumb(){
         // add new
-        let r = getRectByStep(self.step/2)
+        let r = getRectByCalibration(self.calibration/2)
         addThumbViewWithRect(rect: r)
-        sliderDelegate?.focusedSliderChanged(start:Float(r.origin.x - xoffset) , end: Float(r.origin.x + r.width - xoffset))
+        sliderDelegate?.focusedSliderChanged(start:Float(r.origin.x - xoffset) , end: Float(r.origin.x + r.width - xoffset),view: true)
     }
     func deleteFocusedThumb(){
         // delete and move to next
@@ -115,10 +112,36 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         self.thumbs.append(thumb)
         self.addSubview(thumb)
     }
+    private func isPointInOtherThumb(p:NSPoint, thumb: RangeSliderThumbView) -> Bool{
+        for t in self.thumbs{
+            if t != thumb {
+                if NSPointInRect(p,t.frame){
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    private func isRectIntersectsOtherThumb(rect: NSRect, thumb: RangeSliderThumbView) -> Bool{
+        for t in self.thumbs{
+            if t != thumb {
+                if rect.intersects(t.frame){
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
     func leftPanned(gesture: NSPanGestureRecognizer, thumb: RangeSliderThumbView){
-        
         if thumb.Focused {
-        
+            
+            if isPointInOtherThumb(p: gesture.location(in: self),thumb: thumb) {
+                return
+            }
+            
             var destx = gesture.location(in: self).x
             if destx < 12 {
                 destx = 12
@@ -128,16 +151,26 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
                 return
             }
             
+            let r2 = NSRect(x:destx,y:rc.origin.y,width:rc.origin.x+rc.width - destx ,height:rc.size.height)
+            if self.isRectIntersectsOtherThumb(rect: r2, thumb: thumb){
+                return
+            }
+            
             thumb.setFrameOrigin(NSPoint(x:destx, y:rc.origin.y))
             thumb.setFrameSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))
-            thumb.setBoundsSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))
-            sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset))
+            thumb.setBoundsSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))            
+            sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
         }
         
     }
     func rightPanned(gesture: NSPanGestureRecognizer, thumb: RangeSliderThumbView){
         
         if thumb.Focused {
+            
+            if isPointInOtherThumb(p: gesture.location(in: self),thumb: thumb) {
+                return
+            }
+            
             var destx = gesture.location(in: self).x
             let rc = thumb.frame
             
@@ -148,9 +181,15 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             if destx > (horizontalline.frame.width+horizontalline.frame.origin.x){
                 destx = horizontalline.frame.width+horizontalline.frame.origin.x
             }
+            
+            let r2 = NSRect(x:destx,y:rc.origin.y,width:rc.origin.x+rc.width - destx ,height:rc.size.height)
+            if self.isRectIntersectsOtherThumb(rect: r2, thumb: thumb){
+                return
+            }
+            
             thumb.setFrameSize(NSSize(width: destx - rc.origin.x , height: rc.size.height))
             thumb.setBoundsSize(NSSize(width: destx - rc.origin.x , height: rc.size.height))
-            sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset))
+            sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
         }
         
     }
@@ -161,7 +200,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             }
         }
         //print(thumb)
-        sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset))
+        sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view:true)
     }
     func getFocusedClipPortion() -> NSPoint{
         for t in self.thumbs{
@@ -174,11 +213,5 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         }
         return NSMakePoint(0,0)
     }
-    /*
-    func notifyFocused(_ thumb: AnyObject?) {
-        let t = thumb as? RangeSliderThumbView
-        t != nil ? print(t!) : print("thumb is nil!")
-        
-    }
-     */
+    
 }

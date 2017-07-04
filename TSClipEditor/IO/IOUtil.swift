@@ -6,6 +6,10 @@
 //  Copyright © 2017 shion. All rights reserved.
 //
 
+// --------------------------------------------------
+// MARK: - ClipExporter: Export clip in background with Stream
+// --------------------------------------------------
+
 import Foundation
 
 public class ClipExporter : NSObject, StreamDelegate {
@@ -13,15 +17,14 @@ public class ClipExporter : NSObject, StreamDelegate {
     private var inputstream : InputStream!
     private var outputstream : OutputStream!
     
+    //  UI update block
     var progressBlock : ((_ current: Int,_ max: Int) -> Void)?
+    //  op finished block
     var finishBlock : ((_ exporter:ClipExporter) -> Void)?
-    
     
     var clipStart : Int = 0
     var clipEnd : Int = 0
     var currentWritten : Int = 0
-    
-    var queue:OperationQueue?
     
     init(sourcepath: String, destpath: String , start: Int, end: Int){
         self.inputstream = InputStream(fileAtPath: sourcepath)
@@ -42,31 +45,24 @@ public class ClipExporter : NSObject, StreamDelegate {
     deinit {
         self.closeExporter()
     }
+    
     func saveClip(progress:((_ current: Int,_ max: Int) -> Void)?, finish:((_ exporter:ClipExporter) -> Void)?){
         
         currentWritten = 0
         self.progressBlock = progress
         self.finishBlock = finish
         
-        if self.queue == nil {
-            self.queue = OperationQueue()
-            self.queue!.maxConcurrentOperationCount = 1
-        }
-        
         self.inputstream!.delegate = self
         self.inputstream!.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
-        let res = self.inputstream.setProperty(clipStart , forKey: .fileCurrentOffsetKey)
-        print("res: \(res)")
+        //  set file offsest in inputstream
+        self.inputstream.setProperty(clipStart , forKey: .fileCurrentOffsetKey)
         self.inputstream!.open()
-        
-        
         
         
         self.outputstream!.delegate = self
         self.outputstream!.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
         self.outputstream!.open()
         
-        //self.queue!.addOperation({ [weak self]  () -> Void in
         let total = self.clipEnd-self.clipStart
         let queue1 = DispatchQueue(label: "com.ioutil.save", qos: DispatchQoS.background)
         queue1.async {
@@ -80,15 +76,10 @@ public class ClipExporter : NSObject, StreamDelegate {
                     self.processData(buffer:buffer!)
                     
                 }
-                print(self.currentWritten)//}
             }
-            
-            
+            //  exporting finished
             self.finishBlock!(self)
         }
-        
-        
-        
         
     }
     
@@ -117,15 +108,12 @@ public class ClipExporter : NSObject, StreamDelegate {
             break
         }
     }
+    
+    //  write data from inputstream to outputstream
     func processData(buffer: NSMutableData) {
         let pt = buffer.mutableBytes.assumingMemoryBound(to: UInt8.self)
         let l = self.outputstream.write(pt, maxLength: buffer.length)
         currentWritten += l
         self.progressBlock!(currentWritten,clipEnd-clipStart)
-        
-        //if currentWritten >= (clipEnd-clipStart) {
-        //    self.closeExporter()
-        //    self.finishBlock!()
-        //}
     }
 }

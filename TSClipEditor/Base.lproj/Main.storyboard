@@ -900,10 +900,6 @@ All</string>
                                     <action selector="saveCurClip:" target="2tg-UD-Dxk" id="QLS-hS-rtK"/>
                                 </connections>
                             </button>
-                            <progressIndicator hidden="YES" wantsLayer="YES" fixedFrame="YES" maxValue="10" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="gqd-X3-RYq">
-                                <rect key="frame" x="20" y="84" width="210" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xzK-EN-nLZ">
                                 <rect key="frame" x="20" y="105" width="210" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -913,6 +909,10 @@ All</string>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <progressIndicator hidden="YES" wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="yhC-uK-rm8">
+                                <rect key="frame" x="20" y="84" width="210" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </progressIndicator>
                         </subviews>
                     </view>
                     <connections>
@@ -922,7 +922,7 @@ All</string>
                         <outlet property="rangeEnd" destination="M5w-7V-VjC" id="STv-Af-3Pk"/>
                         <outlet property="rangeStart" destination="Jlz-po-ACr" id="bgz-Hy-dHX"/>
                         <outlet property="saveone" destination="lJM-rO-cOR" id="fPc-Vu-wvh"/>
-                        <outlet property="saveprogress" destination="gqd-X3-RYq" id="wTz-iH-mBe"/>
+                        <outlet property="saveprogress" destination="yhC-uK-rm8" id="aah-LD-gnK"/>
                         <outlet property="tsLocation" destination="BJE-gW-V3w" id="bZN-JP-JNx"/>
                     </connections>
                 </viewController>

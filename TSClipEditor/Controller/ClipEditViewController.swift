@@ -8,7 +8,7 @@
 
 import Cocoa
 protocol  MultipleRangeSliderDelegate {
-    func focusedSliderChanged(start:Float, end:Float)
+    func focusedSliderChanged(start:Float, end:Float, view:Bool)
 }
 class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
     
@@ -19,9 +19,6 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
-        
-        //self.view.appearance = NSAppearance(named: .vibrantDark)//NSAppearanceNameVibrantDark)
         clipSlider.sliderDelegate = self
     }
     
@@ -35,8 +32,8 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
             self.clipStartThumb.image = NSImage(cgImage: image, size: self.clipStartThumb.frame.size)
         }
     }
-    func setSliderRange(start: Int, end:Int, step: Int){
-        clipSlider.setSliderRange(start: start, end: end, step: step)
+    func setSliderRange(start: Int, end:Int, calibration: Int){
+        clipSlider.setSliderRange(start: start, end: end, calibration: calibration)
     }
     func addClipSliderThumb(){
         clipSlider.addClipSliderThumb()
@@ -45,8 +42,8 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
     func deleteFocusedSliderThumb(){
         clipSlider.deleteFocusedThumb()
     }
-    func focusedSliderChanged(start:Float, end:Float){
-        vidInfo?.focusedThumbRangeChanged(start: start, end: end, sliderlength: Float(clipSlider.frame.width))
+    func focusedSliderChanged(start:Float, end:Float, view:Bool){
+        vidInfo?.focusedThumbRangeChanged(start: start, end: end, sliderlength: Float(clipSlider.frame.width), view: view)
     }
     func getFocusedSliderRange() -> NSPoint{
         let r = clipSlider.getFocusedClipPortion()

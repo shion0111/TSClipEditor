@@ -49,8 +49,9 @@ class TSPropertyViewController: NSViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        
     }
+    
     func dialogOKCancel(question: String, text: String) -> Bool {
         let alert = NSAlert()
         alert.messageText = question
@@ -60,6 +61,7 @@ class TSPropertyViewController: NSViewController {
         alert.addButton(withTitle: "Cancel")
         return alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
     }
+    
     func updateSaveProgress(increment: Int, max:Int){
         if saveprogress.doubleValue < 1 {
             saveprogress.maxValue = Double(max)
@@ -73,6 +75,7 @@ class TSPropertyViewController: NSViewController {
         print("save finish!!")
         saveprogress.isHidden = true
     }
+    
     @IBAction func openTS(_ sender: AnyObject!){
         
         if let url = NSOpenPanel().selectedFile {
@@ -100,6 +103,11 @@ class TSPropertyViewController: NSViewController {
         
     }
     @IBAction func saveCurClip(_ sender: AnyObject!){
+        
+        if !(vidInfo!.hasFocusedThumb()) {
+            return
+        }
+        
         if let url = NSOpenPanel().selectedDirectory {
             
             self.destLocation.stringValue = url.path

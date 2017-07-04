@@ -6,6 +6,10 @@
 //  Copyright © 2017 shion. All rights reserved.
 //
 
+// --------------------------------------------------
+// MARK: - Thumb extended by pan gesture
+// --------------------------------------------------
+
 import Cocoa
 
 protocol ThumbPanDelegate {
@@ -32,6 +36,7 @@ class RangeSliderThumbView: NSView {
     }
     var thumbColor : NSColor = NSColor(red: 0.8, green: 0.90, blue: 1.0, alpha: 1.0)
     
+    // left arrow and right arrow
     let left = NSImageView()
     let right = NSImageView()
     
@@ -52,26 +57,29 @@ class RangeSliderThumbView: NSView {
         setup()
     }
     
-    
+    //  newly added and focused
     override func viewDidMoveToWindow() {
         self.Focused = true
         self.needsDisplay = true
     }
+    
+    // update bounds by gesture
     @objc public func leftGesturePanned(gesture: NSPanGestureRecognizer) {
         
         self.panDelegate?.leftPanned(gesture: gesture, thumb: self)
         right.setFrameOrigin(NSPoint(x:self.frame.width - 14,y:0))
     }
     @objc public func rightGesturePanned(gesture: NSPanGestureRecognizer) {
-        //print(self.frame.width)
-        
         self.panDelegate?.rightPanned(gesture: gesture, thumb: self)
         right.setFrameOrigin(NSPoint(x:self.frame.width - 14,y:0))
     }
+    
+    //  clicked and focused
     @objc public func clickGestureHit(gesture: NSClickGestureRecognizer){
         self.Focused = !self.Focused
         
     }
+    //  set up the appearence
     func setup() {
         let fr = self.frame
         self.wantsLayer = true
@@ -107,7 +115,7 @@ class RangeSliderThumbView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
-        if self.Focused{//thumbColor.isEqual(NSColor.lightGray) {
+        if self.Focused{
             self.thumbColor = .systemBlue
         } else {
             self.thumbColor = .lightGray
