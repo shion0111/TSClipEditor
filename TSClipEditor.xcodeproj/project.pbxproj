@@ -11,6 +11,7 @@
 		CB00F2FE1EFA569E00D72D8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB00F2FD1EFA569E00D72D8B /* Assets.xcassets */; };
 		CB00F3011EFA569E00D72D8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB00F2FF1EFA569E00D72D8B /* Main.storyboard */; };
 		CB00F30D1EFA569E00D72D8B /* TSClipEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00F30C1EFA569E00D72D8B /* TSClipEditorTests.swift */; };
+		CB1542941F0AA15D00CB0B9C /* IOUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1542931F0AA15D00CB0B9C /* IOUtil.swift */; };
 		CB2087DC1EFAB0AB00C826DB /* EditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2087DB1EFAB0AB00C826DB /* EditorWindowController.swift */; };
 		CB2087DE1EFAC8BF00C826DB /* ClipEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2087DD1EFAC8BF00C826DB /* ClipEditViewController.swift */; };
 		CB3A436B1F0023FB0006BC46 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3B12F21F0022B2004E5879 /* libavcodec.a */; };
@@ -50,6 +51,7 @@
 		CB00F3081EFA569E00D72D8B /* TSClipEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TSClipEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB00F30C1EFA569E00D72D8B /* TSClipEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSClipEditorTests.swift; sourceTree = "<group>"; };
 		CB00F30E1EFA569E00D72D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB1542931F0AA15D00CB0B9C /* IOUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOUtil.swift; sourceTree = "<group>"; };
 		CB2087DB1EFAB0AB00C826DB /* EditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorWindowController.swift; sourceTree = "<group>"; };
 		CB2087DD1EFAC8BF00C826DB /* ClipEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipEditViewController.swift; sourceTree = "<group>"; };
 		CB3A436E1F0023FE0006BC46 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../../../../usr/local/lib/libswresample.a; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 		CB00F2F81EFA569E00D72D8B /* TSClipEditor */ = {
 			isa = PBXGroup;
 			children = (
+				CB1542921F0AA13B00CB0B9C /* IO */,
 				CBF5DE631F049F6F00BC0D4A /* RangeControl */,
 				CBF5DE621F049F5900BC0D4A /* Controller */,
 				CB00F2F91EFA569E00D72D8B /* AppDelegate.swift */,
@@ -143,6 +146,14 @@
 				CB00F30E1EFA569E00D72D8B /* Info.plist */,
 			);
 			path = TSClipEditorTests;
+			sourceTree = "<group>";
+		};
+		CB1542921F0AA13B00CB0B9C /* IO */ = {
+			isa = PBXGroup;
+			children = (
+				CB1542931F0AA15D00CB0B9C /* IOUtil.swift */,
+			);
+			path = IO;
 			sourceTree = "<group>";
 		};
 		CB3A437D1F0026E50006BC46 /* ffmpeg */ = {
@@ -299,6 +310,7 @@
 				CBF5DE641F04A15600BC0D4A /* MultipleRangeSlider.swift in Sources */,
 				CB2087DE1EFAC8BF00C826DB /* ClipEditViewController.swift in Sources */,
 				CB938EAC1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift in Sources */,
+				CB1542941F0AA15D00CB0B9C /* IOUtil.swift in Sources */,
 				CB2087DC1EFAB0AB00C826DB /* EditorWindowController.swift in Sources */,
 				CBEF1E641F01FDBD00FA8A9E /* TSClipEditorViewController.swift in Sources */,
 				CBF5DE651F04A16C00BC0D4A /* RangeSliderThumbView.swift in Sources */,

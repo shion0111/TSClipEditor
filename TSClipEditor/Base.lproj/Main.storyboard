@@ -789,15 +789,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xzK-EN-nLZ">
-                                <rect key="frame" x="20" y="120" width="210" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" drawsBackground="YES" id="8hj-bc-ie7">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o2n-vW-mdn">
                                 <rect key="frame" x="20" y="284" width="180" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -852,8 +843,8 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4F2-vN-lxG">
-                                <rect key="frame" x="182" y="62" width="48" height="48"/>
+                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4F2-vN-lxG">
+                                <rect key="frame" x="182" y="30" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1NZ-YK-v8b">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -866,18 +857,18 @@ All</string>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p9b-9O-Hk7">
-                                <rect key="frame" x="74" y="62" width="48" height="48"/>
+                                <rect key="frame" x="71" y="30" width="55" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="squareTextured" title="Delete" bezelStyle="texturedSquare" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PaN-VN-xjy">
+                                <buttonCell key="cell" type="squareTextured" title="Discard" bezelStyle="texturedSquare" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PaN-VN-xjy">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="deleteCurClip:" target="2tg-UD-Dxk" id="bmH-9U-shK"/>
+                                    <action selector="discardCurClip:" target="2tg-UD-Dxk" id="JGG-Df-Nsh"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zsL-X9-Tcc">
-                                <rect key="frame" x="20" y="62" width="48" height="48"/>
+                                <rect key="frame" x="20" y="30" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="squareTextured" title="Add" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kXF-ff-ckQ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -899,7 +890,7 @@ All</string>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lJM-rO-cOR">
-                                <rect key="frame" x="128" y="62" width="48" height="48"/>
+                                <rect key="frame" x="128" y="30" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="squareTextured" title="Save" bezelStyle="texturedSquare" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ULa-sY-ILa">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -909,13 +900,29 @@ All</string>
                                     <action selector="saveCurClip:" target="2tg-UD-Dxk" id="QLS-hS-rtK"/>
                                 </connections>
                             </button>
+                            <progressIndicator hidden="YES" wantsLayer="YES" fixedFrame="YES" maxValue="10" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="gqd-X3-RYq">
+                                <rect key="frame" x="20" y="84" width="210" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </progressIndicator>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xzK-EN-nLZ">
+                                <rect key="frame" x="20" y="105" width="210" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" drawsBackground="YES" id="8hj-bc-ie7">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="destLocation" destination="xzK-EN-nLZ" id="1oN-eo-kG8"/>
+                        <outlet property="discard" destination="p9b-9O-Hk7" id="2ug-Bf-GG5"/>
                         <outlet property="duration" destination="o2n-vW-mdn" id="0Oo-US-vfP"/>
                         <outlet property="rangeEnd" destination="M5w-7V-VjC" id="STv-Af-3Pk"/>
                         <outlet property="rangeStart" destination="Jlz-po-ACr" id="bgz-Hy-dHX"/>
+                        <outlet property="saveone" destination="lJM-rO-cOR" id="fPc-Vu-wvh"/>
+                        <outlet property="saveprogress" destination="gqd-X3-RYq" id="wTz-iH-mBe"/>
                         <outlet property="tsLocation" destination="BJE-gW-V3w" id="bZN-JP-JNx"/>
                     </connections>
                 </viewController>

@@ -154,10 +154,12 @@ AVFrame* resize_frame(AVCodecContext *codec_ctx, AVFrame *frame_av, double width
     
     free(Buffer);
     
+    
+    
     return frameRGB_av;
 }
 
-CGImageRef imageFromAVPicture(AVFrame *pict, int width, int height)
+CGImageRef imageFromAVFrame(AVFrame *pict, int width, int height)
 {
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
     //NSLog(@"imageFromAVP %d",(int)pict->data[1024]);
@@ -214,6 +216,7 @@ CGImageRef getVideoThumbAtPosition(double second)
     
     if (avStream_seek(second) <0)
     {
+        av_free(frame);
         fprintf(stderr, "Seek on invalid time");
         return NULL;
     }
@@ -229,15 +232,13 @@ CGImageRef getVideoThumbAtPosition(double second)
             
             int ret;
             
-            //ss = 0;
-            
-            //if (pkt)
-            {
-                ret = avcodec_send_packet(pCodecCtx, &packet);
+            ret = avcodec_send_packet(pCodecCtx, &packet);
                 // In particular, we don't expect AVERROR(EAGAIN), because we read all
                 // decoded frames with avcodec_receive_frame() until done.
-                if (ret < 0)
-                    return NULL;//ret == AVERROR_EOF ? 0 : ret;
+            if (ret < 0){
+                av_free(frame);
+                return NULL;//ret == AVERROR_EOF ? 0 : ret;
+                
             }
             
             ret = avcodec_receive_frame(pCodecCtx, frame);
@@ -254,19 +255,16 @@ CGImageRef getVideoThumbAtPosition(double second)
         }
         //av_free_packet(&packet);
     }
-    //NSLog(@"packet dts %ld/%ld (%ld)",(unsigned long)packet.dts,(unsigned long)packet.pts,(unsigned long)ss);
-    fprintf(stderr, "frame found %lf\n",second);
-    av_seek_frame(fmt_ctx, videoStream, 0, AVSEEK_FLAG_BYTE);
+    //av_seek_frame(fmt_ctx, videoStream, 0, AVSEEK_FLAG_BYTE);
     avcodec_flush_buffers(pCodecCtx);
     
     AVFrame *sized = NULL;
     if(frame)
     {
-        sized = resize_frame(pCodecCtx, frame,width/2,height/2);
-        av_free(frame);
+        sized = resize_frame(pCodecCtx, frame,width/4,height/4);
     }
-    
-    CGImageRef thumb = imageFromAVPicture(sized, width/2, height/2);
+    av_free(frame);
+    CGImageRef thumb = imageFromAVFrame(sized, width/4, height/4);
     
     
     avcodec_free_context(&pCodecCtx);

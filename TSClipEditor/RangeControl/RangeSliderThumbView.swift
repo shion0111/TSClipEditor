@@ -24,7 +24,10 @@ class RangeSliderThumbView: NSView {
         get { return _focused }
         set {
             _focused = newValue
-            panDelegate?.notifyFocused(self)
+            self.needsDisplay = true
+            if _focused {
+                panDelegate?.notifyFocused(self)
+            }
         }
     }
     var thumbColor : NSColor = NSColor(red: 0.8, green: 0.90, blue: 1.0, alpha: 1.0)
@@ -68,7 +71,6 @@ class RangeSliderThumbView: NSView {
     @objc public func clickGestureHit(gesture: NSClickGestureRecognizer){
         self.Focused = !self.Focused
         
-        self.needsDisplay = true
     }
     func setup() {
         let fr = self.frame
