@@ -135,13 +135,13 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         self.clipVC.setThumbnailImage(image: thumb, isEnd: false)
         
         
-        /*
+        
         unowned let unownedSelf = self
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             let thumb = getVideoThumbAtPosition(Double(end))!.takeUnretainedValue()
             unownedSelf.clipVC.setThumbnailImage(image: thumb, isEnd: true)
         })
-         */
+     
     }
     
 }
