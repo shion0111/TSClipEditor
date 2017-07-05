@@ -11,6 +11,7 @@
 //
 
 import Cocoa
+
 protocol  MultipleRangeSliderDelegate {
     func focusedSliderChanged(start:Float, end:Float, view:Bool)
 }
@@ -54,4 +55,7 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
         return r
     }
     
+    @IBAction func playClip(_ sender: AnyObject!){
+        
+    }
 }

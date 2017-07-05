@@ -3,3 +3,4 @@
 //
 
 #import "ffmpeg.h"
+#import <VLCKit/VLCKit.h>

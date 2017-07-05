@@ -964,6 +964,9 @@ All</string>
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="playClip:" target="wQi-2V-HeS" id="nwM-aF-c1R"/>
+                                </connections>
                             </button>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="9qz-To-WNA" customClass="MultipleRangeSlider" customModule="TSClipEditor" customModuleProvider="target">
                                 <rect key="frame" x="16" y="161" width="813" height="96"/>
@@ -993,10 +996,10 @@ All</string>
             </objects>
             <point key="canvasLocation" x="138" y="1668"/>
         </scene>
-        <!--View Controller-->
+        <!--Video Player View Controller-->
         <scene sceneID="erc-hW-HvG">
             <objects>
-                <viewController id="dZu-9b-n66" sceneMemberID="viewController">
+                <viewController id="dZu-9b-n66" customClass="VideoPlayerViewController" customModule="TSClipEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="V15-AI-Wsx">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1004,6 +1007,7 @@ All</string>
                 </viewController>
                 <customObject id="4G8-qX-SHC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-61" y="2145"/>
         </scene>
     </scenes>
     <resources>

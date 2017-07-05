@@ -245,8 +245,8 @@ CGImageRef getVideoThumbAtPosition(double second)
             ret = avcodec_receive_frame(pCodecCtx, frame);
             if (ret < 0 && ret != AVERROR(EAGAIN) && ret != AVERROR_EOF)
                 return NULL;
-            else if (ret < 0)
-                printf("avcodec_receive_frame error (%f): %d,%s \n",second,ret,av_err2str(ret));
+            //else if (ret < 0)
+            //    printf("avcodec_receive_frame error (%f): %d,%s \n",second,ret,av_err2str(ret));
             if (ret >= 0)
             {
                 av_packet_unref(&packet);                

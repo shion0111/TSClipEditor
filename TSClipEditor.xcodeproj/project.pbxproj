@@ -24,8 +24,10 @@
 		CB3A43781F0023FE0006BC46 /* libavresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3A43721F0023FE0006BC46 /* libavresample.a */; };
 		CB3A43791F0023FE0006BC46 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3A43731F0023FE0006BC46 /* libavfilter.a */; };
 		CB3A438B1F0027020006BC46 /* ffmpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = CB3A438A1F0027020006BC46 /* ffmpeg.c */; };
+		CB8F36001F0CD63700D266AD /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */; };
 		CB938EAA1F00A169006E6FFC /* TSPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB938EA91F00A169006E6FFC /* TSPropertyViewController.swift */; };
 		CB938EAC1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB938EAB1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift */; };
+		CB99DCEA1F0D40E3003324B5 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = CB99DCE91F0D40E3003324B5 /* podfile */; };
 		CBEF1E641F01FDBD00FA8A9E /* TSClipEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEF1E631F01FDBD00FA8A9E /* TSClipEditorViewController.swift */; };
 		CBF5DE641F04A15600BC0D4A /* MultipleRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5DE611F049F4F00BC0D4A /* MultipleRangeSlider.swift */; };
 		CBF5DE651F04A16C00BC0D4A /* RangeSliderThumbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5DE601F049F4F00BC0D4A /* RangeSliderThumbView.swift */; };
@@ -69,8 +71,10 @@
 		CB3B12F11F0022B2004E5879 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../../../usr/local/lib/libavdevice.a; sourceTree = "<group>"; };
 		CB3B12F21F0022B2004E5879 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../../usr/local/lib/libavcodec.a; sourceTree = "<group>"; };
 		CB3B12F31F0022B2004E5879 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../../usr/local/lib/libavformat.a; sourceTree = "<group>"; };
+		CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		CB938EA91F00A169006E6FFC /* TSPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSPropertyViewController.swift; sourceTree = "<group>"; };
 		CB938EAB1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSOpenPanel-Extension.swift"; sourceTree = "<group>"; };
+		CB99DCE91F0D40E3003324B5 /* podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = podfile; sourceTree = "<group>"; };
 		CBEF1E631F01FDBD00FA8A9E /* TSClipEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSClipEditorViewController.swift; sourceTree = "<group>"; };
 		CBF5DE601F049F4F00BC0D4A /* RangeSliderThumbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSliderThumbView.swift; sourceTree = "<group>"; };
 		CBF5DE611F049F4F00BC0D4A /* MultipleRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRangeSlider.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 		CB00F2ED1EFA569E00D72D8B = {
 			isa = PBXGroup;
 			children = (
+				CB99DCE91F0D40E3003324B5 /* podfile */,
+				CB3A43881F0027020006BC46 /* TSClipEditor-Bridging-Header.h */,
 				CB3A437D1F0026E50006BC46 /* ffmpeg */,
 				CB00F2F81EFA569E00D72D8B /* TSClipEditor */,
 				CB00F30B1EFA569E00D72D8B /* TSClipEditorTests */,
@@ -161,7 +167,6 @@
 			children = (
 				CB3A43891F0027020006BC46 /* ffmpeg.h */,
 				CB3A438A1F0027020006BC46 /* ffmpeg.c */,
-				CB3A43881F0027020006BC46 /* TSClipEditor-Bridging-Header.h */,
 			);
 			path = ffmpeg;
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 				CB2087DD1EFAC8BF00C826DB /* ClipEditViewController.swift */,
 				CB938EA91F00A169006E6FFC /* TSPropertyViewController.swift */,
 				CBEF1E631F01FDBD00FA8A9E /* TSClipEditorViewController.swift */,
+				CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -288,6 +294,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB99DCEA1F0D40E3003324B5 /* podfile in Resources */,
 				CB00F2FE1EFA569E00D72D8B /* Assets.xcassets in Resources */,
 				CB00F3011EFA569E00D72D8B /* Main.storyboard in Resources */,
 			);
@@ -314,6 +321,7 @@
 				CB2087DC1EFAB0AB00C826DB /* EditorWindowController.swift in Sources */,
 				CBEF1E641F01FDBD00FA8A9E /* TSClipEditorViewController.swift in Sources */,
 				CBF5DE651F04A16C00BC0D4A /* RangeSliderThumbView.swift in Sources */,
+				CB8F36001F0CD63700D266AD /* VideoPlayerViewController.swift in Sources */,
 				CB3A438B1F0027020006BC46 /* ffmpeg.c in Sources */,
 				CB00F2FA1EFA569E00D72D8B /* AppDelegate.swift in Sources */,
 				CB938EAA1F00A169006E6FFC /* TSPropertyViewController.swift in Sources */,
@@ -382,6 +390,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -437,6 +446,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -462,15 +472,22 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = TSClipEditor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shion.TSClipEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "ffmpeg/TSClipEditor-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TSClipEditor-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
@@ -486,15 +503,22 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = TSClipEditor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shion.TSClipEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "ffmpeg/TSClipEditor-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TSClipEditor-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

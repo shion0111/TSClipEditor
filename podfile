@@ -1,0 +1,4 @@
+platform:"osx", "10.10"
+target 'TSClipEditor' do
+pod 'VLCKit', '3.0.0a24'
+end
