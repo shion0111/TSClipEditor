@@ -9,6 +9,7 @@ A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choos
 
 ## Prerequisites
 - [ffmpeg](https://github.com/FFmpeg)
+- VLCKit via cocoapods
 
 ## Compatibility
 - OS X 10.10 or later
