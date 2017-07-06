@@ -9,7 +9,7 @@ A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choos
 
 ## Prerequisites
 - [ffmpeg](https://github.com/FFmpeg)
-- VLCKit via cocoapods
+- VLCKit via cocoapods (The pod files are not included in this repo. After cloning you need to run "pod install" to get the cocoapod files. Then you should be able to open the workspace and build.)
 
 ## Compatibility
 - OS X 10.10 or later
@@ -17,6 +17,6 @@ A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choos
 ## Tasks in progress
 - Issue: memory consuming when decoding video
 - UI redesign 
-- Clip viewer
+- ~~Clip preview~~
 
 
