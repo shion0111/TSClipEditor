@@ -15,6 +15,7 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
     var vidpath : String!
     @IBOutlet weak var videoView: VLCVideoView!
     @IBOutlet weak var playBtn : NSButton!
+    @IBOutlet weak var timeLabel : NSTextField!
     var player : VLCMediaPlayer = VLCMediaPlayer()
     
     deinit {
@@ -22,6 +23,7 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
         player.delegate = nil
         
     }
+    
     override func viewWillAppear() {
         if !player.isPlaying {
             playPause(self.playBtn)
@@ -65,7 +67,7 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
         }
     }
     func mediaPlayerTimeChanged(_ aNotification: Notification!) {
-        
+        self.timeLabel.stringValue = player.time.stringValue;
     }
     func mediaPlayerStateChanged(_ aNotification: Notification!) {
         switch self.player.state.rawValue {

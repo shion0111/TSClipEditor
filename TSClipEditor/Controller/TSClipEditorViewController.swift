@@ -158,6 +158,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         let preview = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("PreviewWindow")) as! NSWindowController
         let vidVC = preview.contentViewController as! VideoPlayerViewController
         vidVC.prepareVideo(start: st, end: ed, path: videopath)
+        preview.window?.appearance = NSAppearance(named: .vibrantDark)
         preview.window?.makeKeyAndOrderFront(nil)
         
         

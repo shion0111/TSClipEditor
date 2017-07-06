@@ -1052,6 +1052,15 @@ All</string>
                                     <constraint firstAttribute="height" constant="40" id="UTT-1R-grK"/>
                                 </constraints>
                             </box>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mEM-u1-iko">
+                                <rect key="frame" x="368" y="16" width="94" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="00:00" id="DpB-RG-o0y">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="ee2-yl-rt5" firstAttribute="width" secondItem="V15-AI-Wsx" secondAttribute="width" id="Bpt-Uc-p0X"/>
@@ -1064,6 +1073,7 @@ All</string>
                     </view>
                     <connections>
                         <outlet property="playBtn" destination="csv-sE-kmY" id="tXh-P5-pm0"/>
+                        <outlet property="timeLabel" destination="mEM-u1-iko" id="i47-rl-afb"/>
                         <outlet property="videoView" destination="ee2-yl-rt5" id="GJr-15-E0x"/>
                     </connections>
                 </viewController>
