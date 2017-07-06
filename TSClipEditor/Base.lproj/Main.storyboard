@@ -3,9 +3,28 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13122.17"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Window Controller-->
+        <scene sceneID="OHg-CS-Spx">
+            <objects>
+                <windowController storyboardIdentifier="PreviewWindow" id="HlB-yi-i0g" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="n1s-2L-VdX">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="196" y="240" width="480" height="320"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+                    </window>
+                    <connections>
+                        <segue destination="dZu-9b-n66" kind="relationship" relationship="window.shadowedContentViewController" id="LBD-eo-Q9f"/>
+                    </connections>
+                </windowController>
+                <customObject id="R1T-Rt-Llk" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-632" y="2145"/>
+        </scene>
         <!--Application-->
         <scene sceneID="JPo-4y-FX3">
             <objects>
@@ -954,13 +973,13 @@ All</string>
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" id="tal-e3-eg1"/>
                             </imageView>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="5l1-qo-c9G">
+                            <button hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5l1-qo-c9G">
                                 <rect key="frame" x="406" y="355" width="36" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="OBi-G1-Xhq"/>
                                     <constraint firstAttribute="width" constant="36" id="nv0-YE-noA"/>
                                 </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSSlideshowTemplate" imagePosition="overlaps" alignment="center" enabled="NO" imageScaling="proportionallyUpOrDown" inset="2" id="7Je-HE-uqi">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSSlideshowTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="7Je-HE-uqi">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -990,6 +1009,7 @@ All</string>
                         <outlet property="clipEndThumb" destination="Ej8-jC-3fa" id="C4j-0W-9Qf"/>
                         <outlet property="clipSlider" destination="9qz-To-WNA" id="d50-9D-Nbc"/>
                         <outlet property="clipStartThumb" destination="mgV-4Q-Fbr" id="Khg-9x-3yQ"/>
+                        <outlet property="playButton" destination="5l1-qo-c9G" id="ikP-Z2-Qah"/>
                     </connections>
                 </viewController>
                 <customObject id="EoO-do-DUc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -999,13 +1019,54 @@ All</string>
         <!--Video Player View Controller-->
         <scene sceneID="erc-hW-HvG">
             <objects>
-                <viewController id="dZu-9b-n66" customClass="VideoPlayerViewController" customModule="TSClipEditor" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="V15-AI-Wsx">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
                 <customObject id="4G8-qX-SHC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="VideoPlayerViewController" id="dZu-9b-n66" customClass="VideoPlayerViewController" customModule="TSClipEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="V15-AI-Wsx">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee2-yl-rt5" customClass="VLCVideoView">
+                                <rect key="frame" x="0.0" y="50" width="480" height="270"/>
+                            </customView>
+                            <box boxType="custom" cornerRadius="4" title="Box" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3XS-oV-3Vy">
+                                <rect key="frame" x="140" y="5" width="200" height="40"/>
+                                <view key="contentView" id="Fhn-F3-fTg">
+                                    <rect key="frame" x="1" y="1" width="198" height="38"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="csv-sE-kmY">
+                                            <rect key="frame" x="62" y="1" width="74" height="36"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" title="Play" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="axesIndependently" inset="2" id="f64-Xj-Jcg">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="playPause:" target="dZu-9b-n66" id="cNJ-TA-R1R"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="9a0-X2-IJ9"/>
+                                    <constraint firstAttribute="height" constant="40" id="UTT-1R-grK"/>
+                                </constraints>
+                            </box>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="ee2-yl-rt5" firstAttribute="width" secondItem="V15-AI-Wsx" secondAttribute="width" id="Bpt-Uc-p0X"/>
+                            <constraint firstItem="ee2-yl-rt5" firstAttribute="top" secondItem="V15-AI-Wsx" secondAttribute="top" id="Df4-lH-Kpz"/>
+                            <constraint firstAttribute="bottom" secondItem="3XS-oV-3Vy" secondAttribute="bottom" constant="5" id="N29-mW-MxZ"/>
+                            <constraint firstItem="3XS-oV-3Vy" firstAttribute="centerX" secondItem="V15-AI-Wsx" secondAttribute="centerX" id="aJr-Nz-FPi"/>
+                            <constraint firstItem="ee2-yl-rt5" firstAttribute="height" secondItem="V15-AI-Wsx" secondAttribute="height" constant="-50" id="mj9-xE-bMf"/>
+                            <constraint firstItem="ee2-yl-rt5" firstAttribute="centerX" secondItem="3XS-oV-3Vy" secondAttribute="centerX" id="nv7-ep-awy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="playBtn" destination="csv-sE-kmY" id="tXh-P5-pm0"/>
+                        <outlet property="videoView" destination="ee2-yl-rt5" id="GJr-15-E0x"/>
+                    </connections>
+                </viewController>
             </objects>
             <point key="canvasLocation" x="-61" y="2145"/>
         </scene>

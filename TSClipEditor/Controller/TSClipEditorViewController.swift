@@ -26,6 +26,8 @@ protocol VideoInfoProtocol {
     func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float, view:Bool)
     
     func hasFocusedThumb() -> Bool
+    
+    func playVideoWithClipRange()
 }
 
 class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
@@ -33,6 +35,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     @IBOutlet weak var propertyItem: NSSplitViewItem!
     @IBOutlet weak var clipViewItem: NSSplitViewItem!
     var tsduration : Int = 0
+    var videopath: String!
     
     // Left : TSPropertyViewController
     var prtVC : TSPropertyViewController {
@@ -63,6 +66,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     
     //  retrieve video duration/metadata via ffmpeg
     func loadVideoWithPath(path: String) -> Int {
+        videopath = path
         cleanContext()
         self.tsduration = Int(getVideoDurationWithLoc(path))
     
@@ -142,6 +146,21 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
             unownedSelf.clipVC.setThumbnailImage(image: thumb, isEnd: true)
         })
      
+    }
+    func playVideoWithClipRange(){
+        //  get clip range
+        let r = self.clipVC.getFocusedSliderRange()
+        let st = Float(r.x)*Float(tsduration)
+        let ed = Float(r.y)*Float(tsduration)
+        
+        
+        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
+        let preview = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("PreviewWindow")) as! NSWindowController
+        let vidVC = preview.contentViewController as! VideoPlayerViewController
+        vidVC.prepareVideo(start: st, end: ed, path: videopath)
+        preview.window?.makeKeyAndOrderFront(nil)
+        
+        
     }
     
 }

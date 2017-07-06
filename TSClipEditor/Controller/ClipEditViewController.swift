@@ -21,6 +21,7 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
     @IBOutlet weak var clipStartThumb : NSImageView!
     @IBOutlet weak var clipEndThumb : NSImageView!
     @IBOutlet weak var clipSlider : MultipleRangeSlider!
+    @IBOutlet weak var playButton : NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,7 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
     }
     func setSliderRange(start: Int, end:Int, calibration: Int){
         clipSlider.setSliderRange(start: start, end: end, calibration: calibration)
+        self.playButton.isHidden = false
     }
     func addClipSliderThumb(){
         clipSlider.addClipSliderThumb()
@@ -56,6 +58,6 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate {
     }
     
     @IBAction func playClip(_ sender: AnyObject!){
-        
+        self.vidInfo?.playVideoWithClipRange()
     }
 }
