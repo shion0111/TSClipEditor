@@ -14,6 +14,10 @@ A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choos
 ## Compatibility
 - OS X 10.10 or later
 
+## Requirements
+- Xcode 8.0
+- Swift 3.0
+
 ## Tasks in progress
 - Issue: memory consuming when decoding video
 - UI redesign 
