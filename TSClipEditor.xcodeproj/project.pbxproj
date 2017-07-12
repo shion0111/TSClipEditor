@@ -25,7 +25,6 @@
 		CB3A43791F0023FE0006BC46 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3A43731F0023FE0006BC46 /* libavfilter.a */; };
 		CB3A438B1F0027020006BC46 /* ffmpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = CB3A438A1F0027020006BC46 /* ffmpeg.c */; };
 		CB8F36001F0CD63700D266AD /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */; };
-		CB938EAA1F00A169006E6FFC /* TSPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB938EA91F00A169006E6FFC /* TSPropertyViewController.swift */; };
 		CB938EAC1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB938EAB1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift */; };
 		CB99DCEA1F0D40E3003324B5 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = CB99DCE91F0D40E3003324B5 /* podfile */; };
 		CBEF1E641F01FDBD00FA8A9E /* TSClipEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEF1E631F01FDBD00FA8A9E /* TSClipEditorViewController.swift */; };
@@ -72,7 +71,6 @@
 		CB3B12F21F0022B2004E5879 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../../usr/local/lib/libavcodec.a; sourceTree = "<group>"; };
 		CB3B12F31F0022B2004E5879 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../../usr/local/lib/libavformat.a; sourceTree = "<group>"; };
 		CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
-		CB938EA91F00A169006E6FFC /* TSPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSPropertyViewController.swift; sourceTree = "<group>"; };
 		CB938EAB1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSOpenPanel-Extension.swift"; sourceTree = "<group>"; };
 		CB99DCE91F0D40E3003324B5 /* podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = podfile; sourceTree = "<group>"; };
 		CBEF1E631F01FDBD00FA8A9E /* TSClipEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSClipEditorViewController.swift; sourceTree = "<group>"; };
@@ -195,7 +193,6 @@
 			children = (
 				CB2087DB1EFAB0AB00C826DB /* EditorWindowController.swift */,
 				CB2087DD1EFAC8BF00C826DB /* ClipEditViewController.swift */,
-				CB938EA91F00A169006E6FFC /* TSPropertyViewController.swift */,
 				CBEF1E631F01FDBD00FA8A9E /* TSClipEditorViewController.swift */,
 				CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */,
 			);
@@ -324,7 +321,6 @@
 				CB8F36001F0CD63700D266AD /* VideoPlayerViewController.swift in Sources */,
 				CB3A438B1F0027020006BC46 /* ffmpeg.c in Sources */,
 				CB00F2FA1EFA569E00D72D8B /* AppDelegate.swift in Sources */,
-				CB938EAA1F00A169006E6FFC /* TSPropertyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

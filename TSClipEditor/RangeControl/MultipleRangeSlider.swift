@@ -15,6 +15,7 @@ import Cocoa
 class MultipleRangeSlider: NSView,ThumbPanDelegate {
     
     var sliderDelegate : MultipleRangeSliderDelegate?
+    var endLabel: NSTextField?
     
     var start : Int = 0
     var end : Int = 0
@@ -25,12 +26,8 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
     var xoffset : CGFloat = 0
     
     override func awakeFromNib() {
-        
-        horizontalline.boxType = .separator
-        horizontalline.setFrameOrigin(NSPoint(x:12, y:self.frame.height/2))
-        horizontalline.setFrameSize(NSSize(width:self.frame.width - 24,height:2))
-        self.addSubview(horizontalline)
         xoffset = 12
+        setAccessoryViews()
     }
     
     override func draw(_ dirtyRect: NSRect) {
@@ -47,9 +44,40 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             for st in 0...self.calibration{
                 let x = r0.origin.x + r*CGFloat(st)
                 let y = r0.origin.y - r0.height - 2
-                NSBezierPath.strokeLine(from: NSPoint(x:x,y:y), to: NSPoint(x:x, y: y-8))
+                if st == 0 || st == self.calibration {
+                    NSBezierPath.strokeLine(from: NSPoint(x:x,y:y), to: NSPoint(x:x, y: y-32))
+                } else {
+                    NSBezierPath.strokeLine(from: NSPoint(x:x,y:y), to: NSPoint(x:x, y: y-8))
+                }
             }
+            NSBezierPath.strokeLine(from: NSPoint(x:r0.origin.x,y:r0.origin.y-36), to: NSPoint(x:r0.origin.x+r0.width, y: r0.origin.y-36))
         }
+        
+    }
+    func setAccessoryViews(){
+        
+        horizontalline.boxType = .separator
+        horizontalline.setFrameOrigin(NSPoint(x:12, y:self.frame.height-16))
+        horizontalline.setFrameSize(NSSize(width:self.frame.width - 24,height:2))
+        self.addSubview(horizontalline)
+        horizontalline.wantsLayer = true
+        horizontalline.layer?.shadowColor = NSColor.white.cgColor
+        horizontalline.layer?.shadowOpacity = 0.7
+        horizontalline.layer?.shadowOffset = CGSize.zero
+        horizontalline.layer?.shadowRadius = 5.0
+        horizontalline.layer?.masksToBounds = false
+        horizontalline.isHidden = true
+        
+        
+        endLabel = NSTextField(frame: NSMakeRect(607, self.frame.height-50, 194, 17))
+        endLabel?.alignment = .right
+        endLabel?.textColor = NSColor.white
+        self.addSubview(endLabel!)
+        endLabel?.isEditable = false
+        endLabel?.isBezeled = false
+        endLabel?.drawsBackground = false
+        endLabel?.stringValue = "00:00:00"
+        endLabel?.isHidden = true
         
     }
     func getRectByCalibration(_ st : Int) -> CGRect {
@@ -69,6 +97,13 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         
         let r = getRectByCalibration(0)
         self.addThumbViewWithRect(rect: r)
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional
+        endLabel?.stringValue = "\(formatter.string(from: TimeInterval(end))!) (\(end) Sec.)"
+        endLabel?.isHidden = false
+        horizontalline.isHidden = false
         
     }
     func resetThumbs(){
@@ -111,6 +146,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         for i in 0..<total {
             let rct = NSRect(x: i*35, y:Int(y) , width: 35, height: 30)
             if !(self.isRectIntersectsOtherThumb(rect: rct, thumb: nil)) {
+                
                 return rct
             }
         }
@@ -121,6 +157,11 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
     func addThumbViewWithRect(rect: CGRect){
         
         let thumb = RangeSliderThumbView(frame: rect, max:Float(rect.origin.x) , min:Float(rect.origin.x+rect.width) )//CGRect(x:12,y:self.frame.height/2-15,width:60,height:30))
+        
+        if rect.origin.x == 0 {
+            let p = rect.origin
+            thumb.setFrameOrigin(NSPoint(x:xoffset, y:p.y))
+        }
         
         thumb.thumbColor = .lightGray//.systemBlue-
         thumb.panDelegate = self

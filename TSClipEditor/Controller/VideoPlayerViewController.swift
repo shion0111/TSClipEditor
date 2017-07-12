@@ -25,13 +25,20 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
     }
     
     override func viewWillAppear() {
+        videoView.setFrameSize(NSMakeSize(480, 270))
         if !player.isPlaying {
             playPause(self.playBtn)
         }
     }
+    func delay(_ delay: Double, closure: @escaping() -> Void) {
+        let when = DispatchTime.now() + delay
+        DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
+        
+    }
     func prepareVideo(start: Float, end:Float, path:String){
         
-        videoView.frame = NSMakeRect(0,50,480,270)
+        //videoView.frame = NSMakeRect(0,50,480,270)
+        videoView.setFrameSize(NSMakeSize(480, 270))
         videoView.autoresizingMask = [.width,.height]
         videoView.fillScreen = true
         
@@ -45,6 +52,12 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
         self.player.drawable = videoView
         self.player.media = VLCMedia(path: self.vidpath)
         self.player.delegate = self
+        
+        delay(1.0) {
+            if !self.player.isPlaying {
+                self.playPause(self.playBtn)
+            }
+        }
         
     }
     
@@ -71,8 +84,8 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
     }
     func mediaPlayerStateChanged(_ aNotification: Notification!) {
         switch self.player.state.rawValue {
-        case 2:
-            if start != 0 {
+        case 5,2:
+            if (videoView.hasVideo) && (start != 0) {
                 //self.player.position = 0.5
                 self.player.jumpForward(Int32(start))
                 start = 0

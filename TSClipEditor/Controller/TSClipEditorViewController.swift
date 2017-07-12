@@ -32,29 +32,38 @@ protocol VideoInfoProtocol {
 
 class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     
-    @IBOutlet weak var propertyItem: NSSplitViewItem!
+    @IBOutlet weak var playerItem: NSSplitViewItem!
     @IBOutlet weak var clipViewItem: NSSplitViewItem!
     var tsduration : Int = 0
     var videopath: String!
     
+    /*
     // Left : TSPropertyViewController
     var prtVC : TSPropertyViewController {
         get{
             return propertyItem.viewController as! TSPropertyViewController
         }
     }
-    // Right : ClipEditViewController
+    */
+    // Left : ClipEditViewController
     var clipVC : ClipEditViewController {
         get{
             return clipViewItem.viewController as! ClipEditViewController
         }
     }
+    // Right : VideoPlayerViewController
+    var playerVC : VideoPlayerViewController{
+        get{
+            return playerItem.viewController as! VideoPlayerViewController
+        }
+    }
+    
     var thumbViewHandler: ((CGImage, Bool) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.prtVC.vidInfo = self
+        //self.prtVC.vidInfo = self
         self.clipVC.vidInfo = self
         
     }
@@ -79,7 +88,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float,view:Bool){
         let st = Float(start/sliderlength)*Float(tsduration)
         let ed = Float(end/sliderlength)*Float(tsduration)
-        self.prtVC.clipRangeChanged(start: Float(st), end:Float((ed > Float(tsduration)) ? Float(tsduration) : ed) )
+        //self.prtVC.clipRangeChanged(start: Float(st), end:Float((ed > Float(tsduration)) ? Float(tsduration) : ed) )
         
         //if view {
         loadVideoThumbnails(start: Int(st), end: Int(ed))
@@ -110,11 +119,11 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         
         clipexporter.saveClip(progress: { (current, max) in
             DispatchQueue.main.async {
-                self.prtVC.updateSaveProgress(increment: current, max: max)
+                //self.prtVC.updateSaveProgress(increment: current, max: max)
             }
         }) { (exporter) in
             DispatchQueue.main.async {
-                self.prtVC.finishSaveProgress()
+                //self.prtVC.finishSaveProgress()
                 clipexporter.closeExporter()
                 
             }
@@ -135,32 +144,40 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     func loadVideoThumbnails(start:Int, end:Int){
         
         //  call clipVC to display thumb
-        let thumb = getVideoThumbAtPosition(Double(start))!.takeUnretainedValue()
-        self.clipVC.setThumbnailImage(image: thumb, isEnd: false)
+        let imgref = getVideoThumbAtPosition(Double(start))
         
-        
-        
-        unowned let unownedSelf = self
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            let thumb = getVideoThumbAtPosition(Double(end))!.takeUnretainedValue()
-            unownedSelf.clipVC.setThumbnailImage(image: thumb, isEnd: true)
-        })
+        if imgref != nil {
+            let thumb = imgref!.takeUnretainedValue()
+            self.clipVC.setThumbnailImage(image: thumb, isEnd: false)
+            
+            
+            
+            unowned let unownedSelf = self
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                let thumb = getVideoThumbAtPosition(Double(end))!.takeUnretainedValue()
+                unownedSelf.clipVC.setThumbnailImage(image: thumb, isEnd: true)
+            })
+        }
      
     }
     func playVideoWithClipRange(){
+        
+        playerItem.animator().isCollapsed = false
+        playerItem.canCollapse = false
         //  get clip range
         let r = self.clipVC.getFocusedSliderRange()
         let st = Float(r.x)*Float(tsduration)
         let ed = Float(r.y)*Float(tsduration)
         
-        
+        /*
         let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
         let preview = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("PreviewWindow")) as! NSWindowController
         let vidVC = preview.contentViewController as! VideoPlayerViewController
-        vidVC.prepareVideo(start: st, end: ed, path: videopath)
-        preview.window?.appearance = NSAppearance(named: .vibrantDark)
-        preview.window?.makeKeyAndOrderFront(nil)
-        
+         */
+        self.playerVC.prepareVideo(start: st, end: ed, path: videopath)
+        //preview.window?.appearance = NSAppearance(named: .vibrantDark)
+        //preview.window?.makeKeyAndOrderFront(nil)
+
         
     }
     
