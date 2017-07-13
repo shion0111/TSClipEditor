@@ -25,4 +25,7 @@ A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choos
 - ~~UI redesign~~ 
 - ~~Clip preview~~
 
+## To do
+- Support for other formats
+
 
