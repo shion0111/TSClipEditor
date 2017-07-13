@@ -22,7 +22,7 @@ A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choos
 
 ## Tasks in progress
 - Issue: memory consuming when decoding video
-- UI redesign 
+- ~~UI redesign~~ 
 - ~~Clip preview~~
 
 
