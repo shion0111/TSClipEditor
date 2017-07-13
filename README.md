@@ -1,8 +1,8 @@
 # TSClipEditor
 <p align="center">
-  <img src="https://github.com/shion0111/TSClipEditor/blob/master/v1.jpg" width="480"/>
-  <img src="https://github.com/shion0111/TSClipEditor/blob/master/v2.jpg" width="480"/>
-  <img src="https://github.com/shion0111/TSClipEditor/blob/master/v3.jpg" width="640"/>
+  <img src="https://github.com/shion0111/TSClipEditor/blob/master/screen/v1.jpg" width="480"/>
+  <img src="https://github.com/shion0111/TSClipEditor/blob/master/screen/v2.jpg" width="480"/>
+  <img src="https://github.com/shion0111/TSClipEditor/blob/master/screen/v3.jpg" width="640"/>
 </p>
 
 A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choose several ranges of a video on a customized slider by setting multiple thumbs and then save clips.
