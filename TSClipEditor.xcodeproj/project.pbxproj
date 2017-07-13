@@ -24,6 +24,7 @@
 		CB3A43781F0023FE0006BC46 /* libavresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3A43721F0023FE0006BC46 /* libavresample.a */; };
 		CB3A43791F0023FE0006BC46 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3A43731F0023FE0006BC46 /* libavfilter.a */; };
 		CB3A438B1F0027020006BC46 /* ffmpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = CB3A438A1F0027020006BC46 /* ffmpeg.c */; };
+		CB786DE91F17565B00916B4C /* ThumbRangeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB786DE81F17565B00916B4C /* ThumbRangeInfoViewController.swift */; };
 		CB8F36001F0CD63700D266AD /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */; };
 		CB938EAC1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB938EAB1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift */; };
 		CB99DCEA1F0D40E3003324B5 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = CB99DCE91F0D40E3003324B5 /* podfile */; };
@@ -70,6 +71,7 @@
 		CB3B12F11F0022B2004E5879 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../../../usr/local/lib/libavdevice.a; sourceTree = "<group>"; };
 		CB3B12F21F0022B2004E5879 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../../usr/local/lib/libavcodec.a; sourceTree = "<group>"; };
 		CB3B12F31F0022B2004E5879 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../../usr/local/lib/libavformat.a; sourceTree = "<group>"; };
+		CB786DE81F17565B00916B4C /* ThumbRangeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbRangeInfoViewController.swift; sourceTree = "<group>"; };
 		CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		CB938EAB1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSOpenPanel-Extension.swift"; sourceTree = "<group>"; };
 		CB99DCE91F0D40E3003324B5 /* podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = podfile; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				CB2087DD1EFAC8BF00C826DB /* ClipEditViewController.swift */,
 				CBEF1E631F01FDBD00FA8A9E /* TSClipEditorViewController.swift */,
 				CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */,
+				CB786DE81F17565B00916B4C /* ThumbRangeInfoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -259,7 +262,7 @@
 					CB00F2F51EFA569E00D72D8B = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					CB00F3071EFA569E00D72D8B = {
 						CreatedOnToolsVersion = 9.0;
@@ -314,6 +317,7 @@
 				CBF5DE641F04A15600BC0D4A /* MultipleRangeSlider.swift in Sources */,
 				CB2087DE1EFAC8BF00C826DB /* ClipEditViewController.swift in Sources */,
 				CB938EAC1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift in Sources */,
+				CB786DE91F17565B00916B4C /* ThumbRangeInfoViewController.swift in Sources */,
 				CB1542941F0AA15D00CB0B9C /* IOUtil.swift in Sources */,
 				CB2087DC1EFAB0AB00C826DB /* EditorWindowController.swift in Sources */,
 				CBEF1E641F01FDBD00FA8A9E /* TSClipEditorViewController.swift in Sources */,
@@ -465,9 +469,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TSClipEditor/TSClipEditor.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 392DCPHLMM;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
@@ -496,9 +500,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TSClipEditor/TSClipEditor.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 392DCPHLMM;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,

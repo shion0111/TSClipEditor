@@ -20,10 +20,8 @@ protocol VideoInfoProtocol {
     func saveClipAtLocation(source : String, dest:String)
     // Delete clip
     func deleteClipThumb()
-    //  Add new clip
-    func addClipThumb()
     //  Range of focused thumb is changed. Notify Property VC.
-    func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float, view:Bool)
+    func focusedThumbRangeChanged(focused: AnyObject?, start: Float, end:Float, sliderlength:Float, view:Bool)
     
     func hasFocusedThumb() -> Bool
     
@@ -85,7 +83,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     }
     
     //  Range of the focused thumb is changed. Notify Property VC.
-    func focusedThumbRangeChanged(start: Float, end:Float, sliderlength:Float,view:Bool){
+    func focusedThumbRangeChanged(focused: AnyObject?, start: Float, end:Float, sliderlength:Float, view:Bool) {
         let st = Float(start/sliderlength)*Float(tsduration)
         let ed = Float(end/sliderlength)*Float(tsduration)
         //self.prtVC.clipRangeChanged(start: Float(st), end:Float((ed > Float(tsduration)) ? Float(tsduration) : ed) )
@@ -94,11 +92,6 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         loadVideoThumbnails(start: Int(st), end: Int(ed))
         //}
     }
-    
-    func addClipThumb(){
-        self.clipVC.addClipSliderThumb()
-    }
-    
     // Save Clip
     func saveClipAtLocation(source : String, dest:String) {
         
@@ -119,11 +112,11 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         
         clipexporter.saveClip(progress: { (current, max) in
             DispatchQueue.main.async {
-                //self.prtVC.updateSaveProgress(increment: current, max: max)
+                self.clipVC.updateSaveProgress(increment: current, max: max)
             }
         }) { (exporter) in
             DispatchQueue.main.async {
-                //self.prtVC.finishSaveProgress()
+                self.clipVC.finishSaveProgress()
                 clipexporter.closeExporter()
                 
             }

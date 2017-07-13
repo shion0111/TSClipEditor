@@ -25,7 +25,8 @@ class EditorWindowController: NSWindowController {
         window.titlebarAppearsTransparent = true
         
         
-        window.appearance = NSAppearance(named: .vibrantDark)//NSAppearanceNameVibrantDark)
+        window.appearance = NSAppearance(named: .vibrantDark)
+        
     }
 
 }

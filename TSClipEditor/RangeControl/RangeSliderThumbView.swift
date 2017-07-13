@@ -59,8 +59,10 @@ class RangeSliderThumbView: NSView {
     
     //  newly added and focused
     override func viewDidMoveToWindow() {
-        self.Focused = true
-        self.needsDisplay = true
+        if !_focused {
+            self.Focused = true
+            self.needsDisplay = true
+        }
     }
     
     // update bounds by gesture
@@ -75,7 +77,9 @@ class RangeSliderThumbView: NSView {
     }
     
     //  clicked and focused
+    //  there must be one focused thumb unless there's no thumbs at all in slider...
     @objc public func clickGestureHit(gesture: NSClickGestureRecognizer){
+        if _focused { return }
         self.Focused = !self.Focused
         
     }

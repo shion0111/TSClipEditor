@@ -114,12 +114,17 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         self.thumbs.removeAll()
         
     }
+    
     func addClipSliderThumb(){
         // add new
         let r = findUnoccupiedRect()//getRectByCalibration(self.calibration/2)
-        addThumbViewWithRect(rect: r)
-        sliderDelegate?.focusedSliderChanged(start:Float(r.origin.x - xoffset) , end: Float(r.origin.x + r.width - xoffset),view: true)
+        let focused = addThumbViewWithRect(rect: r)
+        if r.origin.x - xoffset < 0 {
+            return
+        }
+        sliderDelegate?.focusedSliderChanged(focused:focused, start:Float(r.origin.x - xoffset) , end: Float(r.origin.x + r.width - xoffset),view: true)
     }
+    
     func deleteFocusedThumb(){
         // delete and move to next
         for t in self.thumbs{
@@ -154,7 +159,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
     }
     
     // MARK: - ThumbPanDelegate functions
-    func addThumbViewWithRect(rect: CGRect){
+    func addThumbViewWithRect(rect: CGRect) -> RangeSliderThumbView {
         
         let thumb = RangeSliderThumbView(frame: rect, max:Float(rect.origin.x) , min:Float(rect.origin.x+rect.width) )//CGRect(x:12,y:self.frame.height/2-15,width:60,height:30))
         
@@ -167,6 +172,8 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         thumb.panDelegate = self
         self.thumbs.append(thumb)
         self.addSubview(thumb)
+        
+        return thumb
     }
     private func isPointInOtherThumb(p:NSPoint, thumb: RangeSliderThumbView) -> Bool{
         for t in self.thumbs{
@@ -215,7 +222,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             thumb.setFrameOrigin(NSPoint(x:destx, y:rc.origin.y))
             thumb.setFrameSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))
             thumb.setBoundsSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))            
-            sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
+            sliderDelegate?.focusedSliderChanged(focused:thumb, start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
         }
         
     }
@@ -245,7 +252,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             
             thumb.setFrameSize(NSSize(width: destx - rc.origin.x , height: rc.size.height))
             thumb.setBoundsSize(NSSize(width: destx - rc.origin.x , height: rc.size.height))
-            sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
+            sliderDelegate?.focusedSliderChanged(focused: thumb, start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
         }
         
     }
@@ -256,7 +263,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             }
         }
         //print(thumb)
-        sliderDelegate?.focusedSliderChanged(start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view:true)
+        sliderDelegate?.focusedSliderChanged(focused: thumb, start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view:true)
     }
     func getFocusedClipPortion() -> NSPoint{
         for t in self.thumbs{
