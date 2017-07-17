@@ -74,7 +74,7 @@
 		CB786DE81F17565B00916B4C /* ThumbRangeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbRangeInfoViewController.swift; sourceTree = "<group>"; };
 		CB8F35FF1F0CD63700D266AD /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		CB938EAB1F00DE9B006E6FFC /* NSOpenPanel-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSOpenPanel-Extension.swift"; sourceTree = "<group>"; };
-		CB99DCE91F0D40E3003324B5 /* podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = podfile; sourceTree = "<group>"; };
+		CB99DCE91F0D40E3003324B5 /* podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		CBEF1E631F01FDBD00FA8A9E /* TSClipEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSClipEditorViewController.swift; sourceTree = "<group>"; };
 		CBF5DE601F049F4F00BC0D4A /* RangeSliderThumbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSliderThumbView.swift; sourceTree = "<group>"; };
 		CBF5DE611F049F4F00BC0D4A /* MultipleRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRangeSlider.swift; sourceTree = "<group>"; };

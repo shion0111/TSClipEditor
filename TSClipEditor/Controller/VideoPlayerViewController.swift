@@ -7,56 +7,92 @@
 //
 
 import Cocoa
-
+class MyVideoView : VLCVideoView{
+    
+}
 class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
 
     var start: Float = 0
     var end: Float = 0
     var vidpath : String!
-    @IBOutlet weak var videoView: VLCVideoView!
+    var videoView: VLCVideoView! = nil
+    @IBOutlet weak var videoHolderView: NSView!
     @IBOutlet weak var playBtn : NSButton!
     @IBOutlet weak var timeLabel : NSTextField!
-    var player : VLCMediaPlayer = VLCMediaPlayer()
+    
+    var player : VLCMediaPlayer! = nil //VLCMediaPlayer()
     
     deinit {
         player.stop()
         player.delegate = nil
         
     }
-    
+    /*
     override func viewWillAppear() {
         videoView.setFrameSize(NSMakeSize(480, 270))
         if !player.isPlaying {
             playPause(self.playBtn)
         }
     }
+ */
     func delay(_ delay: Double, closure: @escaping() -> Void) {
         let when = DispatchTime.now() + delay
         DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
         
     }
+    func cleanup() {
+        if (self.videoView != nil) {//} && (self.videoView.hasVideo) {
+            if self.player.isPlaying {
+                self.playPause(self.playBtn)
+            }
+            self.player.stop()
+            videoView.removeFromSuperview()
+            videoView = nil
+            player.delegate = nil
+            player = nil
+            self.timeLabel.stringValue = "00:00:00"
+        }
+    }
     func prepareVideo(start: Float, end:Float, path:String){
         
-        //videoView.frame = NSMakeRect(0,50,480,270)
-        videoView.setFrameSize(NSMakeSize(480, 270))
-        videoView.autoresizingMask = [.width,.height]
+        cleanup()
+        
+        var rect = NSMakeRect(0, 0, 0, 0);
+        rect.size = self.videoHolderView.frame.size;
+        
+        videoView = VLCVideoView(frame: rect)//[[VLCVideoView alloc] initWithFrame:rect];
+        
+        //videoView.autoresizingMask = [.height,.width]
         videoView.fillScreen = true
+        
         
         self.start = start
         self.end = end
         self.vidpath = path
         
         
-        //self.player = VLCMediaPlayer(videoView: self.videoView)
-        player.setVideoView(videoView)
+        self.player = VLCMediaPlayer(videoView: self.videoView)
+        //player.setVideoView(videoView)
         self.player.drawable = videoView
         self.player.media = VLCMedia(path: self.vidpath)
         self.player.delegate = self
+        self.videoHolderView.addSubview(self.videoView)
         
-        delay(1.0) {
-            if !self.player.isPlaying {
-                self.playPause(self.playBtn)
-            }
+        if !self.player.isPlaying {
+            self.playPause(self.playBtn)
+            self.videoView.frame = CGRect(x: 0, y: 0, width: rect.width*2, height: rect.height*2)
+        }
+        
+        //  MARK: - VLCKit has a resizing issue on OS X https://code.videolan.org/videolan/VLCKit/issues/82
+        //  Workaround: try to resize the videoView twice to enforce VoutDisplayEvent 'resize' invoked
+        //  but mostly at first launch this workaround doesn't work......
+        delay(0.5) {
+            self.videoView.frame = rect
+        }
+        
+        //  MARK: - jumpto the start
+        delay(0.5){
+            self.player.jumpForward(Int32(start))
         }
         
     }
@@ -74,22 +110,31 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
         if player.isPlaying {
             player.pause()
             playBtn.title = "Play"
+            
         } else {
             player.play()
             playBtn.title = "Pause"
+            if start != 0 {
+                //let newTime: VLCTime = VLCTime(int: Int32(start))
+                //self.player.jumpForward(Int32(start))//time = newTime
+                
+                self.player.time = VLCTime(int:self.player.time.intValue + Int32(start*1000))
+                start = 0
+            }
         }
     }
     func mediaPlayerTimeChanged(_ aNotification: Notification!) {
         self.timeLabel.stringValue = player.time.stringValue;
     }
+    /*
     func mediaPlayerStateChanged(_ aNotification: Notification!) {
+        
         switch self.player.state.rawValue {
-        case 5,2:
-            if (videoView.hasVideo) && (start != 0) {
-                //self.player.position = 0.5
-                self.player.jumpForward(Int32(start))
-                start = 0
-            }
+            
+        case 2:
+            bufferingcount = bufferingcount+1
+            print("bufferingcount :\(bufferingcount)");
+            
             break
         case 1:
             
@@ -97,8 +142,9 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
         default:
             print(self.player.state)
         }
+        
         print("*** \(self.player.state.rawValue)\n\n")
     }
-    
+    */
     
 }

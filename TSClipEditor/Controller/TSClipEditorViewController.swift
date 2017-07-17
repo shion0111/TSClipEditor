@@ -79,6 +79,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     
         let st = 20
         self.clipVC.setSliderRange(start: 0, end: Int(tsduration),calibration: st)
+        self.playerVC.cleanup()
         return Int(tsduration)
     }
     

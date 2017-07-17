@@ -16,7 +16,7 @@ void print_err(int ret);
 const char * strFromErr(int ret);
 int is_eof(int ret);
 int err2averr(int ret);
-void cleanContext();
+void cleanContext(void);
 int getVideoDurationWithLoc(const char* fileLoc);
 CGImageRef getVideoThumbAtPosition(double second);
 

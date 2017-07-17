@@ -708,10 +708,10 @@
                 <splitViewController title="TSClipEditor" showSeguePresentationStyle="single" id="lw2-Ff-bK8" customClass="TSClipEditorViewController" customModule="TSClipEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="MYx-Bn-N8X"/>
-                        <splitViewItem canCollapse="YES" collapsed="YES" id="gIk-6l-NHV"/>
+                        <splitViewItem canCollapse="YES" id="gIk-6l-NHV"/>
                     </splitViewItems>
                     <splitView key="splitView" misplaced="YES" dividerStyle="thin" vertical="YES" id="AZH-hO-0y7">
-                        <rect key="frame" x="0.0" y="0.0" width="1167" height="520"/>
+                        <rect key="frame" x="0.0" y="175" width="1167" height="345"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
                             <outlet property="delegate" destination="lw2-Ff-bK8" id="Duy-yW-kAP"/>
@@ -726,7 +726,7 @@
                 </splitViewController>
                 <customObject id="EgH-lZ-y3Q" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="74" y="910"/>
+            <point key="canvasLocation" x="73.5" y="997.5"/>
         </scene>
         <!--Clip Edit View Controller-->
         <scene sceneID="Bl4-kZ-tVC">
@@ -873,7 +873,7 @@
                                     <constraint firstAttribute="height" constant="40" id="UTT-1R-grK"/>
                                 </constraints>
                             </box>
-                            <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee2-yl-rt5" customClass="VLCVideoView">
+                            <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee2-yl-rt5">
                                 <rect key="frame" x="0.0" y="170" width="320" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="GNP-24-riY"/>
@@ -906,7 +906,7 @@
                     <connections>
                         <outlet property="playBtn" destination="csv-sE-kmY" id="tXh-P5-pm0"/>
                         <outlet property="timeLabel" destination="mEM-u1-iko" id="i47-rl-afb"/>
-                        <outlet property="videoView" destination="ee2-yl-rt5" id="GJr-15-E0x"/>
+                        <outlet property="videoHolderView" destination="ee2-yl-rt5" id="LSW-xA-FXm"/>
                     </connections>
                 </viewController>
             </objects>
