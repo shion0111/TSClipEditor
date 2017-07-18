@@ -107,7 +107,7 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate,NSPo
     
     // MARK: - handling clip saving progress -
     // pass saving progress to popover
-    func updateSaveProgress(increment: Int, max:Int){
+    func updateSaveProgress(_ increment: Int,_ max:Int){
         let info = popover.contentViewController as! ThumbRangeInfoViewController
         info.updateSaveProgress(increment: increment, max: max)
     }

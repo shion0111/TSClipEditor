@@ -11,7 +11,8 @@ class MyVideoView : VLCVideoView{
     
 }
 class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
-
+    
+    var vidInfo:VideoInfoProtocol?
     var start: Float = 0
     var end: Float = 0
     var vidpath : String!
@@ -103,6 +104,15 @@ class VideoPlayerViewController: NSViewController,VLCMediaPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+    }
+    
+    @IBAction func collapseViewer(_ sender:AnyObject) {
+        
+        if ((player != nil) && player.isPlaying) {
+            player.pause()
+        }
+        
+        vidInfo?.collapseClipViewController()
     }
     
     @IBAction func playPause(_ sender:AnyObject){

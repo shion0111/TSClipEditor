@@ -708,7 +708,7 @@
                 <splitViewController title="TSClipEditor" showSeguePresentationStyle="single" id="lw2-Ff-bK8" customClass="TSClipEditorViewController" customModule="TSClipEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="MYx-Bn-N8X"/>
-                        <splitViewItem canCollapse="YES" id="gIk-6l-NHV"/>
+                        <splitViewItem canCollapse="YES" collapsed="YES" id="gIk-6l-NHV"/>
                     </splitViewItems>
                     <splitView key="splitView" misplaced="YES" dividerStyle="thin" vertical="YES" id="AZH-hO-0y7">
                         <rect key="frame" x="0.0" y="175" width="1167" height="345"/>
@@ -892,6 +892,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q1U-sK-5i9">
+                                <rect key="frame" x="14" y="472" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSGoLeftTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CLW-p0-beM">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="collapseViewer:" target="dZu-9b-n66" id="C5z-BZ-oSS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="ee2-yl-rt5" firstAttribute="width" secondItem="V15-AI-Wsx" secondAttribute="width" id="Bpt-Uc-p0X"/>
@@ -1037,6 +1048,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NSGoLeftTemplate" width="9" height="12"/>
         <image name="add" width="184" height="184"/>
         <image name="delete" width="184" height="184"/>
         <image name="open" width="184" height="184"/>

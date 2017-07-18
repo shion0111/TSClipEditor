@@ -26,9 +26,11 @@ protocol VideoInfoProtocol {
     func hasFocusedThumb() -> Bool
     
     func playVideoWithClipRange()
+    
+    func collapseClipViewController()
 }
 
-class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
+class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {//,CAAnimationDelegate {
     
     @IBOutlet weak var playerItem: NSSplitViewItem!
     @IBOutlet weak var clipViewItem: NSSplitViewItem!
@@ -62,6 +64,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         super.viewDidLoad()
         
         //self.prtVC.vidInfo = self
+        self.playerVC.vidInfo = self
         self.clipVC.vidInfo = self
         
     }
@@ -74,7 +77,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     //  retrieve video duration/metadata via ffmpeg
     func loadVideoWithPath(path: String) -> Int {
         videopath = path
-        cleanContext()
+        cleanVideoContext()
         self.tsduration = Int(getVideoDurationWithLoc(path))
     
         let st = 20
@@ -87,6 +90,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
     func focusedThumbRangeChanged(focused: AnyObject?, start: Float, end:Float, sliderlength:Float, view:Bool) {
         let st = Float(start/sliderlength)*Float(tsduration)
         let ed = Float(end/sliderlength)*Float(tsduration)
+        
         //self.prtVC.clipRangeChanged(start: Float(st), end:Float((ed > Float(tsduration)) ? Float(tsduration) : ed) )
         
         //if view {
@@ -98,17 +102,43 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         
         //  get clip range
         let r = self.clipVC.getFocusedSliderRange()
-        //  get size of source
-        guard
-            let atts = try? FileManager.default.attributesOfItem(atPath: source),
-            let filesize = atts[.size] as? Int
-        else {
-            return
+        
+        
+        let total = self.tsduration
+        let st = ceil(Float(r.x)*Float(total))-1
+        let ed = ceil(Float(r.y)*Float(total))+1
+        
+        let queue1 = DispatchQueue(label: "com.ioutil.save", qos: DispatchQoS.background)
+        queue1.async {
+            // Void pointer to `self`:
+            let observer = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+            
+            SaveClipWithInfo(st, ed, dest,observer, { (observer, current, total) -> Void in
+                DispatchQueue.main.async {
+                    if let observer = observer {
+                        let myself = Unmanaged<TSClipEditorViewController>.fromOpaque(observer).takeUnretainedValue()
+                        myself.clipVC.updateSaveProgress(Int(current),Int(total))
+                        //print("progress: \(current)/\(total)")
+                    }
+                }
+            }, { (observer) -> Void in
+                DispatchQueue.main.async {
+                    if let observer = observer {
+                        let myself = Unmanaged<TSClipEditorViewController>.fromOpaque(observer).takeUnretainedValue()
+                        myself.clipVC.finishSaveProgress()
+                    }
+                    
+                }
+            })
         }
         
-        let total = filesize
-        let st = Int(ceil(Float(r.x)*Float(total)))
-        let ed = Int(ceil(Float(r.y)*Float(total)))
+        
+        
+        /*
+         FFmpeg cannot copy streams that are detected but not correctly identified (like stream 0:1 in this case).
+         A second option is needed
+         */
+        /*
         let clipexporter = ClipExporter(sourcepath: source, destpath: dest, start: st, end: ed)
         
         clipexporter.saveClip(progress: { (current, max) in
@@ -122,7 +152,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
                 
             }
         }
-        
+        */
         
     }
     // Delete Clip
@@ -154,24 +184,32 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
         }
      
     }
-    func playVideoWithClipRange(){
+    func setPlayerCollapse(_ c: Bool) {
+        /*
+        let animation = CAAnimation()
+        animation.delegate = self
+        playerItem.animations = [NSAnimatablePropertyKey(rawValue: "collapsed"):animation]
+         */
+        playerItem.isCollapsed = c
         
-        playerItem.animator().isCollapsed = false
-        playerItem.canCollapse = false
+    }
+    
+    func collapseClipViewController() {
+        setPlayerCollapse(true)
+    }
+    func playVideoWithClipRange() {
         //  get clip range
         let r = self.clipVC.getFocusedSliderRange()
         let st = Float(r.x)*Float(tsduration)
         let ed = Float(r.y)*Float(tsduration)
         
-        /*
-        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
-        let preview = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("PreviewWindow")) as! NSWindowController
-        let vidVC = preview.contentViewController as! VideoPlayerViewController
-         */
-        self.playerVC.prepareVideo(start: st, end: ed, path: videopath)
-        //preview.window?.appearance = NSAppearance(named: .vibrantDark)
-        //preview.window?.makeKeyAndOrderFront(nil)
-
+        
+        setPlayerCollapse(false)
+        let when = DispatchTime.now() + 1.0
+        DispatchQueue.main.asyncAfter(deadline: when, execute : {
+            self.playerVC.prepareVideo(start: st, end: ed, path: self.videopath)
+        })
+        
         
     }
     

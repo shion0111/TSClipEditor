@@ -16,13 +16,16 @@
 #import <libavutil/imgutils.h>
 #import <libavutil/error.h>
 #import <libavutil/common.h>
+#include <libavutil/timestamp.h>
+#include <libavformat/avformat.h>
 
-static AVFormatContext *fmt_ctx;
-static AVCodecParameters *pCodecPar;
+static AVFormatContext *fmt_ctx = NULL;
 
 static AVStream *vStream;
 int videoStream;
-AVCodec *pCodec;
+
+AVCodecContext *pCodecCtx = NULL;
+
 static double theDuration;
 
 
@@ -50,10 +53,17 @@ int64_t initial_timestamp()
     else
         return 0;
 }
-void cleanContext(){
+void cleanVideoContext(){
+    
+    if (pCodecCtx != NULL){
+        avcodec_close(pCodecCtx);
+        avcodec_free_context(&pCodecCtx);
+        pCodecCtx = NULL;
+    }
     
     if (fmt_ctx != NULL)
     {
+        avformat_close_input(&fmt_ctx);
         avformat_free_context(fmt_ctx);
         fmt_ctx = NULL;
     }
@@ -62,9 +72,7 @@ void cleanContext(){
 #pragma mark - open a ts file and get duration
 int getVideoDurationWithLoc(const char* fileLoc)
 {
-    AVCodecContext *pCodecCtx = NULL;
-    if (pCodecCtx != NULL)
-        avcodec_free_context(&pCodecCtx);
+    cleanVideoContext();
     
     AVDictionaryEntry *tag = NULL;
     int ret;
@@ -88,12 +96,14 @@ int getVideoDurationWithLoc(const char* fileLoc)
     //AVCodec *sCodec = NULL;
     //int sub = av_find_best_stream(fmt_ctx, AVMEDIA_TYPE_SUBTITLE, -1, -1, &sCodec, 0);
     
-    videoStream = av_find_best_stream(fmt_ctx , AVMEDIA_TYPE_VIDEO, -1, -1, &pCodec, 0);
+    videoStream = av_find_best_stream(fmt_ctx , AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
     vStream = fmt_ctx->streams[videoStream];
     
     dd = (double) vStream->duration /  (double)vStream->time_base.den;
     
     int intValue = (int)(dd < 0 ? dd - 0.5 : dd + 0.5);
+    
+    
     return intValue;
 }
 #pragma mark - seek video to a certain frame based on time
@@ -186,31 +196,28 @@ CGImageRef imageFromAVFrame(AVFrame *pict, int width, int height)
 #pragma mark -
 CGImageRef getVideoThumbAtPosition(double second)
 {
-    
-    pCodecPar =fmt_ctx->streams[videoStream]->codecpar;
-    AVCodecContext *pCodecCtx = NULL;
-    pCodecCtx = avcodec_alloc_context3(NULL);
-    int res = avcodec_parameters_to_context(pCodecCtx,pCodecPar);
-    if (res < 0) return NULL;
-    
-    // Open video codec
-    // Find the decoder for the video stream
-    pCodec = avcodec_find_decoder(pCodecCtx->codec_id);
-    if (avcodec_open2(pCodecCtx, pCodec,NULL) < 0)
-    {
-        avformat_free_context(fmt_ctx);
-        fprintf(stderr, "unable to open codec");
-        return NULL;
+    // initialize the decoder AVCodecContext
+    if (pCodecCtx == NULL){
+        AVCodecParameters *pCodecPar =fmt_ctx->streams[videoStream]->codecpar;
+        pCodecCtx = avcodec_alloc_context3(NULL);
+        int res = avcodec_parameters_to_context(pCodecCtx,pCodecPar);
+        if (res < 0) return NULL;
+        
+        AVCodec *pCodec = NULL;
+        // Open video codec
+        // Find the decoder for the video stream
+        pCodec = avcodec_find_decoder(pCodecCtx->codec_id);
+        if (avcodec_open2(pCodecCtx, pCodec,NULL) < 0)
+        {
+            avformat_free_context(fmt_ctx);
+            fprintf(stderr, "unable to open codec");
+            return NULL;
+        }
     }
-    
-    //ImageSize finalSize = get_new_frame_size(pCodecCtx->width, pCodecCtx->height, request.width, request.height);
-    
-    //vStream->need_parsing = AVSTREAM_PARSE_TIMESTAMPS;
     
     AVFrame* frame = av_frame_alloc();
     AVPacket packet;
     int frame_end = 0;
-    //int64_t second = 2;
     int width = pCodecCtx->width,height = pCodecCtx->height;
     second = floor(second);
     
@@ -222,12 +229,12 @@ CGImageRef getVideoThumbAtPosition(double second)
     }
     
     avcodec_flush_buffers(pCodecCtx);
-    //int64_t ss = 0;
+    
     while (!frame_end && (av_read_frame(fmt_ctx, &packet) >= 0))
     {
         if (packet.stream_index == videoStream)
         {
-            //ss = avcodec_decode_video2(pCodecCtx, frame, &frame_end, &packet);
+            
             
             if (packet.buf == NULL) continue;
             
@@ -259,21 +266,226 @@ CGImageRef getVideoThumbAtPosition(double second)
         }
         av_packet_unref(&packet);
     }
-    //av_seek_frame(fmt_ctx, videoStream, 0, AVSEEK_FLAG_BYTE);
-    avcodec_flush_buffers(pCodecCtx);
+    //avcodec_flush_buffers(pCodecCtx);
     
     AVFrame *sized = NULL;
     if(frame)
     {
         sized = resize_frame(pCodecCtx, frame,width/4,height/4);
     }
-    avcodec_close(pCodecCtx);
+    
     av_free(frame);
     CGImageRef thumb = imageFromAVFrame(sized, width/4, height/4);
     
-    
-    avcodec_free_context(&pCodecCtx);
     av_free(sized);
     return thumb;
+    
+}
+
+
+static void log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt, const char *tag)
+{
+    AVRational *time_base = &fmt_ctx->streams[pkt->stream_index]->time_base;
+    
+    printf("%s: pts:%s pts_time:%s dts:%s dts_time:%s duration:%s duration_time:%s stream_index:%d\n",
+           tag,
+           av_ts2str(pkt->pts), av_ts2timestr(pkt->pts, time_base),
+           av_ts2str(pkt->dts), av_ts2timestr(pkt->dts, time_base),
+           av_ts2str(pkt->duration), av_ts2timestr(pkt->duration, time_base),
+           pkt->stream_index);
+}
+
+
+// get understood about swift function or obj-c function as a function pointer in c (block mechanism)
+// test TS -> other container
+
+// https://stackoverflow.com/questions/15157759/pass-instance-method-as-function-pointer-to-c-library
+// directly porting to swift? (It's dirty!!!!)
+int SaveClipWithInfo(float from_seconds, float end_seconds,const char* out_filename,const void *observer, const CutClipProgressCallback progresscallback, const CutClipFinishCallback finishcallback) {
+    
+    if (from_seconds < 0)
+        from_seconds = 0;
+    if (end_seconds > theDuration)
+        end_seconds = theDuration;
+    
+    avcodec_flush_buffers(pCodecCtx);
+    
+    
+    if (fmt_ctx == NULL) {
+        fprintf(stderr, "The source file is not selected yet!\n");
+        return  -1111;
+    }
+    
+    int vstremindex = av_find_best_stream(fmt_ctx , AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
+    
+    AVOutputFormat *ofmt = NULL;
+    AVFormatContext *ofmt_ctx = NULL;
+    AVPacket pkt;
+    int ret, i;
+    /*
+    if ((ret = avformat_find_stream_info(fmt_ctx, 0)) < 0) {
+        fprintf(stderr, "Failed to retrieve input stream information\n");
+        goto end;
+    }
+    */
+    //av_dump_format(fmt_ctx, 0, in_filename, 0);
+    
+    avformat_alloc_output_context2(&ofmt_ctx, NULL, NULL, out_filename);
+    if (!ofmt_ctx) {
+        fprintf(stderr, "Could not create output context\n");
+        ret = AVERROR_UNKNOWN;
+        goto end;
+    }
+    
+    ofmt = ofmt_ctx->oformat;
+    
+    for (i = 0; i < fmt_ctx->nb_streams; i++) {
+        AVStream *in_stream = fmt_ctx->streams[i];
+        
+        AVCodec *pCodec = NULL;
+        pCodec = avcodec_find_decoder(in_stream->codecpar->codec_id);
+        AVStream *out_stream = avformat_new_stream(ofmt_ctx, pCodec);
+        if (!out_stream) {
+            fprintf(stderr, "Failed allocating output stream\n");
+            ret = AVERROR_UNKNOWN;
+            goto end;
+        }
+        
+        AVCodecContext *pctx = avcodec_alloc_context3(NULL);
+        int res = avcodec_parameters_to_context(pctx,in_stream->codecpar);
+        if (res < 0) {
+            fprintf(stderr, "Could not retrieve source codec context\n");
+            return -1112;
+        }
+        
+        pctx->codec_tag = 0;
+        if (ofmt_ctx->oformat->flags & AVFMT_GLOBALHEADER) {
+            pctx->flags |= CODEC_FLAG_GLOBAL_HEADER;
+        }
+        
+        ret = avcodec_parameters_from_context(out_stream->codecpar, pctx);
+        if (ret < 0) {
+            printf("Failed to copy context input to output stream codec context\n");
+            goto end;
+        }
+    }
+    av_dump_format(ofmt_ctx, 0, out_filename, 1);
+    
+    //  open output
+    if (!(ofmt->flags & AVFMT_NOFILE)) {
+        ret = avio_open(&ofmt_ctx->pb, out_filename, AVIO_FLAG_WRITE);
+        if (ret < 0) {
+            fprintf(stderr, "Could not open output file '%s'", out_filename);
+            goto end;
+        }
+    }
+    
+    // write header
+    ret = avformat_write_header(ofmt_ctx, NULL);
+    if (ret < 0) {
+        fprintf(stderr, "Error occurred when opening output file\n");
+        goto end;
+    }
+    
+    
+    //  seek to from_seconds
+    //ret =av_seek_frame(fmt_ctx, -1, from_seconds*AV_TIME_BASE, AVSEEK_FLAG_ANY);
+    int64_t pos = from_seconds*AV_TIME_BASE+initial_timestamp();
+    ret = avformat_seek_file( fmt_ctx, -1, pos - 1 * AV_TIME_BASE, pos, pos+1*AV_TIME_BASE, AVSEEK_FLAG_BACKWARD);
+    if (ret < 0) {
+        fprintf(stderr, "Error seek\n");
+        goto end;
+    }
+    
+    int64_t *dts_start_from = malloc(sizeof(int64_t) * fmt_ctx->nb_streams);
+    memset(dts_start_from, 0, sizeof(int64_t) * fmt_ctx->nb_streams);
+    int64_t *pts_start_from = malloc(sizeof(int64_t) * fmt_ctx->nb_streams);
+    memset(pts_start_from, 0, sizeof(int64_t) * fmt_ctx->nb_streams);
+    
+    int frame_count = 0;
+    float current = 0.0;
+    while (1) {
+        AVStream *in_stream, *out_stream;
+        
+        ret = av_read_frame(fmt_ctx, &pkt);
+        if (ret < 0)
+            break;
+        
+        in_stream  = fmt_ctx->streams[pkt.stream_index];
+        out_stream = ofmt_ctx->streams[pkt.stream_index];
+        double base = av_q2d(in_stream->time_base);
+        
+        printf("pkt time: %lf,%lf",base,base * pkt.pts);
+        
+        log_packet(fmt_ctx, &pkt, "in");
+        
+        //  check if copy to the end_seconds
+        if (pkt.stream_index == vstremindex) {
+            current += pkt.duration*base;
+            //if (base * pkt.pts > end_seconds) {
+            if (current > (end_seconds - from_seconds)) {
+                av_packet_unref(&pkt);
+                break;
+            }
+        }
+        
+        if (dts_start_from[pkt.stream_index] == 0) {
+            dts_start_from[pkt.stream_index] = pkt.dts;
+            printf("dts_start_from: %s\n", av_ts2str(dts_start_from[pkt.stream_index]));
+        }
+        if (pts_start_from[pkt.stream_index] == 0) {
+            pts_start_from[pkt.stream_index] = pkt.pts;
+            printf("pts_start_from: %s\n", av_ts2str(pts_start_from[pkt.stream_index]));
+        }
+        
+        /* copy packet */
+        pkt.pts = av_rescale_q_rnd(pkt.pts - pts_start_from[pkt.stream_index], in_stream->time_base, out_stream->time_base, AV_ROUND_NEAR_INF|AV_ROUND_PASS_MINMAX);
+        pkt.dts = av_rescale_q_rnd(pkt.dts - dts_start_from[pkt.stream_index], in_stream->time_base, out_stream->time_base, AV_ROUND_NEAR_INF|AV_ROUND_PASS_MINMAX);
+        if (pkt.pts < 0) {
+            pkt.pts = 0;
+        }
+        if (pkt.dts < 0) {
+            pkt.dts = 0;
+        }
+        pkt.duration = (int)av_rescale_q((int64_t)pkt.duration, in_stream->time_base, out_stream->time_base);
+        pkt.pos = -1;
+        log_packet(ofmt_ctx, &pkt, "out");
+        printf("\n");
+        
+        ret = av_interleaved_write_frame(ofmt_ctx, &pkt);
+        if (ret < 0) {
+            fprintf(stderr, "Error muxing packet\n");
+            break;
+        }
+        frame_count++;
+        current += pkt.duration;
+        //  progress callback here //
+        progresscallback(observer,current, end_seconds-from_seconds);
+        av_packet_unref(&pkt);
+    }
+    free(dts_start_from);
+    free(pts_start_from);
+    
+    av_write_trailer(ofmt_ctx);
+    
+    
+    //  finish callback here //
+    finishcallback(observer);
+end:
+    
+    //  source file should not be closed here for the scenario.
+    //  avformat_close_input(&fmt_ctx);
+    
+    /* close output */
+    if (ofmt_ctx && !(ofmt->flags & AVFMT_NOFILE))
+        avio_closep(&ofmt_ctx->pb);
+    avformat_free_context(ofmt_ctx);
+    
+    if (ret < 0 && ret != AVERROR_EOF) {
+        fprintf(stderr, "Error occurred: %s\n", av_err2str(ret));
+        return 1;
+    }
+    
+    return 0;
     
 }
