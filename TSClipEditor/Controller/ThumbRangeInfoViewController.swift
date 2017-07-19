@@ -63,6 +63,10 @@ class ThumbRangeInfoViewController: NSViewController {
   
     
     func updateSaveProgress(increment: Int, max:Int){
+        if self.savebox.isHidden{
+            self.savebox.isHidden = false
+            self.saveprogress.startAnimation(nil)
+        }
         if saveprogress.doubleValue < 1 {
             saveprogress.maxValue = Double(max)
         }

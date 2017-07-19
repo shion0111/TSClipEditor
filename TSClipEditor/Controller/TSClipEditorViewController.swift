@@ -113,7 +113,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {//,CA
             // Void pointer to `self`:
             let observer = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
             
-            SaveClipWithInfo(st, ed, dest,observer, { (observer, current, total) -> Void in
+            let result = SaveClipWithInfo(st, ed, dest,observer, { (observer, current, total) -> Void in
                 DispatchQueue.main.async {
                     if let observer = observer {
                         let myself = Unmanaged<TSClipEditorViewController>.fromOpaque(observer).takeUnretainedValue()
@@ -130,29 +130,40 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {//,CA
                     
                 }
             })
-        }
-        
-        
-        
-        /*
-         FFmpeg cannot copy streams that are detected but not correctly identified (like stream 0:1 in this case).
-         A second option is needed
-         */
-        /*
-        let clipexporter = ClipExporter(sourcepath: source, destpath: dest, start: st, end: ed)
-        
-        clipexporter.saveClip(progress: { (current, max) in
-            DispatchQueue.main.async {
-                self.clipVC.updateSaveProgress(increment: current, max: max)
-            }
-        }) { (exporter) in
-            DispatchQueue.main.async {
-                self.clipVC.finishSaveProgress()
-                clipexporter.closeExporter()
+            
+            //  FFmpeg cannot copy streams that are detected but not correctly identified
+            //  possibly a plan b is needed...
+            if result < 0 {
+                do{
+                    try FileManager.default.removeItem(atPath: dest)
+                } catch{
+                    print(error)
+                }
+                guard
+                    let atts = try? FileManager.default.attributesOfItem(atPath: source),
+                    let filesize = atts[.size] as? Int
+                    else {
+                        return
+                }
+                let total = filesize
+                let st = Int(ceil(Float(r.x)*Float(total)))
+                let ed = Int(ceil(Float(r.y)*Float(total)))
+                let clipexporter = ClipExporter(sourcepath: source, destpath: dest, start: st, end: ed)
                 
+                clipexporter.saveClip(progress: { (current, max) in
+                    DispatchQueue.main.async {
+                        self.clipVC.updateSaveProgress(current, max)
+                    }
+                }) { (exporter) in
+                    DispatchQueue.main.async {
+                        self.clipVC.finishSaveProgress()                                            
+                    }
+                }
             }
         }
-        */
+        
+        
+        
         
     }
     // Delete Clip

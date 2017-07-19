@@ -35,11 +35,15 @@ public class ClipExporter : NSObject, StreamDelegate {
     }
     
     func closeExporter(){
-        inputstream.close()
-        outputstream.close()
-        inputstream = nil
-        outputstream = nil
-        currentWritten = 0
+        if inputstream != nil {
+            inputstream.close()
+            inputstream.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+            outputstream.close()
+            outputstream.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+            inputstream = nil
+            outputstream = nil
+            currentWritten = 0
+        }
     }
     
     deinit {
@@ -77,6 +81,7 @@ public class ClipExporter : NSObject, StreamDelegate {
                     
                 }
             }
+            self.closeExporter()
             //  exporting finished
             self.finishBlock!(self)
         }

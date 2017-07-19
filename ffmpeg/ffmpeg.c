@@ -301,7 +301,9 @@ static void log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt, cons
 
 // https://stackoverflow.com/questions/15157759/pass-instance-method-as-function-pointer-to-c-library
 // directly porting to swift? (It's dirty!!!!)
-int SaveClipWithInfo(float from_seconds, float end_seconds,const char* out_filename,const void *observer, const CutClipProgressCallback progresscallback, const CutClipFinishCallback finishcallback) {
+int SaveClipWithInfo(float from_seconds, float end_seconds,const char* out_filename,const void *observer,
+                     const CutClipProgressCallback progresscallback,
+                     const CutClipFinishCallback finishcallback) {
     
     if (from_seconds < 0)
         from_seconds = 0;
@@ -309,7 +311,6 @@ int SaveClipWithInfo(float from_seconds, float end_seconds,const char* out_filen
         end_seconds = theDuration;
     
     avcodec_flush_buffers(pCodecCtx);
-    
     
     if (fmt_ctx == NULL) {
         fprintf(stderr, "The source file is not selected yet!\n");
@@ -352,10 +353,10 @@ int SaveClipWithInfo(float from_seconds, float end_seconds,const char* out_filen
         }
         
         AVCodecContext *pctx = avcodec_alloc_context3(NULL);
-        int res = avcodec_parameters_to_context(pctx,in_stream->codecpar);
-        if (res < 0) {
+        ret = avcodec_parameters_to_context(pctx,in_stream->codecpar);
+        if (ret < 0) {
             fprintf(stderr, "Could not retrieve source codec context\n");
-            return -1112;
+            goto end;
         }
         
         pctx->codec_tag = 0;
@@ -425,6 +426,7 @@ int SaveClipWithInfo(float from_seconds, float end_seconds,const char* out_filen
             //if (base * pkt.pts > end_seconds) {
             if (current > (end_seconds - from_seconds)) {
                 av_packet_unref(&pkt);
+                ret = 0;
                 break;
             }
         }
@@ -461,6 +463,7 @@ int SaveClipWithInfo(float from_seconds, float end_seconds,const char* out_filen
         current += pkt.duration;
         //  progress callback here //
         progresscallback(observer,current, end_seconds-from_seconds);
+        
         av_packet_unref(&pkt);
     }
     free(dts_start_from);
@@ -483,7 +486,7 @@ end:
     
     if (ret < 0 && ret != AVERROR_EOF) {
         fprintf(stderr, "Error occurred: %s\n", av_err2str(ret));
-        return 1;
+        return ret;
     }
     
     return 0;
