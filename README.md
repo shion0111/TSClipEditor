@@ -21,9 +21,9 @@ A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choos
 - Swift 3.0
 
 ## Tasks in progress
-- Issue: memory consuming when decoding video
+- ~~Issue: memory consuming when decoding video~~
 - ~~UI redesign~~ 
-- Clip preview
+- Clip preview (current solution: VLCKit)
 
 ## To do
 - Support for other formats
