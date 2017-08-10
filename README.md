@@ -7,7 +7,7 @@
 
 A TS clip exporter (mainly for those huge MPEG2-TS files) on OSX. User can choose several ranges of a video on a customized slider by setting multiple thumbs and then save clips.
 
-** A hobby project and a case-study about ffmpeg **
+** A hobby project and a case-study of ffmpeg **
 
 ## Prerequisites
 - [ffmpeg](https://github.com/FFmpeg)
