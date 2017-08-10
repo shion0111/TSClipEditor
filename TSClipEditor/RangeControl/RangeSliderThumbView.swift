@@ -18,7 +18,7 @@ protocol ThumbPanDelegate {
     func notifyFocused(_ thumb: RangeSliderThumbView)//_ thumb:AnyObject?)
 }
 
-//@available(OSX 10.12, *)
+
 class RangeSliderThumbView: NSView {
     var max : Float = 0.0
     var min : Float = 0.0
@@ -37,8 +37,8 @@ class RangeSliderThumbView: NSView {
     var thumbColor : NSColor = NSColor(red: 0.8, green: 0.90, blue: 1.0, alpha: 1.0)
     
     // left arrow and right arrow
-    let left = NSImageView()
-    let right = NSImageView()
+    let left = NSView()
+    let right = NSView()
     
     init(frame: CGRect, max: Float, min: Float){
         super.init(frame: frame)
@@ -95,21 +95,32 @@ class RangeSliderThumbView: NSView {
             // Fallback on earlier versions
         }
          */
-        left.image = NSImage.init(imageLiteralResourceName: "NSLeftFacingTriangleTemplate")
-        left.setFrameOrigin(NSPoint(x:2,y:0))
-        left.setFrameSize(NSSize(width:9,height:fr.height))
+        let lv = NSImageView()
+        lv.image = NSImage.init(imageLiteralResourceName: "NSLeftFacingTriangleTemplate")
+        lv.setFrameOrigin(NSPoint(x:2,y:0))
+        lv.setFrameSize(NSSize(width:9,height:fr.height))
         let lpan = NSPanGestureRecognizer(target: self, action:#selector(RangeSliderThumbView.leftGesturePanned(gesture:)))
-        left.imageAlignment = .alignLeft
+        lv.imageAlignment = .alignLeft
+        
+        left.setFrameOrigin(NSPoint(x:0, y:0))
+        left.setFrameSize(NSSize(width: 15, height: fr.height))
+        left.addSubview(lv)
         left.addGestureRecognizer(lpan)
         self.addSubview(left)
         
-        right.image = NSImage(imageLiteralResourceName: "NSRightFacingTriangleTemplate")
-        right.setFrameOrigin(NSPoint(x:self.frame.width - 14,y:0))
-        right.setFrameSize(NSSize(width:9,height:fr.height))
+        let rv = NSImageView()
+        rv.image = NSImage(imageLiteralResourceName: "NSRightFacingTriangleTemplate")
+        rv.setFrameOrigin(NSPoint(x:2,y:0))
+        rv.setFrameSize(NSSize(width:9,height:fr.height))
         let rpan = NSPanGestureRecognizer(target: self, action:#selector(RangeSliderThumbView.rightGesturePanned(gesture:)))
-        right.imageAlignment = .alignRight
+        rv.imageAlignment = .alignRight
+        
+        right.setFrameOrigin(NSPoint(x: self.frame.width - 14, y: 0))
+        right.setFrameSize(NSSize(width: 15, height: fr.height))
+        right.addSubview(rv)
         right.addGestureRecognizer(rpan)
         self.addSubview(right)
+        
         
         let click = NSClickGestureRecognizer(target: self, action: #selector(RangeSliderThumbView.clickGestureHit(gesture:)))
         self.addGestureRecognizer(click)

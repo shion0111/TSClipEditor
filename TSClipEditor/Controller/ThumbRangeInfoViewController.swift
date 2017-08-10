@@ -26,19 +26,6 @@ class ThumbRangeInfoViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        self.view.wantsLayer = true
-        let colorTop = NSColor(red: 236 / 255, green: 240 / 255, blue: 250 / 241, alpha: 0.6).cgColor
-        let color2 = NSColor(red: 255 / 255, green: 248 / 255, blue: 225 / 255, alpha: 0.6).cgColor
-        let colorBottom = NSColor(red: 236 / 255, green: 239 / 255, blue: 241 / 255, alpha: 0.6).cgColor
-        let gradient  = CAGradientLayer()
-        gradient.colors = [ color2, colorBottom,colorTop]
-        gradient.locations = [ 0.0,0.8, 1.0]
-        gradient.cornerRadius = 16
-        gradient.borderColor = color2
-        gradient.borderWidth = 1
-        self.view.layer = gradient
-         */
     }
     
     @IBAction func discardCurClip(_ sender: AnyObject!){
