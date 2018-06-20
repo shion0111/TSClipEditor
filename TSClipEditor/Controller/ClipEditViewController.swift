@@ -12,9 +12,7 @@
 
 import Cocoa
 
-protocol  MultipleRangeSliderDelegate {
-    func focusedSliderChanged(focused:AnyObject?, start:Float, end:Float, view:Bool)
-}
+
 class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate,NSPopoverDelegate,ClipInfoDelegate {
     
     var vidInfo:VideoInfoProtocol?
@@ -146,13 +144,15 @@ class ClipEditViewController: NSViewController, MultipleRangeSliderDelegate,NSPo
         let dest = url.appendingPathComponent(fname)
         let info = popover.contentViewController as! ThumbRangeInfoViewController
         info.destLocation.stringValue = dest.path
-        self.vidInfo?.saveClipAtLocation(source: self.tsLocation.stringValue, dest: dest.path)
+        //  get clip range
+        let r = getFocusedSliderRange()
+        self.vidInfo?.saveClipAtLocation(source: self.tsLocation.stringValue, dest: dest.path, r:r)
         
     }
     
     //  MARK: - IBAction -
     @IBAction func playClip(_ sender: AnyObject!){
-        self.vidInfo?.playVideoWithClipRange()
+        //self.vidInfo?.playVideoWithClipRange()
     }
     
     @IBAction func addClipRange(_ sender: AnyObject!){

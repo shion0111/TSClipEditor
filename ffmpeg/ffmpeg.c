@@ -449,11 +449,16 @@ int SaveClipWithInfo(float from_seconds, float end_seconds,const char* out_filen
         if (pkt.dts < 0) {
             pkt.dts = 0;
         }
+        
         pkt.duration = (int)av_rescale_q((int64_t)pkt.duration, in_stream->time_base, out_stream->time_base);
         pkt.pos = -1;
         log_packet(ofmt_ctx, &pkt, "out");
         printf("\n");
         
+        /*
+         av_packet_rescale_ts(pkt, *time_base, st->time_base);
+         pkt->stream_index = st->index;
+         */
         ret = av_interleaved_write_frame(ofmt_ctx, &pkt);
         if (ret < 0) {
             fprintf(stderr, "Error muxing packet\n");

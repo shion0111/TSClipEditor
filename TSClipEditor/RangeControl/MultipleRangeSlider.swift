@@ -12,6 +12,10 @@
 
 import Cocoa
 
+protocol  MultipleRangeSliderDelegate {
+    func focusedSliderChanged(focused:AnyObject?, start:Float, end:Float, view:Bool)
+}
+
 class MultipleRangeSlider: NSView,ThumbPanDelegate {
     
     var sliderDelegate : MultipleRangeSliderDelegate?
@@ -69,7 +73,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         horizontalline.isHidden = true
         
         
-        endLabel = NSTextField(frame: NSMakeRect(607, self.frame.height-50, 194, 17))
+        endLabel = NSTextField(frame: NSMakeRect(self.frame.width-215, self.frame.height-50, 194, 17))
         endLabel?.alignment = .right
         endLabel?.textColor = NSColor.white
         self.addSubview(endLabel!)
@@ -256,6 +260,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         }
         
     }
+   
     func notifyFocused(_ thumb: RangeSliderThumbView) {
         for t in self.thumbs{
             if t != thumb {
@@ -275,6 +280,29 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             }
         }
         return NSMakePoint(0,0)
+    }
+    
+    func updateFocusedPosition(_ s: Int, _ e: Int) {
+        for t in self.thumbs{
+            if t.Focused {
+                print("param \(s),\(e)")
+                let ss = self.end - self.start
+                let ww = Int(self.horizontalline.frame.width)
+                var xs = ww*s/ss
+                if CGFloat(xs) < xoffset {
+                    xs = Int(xoffset)
+                }
+                var xe = ww*e/ss
+                if xe-xs < Int(xoffset) {
+                    xe = xs+Int(xoffset)
+                }
+                let rc = t.frame
+                print("param x \(xs),\(xe)")
+                t.setFrameOrigin(NSPoint(x:CGFloat(xs), y:rc.origin.y))
+                t.setFrameSize(NSSize(width: CGFloat(xe) - CGFloat(xs) , height: rc.size.height))
+                t.setNeedsDisplay(t.frame)
+            }
+        }
     }
     
 }

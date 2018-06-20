@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import AppKit
+
 protocol ClipInfoDelegate {
     func discardTheThumb()
     func saveClipWithDestDirectory(destdir:String)

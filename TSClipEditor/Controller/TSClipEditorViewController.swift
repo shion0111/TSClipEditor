@@ -11,26 +11,10 @@
 //
 import Cocoa
 
-protocol VideoInfoProtocol {
-    //  retrieve video  metadata via ffmpeg
-    func loadVideoWithPath(path : String) -> Int
-    // callback for property to reflect multi-slider operation
-    func updateClipThumbRange(index:Int, size:CGSize)
-    // Save clip
-    func saveClipAtLocation(source : String, dest:String)
-    // Delete clip
-    func deleteClipThumb()
-    //  Range of focused thumb is changed. Notify Property VC.
-    func focusedThumbRangeChanged(focused: AnyObject?, start: Float, end:Float, sliderlength:Float, view:Bool)
-    
-    func hasFocusedThumb() -> Bool
-    
-    func playVideoWithClipRange()
-    
-    func collapseClipViewController()
-}
 
-class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {//,CAAnimationDelegate {
+
+class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {
+    //,CAAnimationDelegate {
     
     @IBOutlet weak var playerItem: NSSplitViewItem!
     @IBOutlet weak var clipViewItem: NSSplitViewItem!
@@ -75,7 +59,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {//,CA
     }
     
     //  retrieve video duration/metadata via ffmpeg
-    func loadVideoWithPath(path: String) -> Int {
+    func loadVideoWithPath(path: String) -> (Int,Int) {
         videopath = path
         cleanVideoContext()
         self.tsduration = Int(getVideoDurationWithLoc(path))
@@ -83,7 +67,7 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {//,CA
         let st = 20
         self.clipVC.setSliderRange(start: 0, end: Int(tsduration),calibration: st)
         self.playerVC.cleanup()
-        return Int(tsduration)
+        return (Int(tsduration),st)
     }
     
     //  Range of the focused thumb is changed. Notify Property VC.
@@ -98,10 +82,9 @@ class TSClipEditorViewController: NSSplitViewController,VideoInfoProtocol {//,CA
         //}
     }
     // Save Clip
-    func saveClipAtLocation(source : String, dest:String) {
+    func saveClipAtLocation(source : String, dest:String,r:NSPoint) {
         
-        //  get clip range
-        let r = self.clipVC.getFocusedSliderRange()
+
         
         
         let total = self.tsduration

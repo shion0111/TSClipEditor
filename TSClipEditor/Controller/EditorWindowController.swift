@@ -19,7 +19,7 @@ class EditorWindowController: NSWindowController {
             
         }
 
-        window.isMovableByWindowBackground = true
+        window.isMovableByWindowBackground = false
         
         window.titleVisibility = .visible
         window.titlebarAppearsTransparent = true
