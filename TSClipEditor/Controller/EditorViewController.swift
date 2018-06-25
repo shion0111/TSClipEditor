@@ -7,27 +7,42 @@
 //
 
 import Cocoa
-class ClipRowView : NSTableRowView {
+//
+class ClipRowView : NSTableRowView,ProgressInfoProtocol {
     @IBOutlet var startLabel : NSTextField?
     @IBOutlet var endLabel : NSTextField?
+    @IBOutlet var progress : NSProgressIndicator?
+    @IBOutlet var save : NSButton?
     
-    
-    override func drawSelection(in dirtyRect: NSRect) {
-        NSColor.selectedControlColor.setFill()
+    override func drawBackground(in dirtyRect: NSRect) {
+        NSColor.secondarySelectedControlColor.setFill()
         let rect = NSRect(x: dirtyRect.origin.x+3, y: dirtyRect.origin.y+2, width: dirtyRect.size.width-6, height: dirtyRect.size.height-4)
-        
         let path: NSBezierPath = NSBezierPath(roundedRect: rect, xRadius: 5.0, yRadius: 5.0)
         path.addClip()
         path.fill()
     }
     
-    override func drawBackground(in dirtyRect: NSRect) {
-        NSColor.secondarySelectedControlColor.setFill()
-        let rect = NSRect(x: dirtyRect.origin.x+3, y: dirtyRect.origin.y+2, width: dirtyRect.size.width-6, height: dirtyRect.size.height-4)
-        
-        let path: NSBezierPath = NSBezierPath(roundedRect: rect, xRadius: 5.0, yRadius: 5.0)
-        path.addClip()
-        path.fill()
+    override var isSelected: Bool {
+        willSet(newValue) {
+            super.isSelected = newValue;
+            needsDisplay = true
+            
+            progress?.isHidden = !newValue
+            save?.isHidden = !newValue
+            
+        }
+    }
+    
+    func progressUpdated(_ cur: Int, _ max: Int, _ finished:Bool) {
+        if let p = self.progress {
+            if !finished {
+                p.maxValue = Double(max)
+                p.minValue = 0
+                p.doubleValue = Double(cur)
+            } else {
+            
+            }
+        }
     }
 }
 //MARK: -
@@ -54,7 +69,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
             let c = NSClickGestureRecognizer(target: self, action: #selector(tapToOpen))
             la.addGestureRecognizer(c)
         }
-        clipSlider.setSliderRange(start: 0, end: 1, calibration: 1)
+        clipSlider.setSliderRange(start: 0, end: 0, calibration: 10)
         clipSlider.sliderDelegate = self
         self.videoInfo = VideoInfo()
         // Do any additional setup after loading the view.
@@ -85,6 +100,13 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         }
     }
     
+    @IBAction func saveTS(_ sender: Any?){
+        
+        if let url = NSOpenPanel().selectedDirectory {
+            self.saveClipWithDestDirectory(destdir: url.path)
+        }
+    }
+    
     func setThumbnailImage(image : CGImage, isEnd: Bool){
         
         if isEnd {
@@ -103,13 +125,13 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
             let s = start*Float(vi.tsduration/w)
             let e = end*Float(vi.tsduration/w)
             
-            let se = self.clipList.selectedRow
-            if se >= 0 {
+            //let se = //self.clipList.selectedRow
+            //if se >= 0 {
                 
-                vi.focusedClipChanged(self.clipList.selectedRow,Int(s),Int(e))
+                vi.focusedClipChanged(Int(s),Int(e))
                 self.clipList.reloadData()
-                self.clipList.selectRowIndexes(IndexSet(integer: se), byExtendingSelection: false)
-            }
+                //self.clipList.selectRowIndexes(IndexSet(integer: se), byExtendingSelection: false)
+            //}
             
             self.loadFramesWithRange(Int(s), Int(e))
         }
@@ -147,17 +169,18 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
     func saveClipWithDestDirectory(destdir: String) {
         let url = URL(fileURLWithPath: destdir)
         let fname = getClipNameWithTick()
-//        let dest = url.appendingPathComponent(fname)
-//        let info = popover.contentViewController as! ThumbRangeInfoViewController
-//        info.destLocation.stringValue = dest.path
-//        //  get clip range
-//        let r = getFocusedSliderRange()
-//        self.vidInfo?.saveClipAtLocation(source: self.tsLocation.stringValue, dest: dest.path, r:r)
+        let dest = url.appendingPathComponent(fname)
+        //  get clip range
+        
+        if let vi = videoInfo, let info = vi.getFocusedClip() {
+            vi.saveSelectedClipAtLocation(dest: dest.path, r: info.duration)
+        }
     }
     
     @IBAction func appendClipInfo(_ sender: Any?) {
         if let vi = videoInfo {
-            vi.addClipInfo(1, 20)
+            
+            vi.addClipInfo(1, vi.tsduration/20)
             self.clipList.reloadData()
         }
     }
@@ -171,7 +194,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         if let vi = videoInfo {
-            return vi.clips.count
+            return vi.getClipsCount()
         }
         return 0
     }
@@ -180,23 +203,33 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         let rowView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ClipRowView"), owner: nil) as? ClipRowView
         
         if let rv = rowView,let vi = videoInfo {
-            let info = vi.clips[row]
-            rv.startLabel?.stringValue = "\(info.start) secs"
-            rv.endLabel?.stringValue = "\(info.end) secs"
-            
+            if let info = vi.getClipWithIndex(row) {
+                rv.selectionHighlightStyle = .none
+                rv.startLabel?.stringValue = "\(info.duration.start) secs"
+                rv.endLabel?.stringValue = "\(info.duration.end) secs"
+                if info.isfocused {
+                    rv.isSelected = true
+                    rv.selectionHighlightStyle = .regular
+                    vi.progress = rv
+                }
+            }
         }
 
-        return rowView;
-        
-
+        return rowView;    
     }
     func tableViewSelectionDidChange(_ notification: Notification) {
         let row = self.clipList.selectedRow
         if row >= 0 ,let vi = videoInfo {
-            let info = vi.clips[row]
-            self.clipSlider.updateFocusedPosition(info.start, info.end)
+            //  get selected ClipRowView
+            if let rv = self.clipList.rowView(atRow: row, makeIfNecessary: false) as? ClipRowView {
+                vi.progress = rv
+            }
             
-            
+            vi.setFocusedClip(row)
+            if let info = vi.getFocusedClip() {
+                self.clipSlider.updateFocusedPosition(info.duration.start, info.duration.end)
+                self.loadFramesWithRange(info.duration.start, info.duration.end)
+            }
         }
     }
     

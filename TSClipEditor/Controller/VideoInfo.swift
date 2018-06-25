@@ -7,22 +7,26 @@
 //
 
 import Foundation
+
+typealias Duration = (start: Int, end: Int)
+
 class ClipInfo :NSObject {
-    var start :Int = 0
-    var end: Int = 1
+    var duration : Duration = Duration(start:0, end: 1)
     var index: Int = 0
     var isfocused: Bool = false
+    var status : Int = 0
     
     func setDuration(_ s: Int, _ e: Int) {
-        self.start = s
-        self.end = e
+        self.duration.start = s
+        self.duration.end = e
     }
     
 }
 class VideoInfo: VideoInfoProtocol {
     
     //,CAAnimationDelegate {
-    var clips : [ClipInfo] = []
+    private var clips : [ClipInfo] = []
+    var progress: ProgressInfoProtocol?
     var tsduration : Int = 0
     var videopath: String = ""
     var thumbViewHandler: ((CGImage, Bool) -> ())?
@@ -43,45 +47,51 @@ class VideoInfo: VideoInfoProtocol {
     }
     
     //  Range of the focused thumb is changed. Notify Property VC.
-    func focusedClipChanged(_ index: Int,_ start: Int,_ end:Int) {
+    func focusedClipChanged(_ start: Int,_ end:Int) {
         
-        if index >= 0 && index < self.clips.count {
-            let c = clips[index]
+        if let c = self.getFocusedClip() {
             c.setDuration(start, end)
         }
     }
     // Save Clip
-    func saveClipAtLocation(source : String, dest:String, r:NSPoint) {
+    func saveSelectedClipAtLocation(dest:String, r:Duration) {
         
-        let total = self.tsduration
-        let st = ceil(Float(r.x)*Float(total))-1
-        let ed = ceil(Float(r.y)*Float(total))+1
+        let st = r.start-1
+        let ed = r.end+1
         
         let queue1 = DispatchQueue(label: "com.ioutil.save", qos: DispatchQoS.background)
         queue1.async {
             // Void pointer to `self`:
             let observer = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
             
-            let result = SaveClipWithInfo(st, ed, dest,observer, { (observer, current, total) -> Void in
+            let result = SaveClipWithInfo(Float(st), Float(ed), dest,observer, { (observer, current, total) -> Void in
                 DispatchQueue.main.async {
                     if let observer = observer {
-                        //let myself = Unmanaged<TSClipEditorViewController>.fromOpaque(observer).takeUnretainedValue()
-                        //myself.clipVC.updateSaveProgress(Int(current),Int(total))
-                        //print("progress: \(current)/\(total)")
+                        let myself = Unmanaged<VideoInfo>.fromOpaque(observer).takeUnretainedValue()
+                        
+                        if let p = myself.progress {
+                            
+                            p.progressUpdated(Int(current), Int(total), false)
+                        }
                     }
                 }
             }, { (observer) -> Void in
                 DispatchQueue.main.async {
                     if let observer = observer {
-                        //let myself = Unmanaged<TSClipEditorViewController>.fromOpaque(observer).takeUnretainedValue()
-                        //myself.clipVC.finishSaveProgress()
+                        let myself = Unmanaged<VideoInfo>.fromOpaque(observer).takeUnretainedValue()
+                        
+                        if let p = myself.progress {
+                            
+                            p.progressUpdated(1, 1, true)
+                        }
                     }
                     
                 }
             })
             
+            // MARK:  Plan B for FFmpeg clip failed
             //  FFmpeg cannot copy streams that are detected but not correctly identified
-            //  possibly a plan b is needed...
+
             if result < 0 {
                 do{
                     try FileManager.default.removeItem(atPath: dest)
@@ -89,23 +99,32 @@ class VideoInfo: VideoInfoProtocol {
                     print(error)
                 }
                 guard
-                    let atts = try? FileManager.default.attributesOfItem(atPath: source),
+                    let atts = try? FileManager.default.attributesOfItem(atPath: self.videopath),
                     let filesize = atts[.size] as? Int
                     else {
                         return
                 }
                 let total = filesize
-                let st = Int(ceil(Float(r.x)*Float(total)))
-                let ed = Int(ceil(Float(r.y)*Float(total)))
-                let clipexporter = ClipExporter(sourcepath: source, destpath: dest, start: st, end: ed)
+                let st = r.start*total/self.tsduration
+                let ed = r.end*total/self.tsduration
+                let clipexporter = ClipExporter(sourcepath: self.videopath, destpath: dest, start: st, end: ed)
                 
                 clipexporter.saveClip(progress: { (current, max) in
                     DispatchQueue.main.async {
-                        //self.clipVC.updateSaveProgress(current, max)
+                        
+                        if let p = self.progress {
+                        
+                            p.progressUpdated(current, max, false)
+                        }
                     }
                 }) { (exporter) in
                     DispatchQueue.main.async {
-                        //self.clipVC.finishSaveProgress()
+                        
+                        print("Finished")
+                        if let p = self.progress {
+                            
+                            p.progressUpdated(1, 1, true)
+                        }
                     }
                 }
             }
@@ -121,6 +140,43 @@ class VideoInfo: VideoInfoProtocol {
             self.clips.remove(at: index)
         }
     }
+    func addClipInfo (_ s: Int, _ e:Int) {
+        let c = ClipInfo()
+        c.setDuration(s, e)
+        self.clips.append(c)
+    }
+    func setFocusedClip(_ index:Int){
+        var i:Int = 0
+        clips.forEach { (c) in
+            c.isfocused = false
+            
+            if i == index {
+                clips[index].isfocused = true
+            }
+            i = i + 1
+        }
+    }
+    func getFocusedClip() -> ClipInfo? {
+        
+        for c in clips {
+            if c.isfocused {
+                return c
+            }
+        }
+        
+        return nil
+    }
+    func getClipWithIndex(_ index:Int) -> ClipInfo? {
+        if index < self.clips.count {
+            return self.clips[index]
+        }
+        
+        return nil
+    }
+    func getClipsCount() -> Int {
+        return clips.count
+    }
+    
     func hasFocusedThumb() -> Bool{
         //let r = self.clipVC.getFocusedSliderRange()
         return false//(r.y-r.x) > 0
@@ -143,11 +199,7 @@ class VideoInfo: VideoInfoProtocol {
         return nil
         
     }
-    func addClipInfo (_ s: Int, _ e:Int) {
-        let c = ClipInfo()
-        c.setDuration(s, e)
-        self.clips.append(c)
-    }
+    
     
 //    func playVideoWithClipRange() {
 //        //  get clip range

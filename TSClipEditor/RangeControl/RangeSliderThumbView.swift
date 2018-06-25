@@ -69,11 +69,11 @@ class RangeSliderThumbView: NSView {
     @objc public func leftGesturePanned(gesture: NSPanGestureRecognizer) {
         
         self.panDelegate?.leftPanned(gesture: gesture, thumb: self)
-        //right.setFrameOrigin(NSPoint(x:self.frame.width - 14,y:0))
+        right.setFrameOrigin(NSPoint(x:self.frame.width - 14,y:0))
     }
     @objc public func rightGesturePanned(gesture: NSPanGestureRecognizer) {
         self.panDelegate?.rightPanned(gesture: gesture, thumb: self)
-        //right.setFrameOrigin(NSPoint(x:self.frame.width - 14,y:0))
+        right.setFrameOrigin(NSPoint(x:self.frame.width - 14,y:0))
     }
     
     //  clicked and focused
@@ -89,11 +89,11 @@ class RangeSliderThumbView: NSView {
         self.wantsLayer = true
         self.layer?.cornerRadius = 5
         /*
-        if #available(OSX 10.13, *) {
-            self.layer?.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        } else {
-            // Fallback on earlier versions
-        }
+         if #available(OSX 10.13, *) {
+         self.layer?.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+         } else {
+         // Fallback on earlier versions
+         }
          */
         let lv = NSImageView()
         lv.image = NSImage.init(imageLiteralResourceName: "NSLeftFacingTriangleTemplate")
@@ -108,7 +108,6 @@ class RangeSliderThumbView: NSView {
         left.addGestureRecognizer(lpan)
         self.addSubview(left)
         
-        
         let rv = NSImageView()
         rv.image = NSImage(imageLiteralResourceName: "NSRightFacingTriangleTemplate")
         rv.setFrameOrigin(NSPoint(x:2,y:0))
@@ -121,11 +120,6 @@ class RangeSliderThumbView: NSView {
         right.addSubview(rv)
         right.addGestureRecognizer(rpan)
         self.addSubview(right)
-        let rightConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-[viewr(15)]-14-|",
-            metrics: nil,
-            views:["viewr":right])//,"viewl":left])
-        self.addConstraints( rightConstraints)
         
         
         let click = NSClickGestureRecognizer(target: self, action: #selector(RangeSliderThumbView.clickGestureHit(gesture:)))
@@ -167,7 +161,6 @@ class RangeSliderThumbView: NSView {
         
         right.setFrameOrigin(NSPoint(x: self.frame.width - 14, y: 0))
         left.setFrameOrigin(NSPoint(x:0, y:0))
-        //right.setFrameOrigin(NSPoint(x:self.frame.width - 14,y:0))
     }
     
 }

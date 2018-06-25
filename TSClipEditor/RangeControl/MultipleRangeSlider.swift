@@ -99,6 +99,10 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         self.calibration = calibration
         self.needsDisplay = true
         
+        if end == 0 {
+            return
+        }
+        
         let r = getRectByCalibration(0)
         self.addThumbViewWithRect(rect: r)
         
@@ -234,9 +238,9 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         
         if thumb.Focused {
             
-            if isPointInOtherThumb(p: gesture.location(in: self),thumb: thumb) {
-                return
-            }
+//            if isPointInOtherThumb(p: gesture.location(in: self),thumb: thumb) {
+//                return
+//            }
             
             var destx = gesture.location(in: self).x
             let rc = thumb.frame
@@ -292,14 +296,14 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
                 if CGFloat(xs) < xoffset {
                     xs = Int(xoffset)
                 }
-                var xe = ww*e/ss
-                if xe-xs < Int(xoffset) {
-                    xe = xs+Int(xoffset)
+                var xe = ww*(e-s)/ss
+                if xe < Int(xoffset) {
+                    xe = Int(xoffset)
                 }
                 let rc = t.frame
                 print("param x \(xs),\(xe)")
                 t.setFrameOrigin(NSPoint(x:CGFloat(xs), y:rc.origin.y))
-                t.setFrameSize(NSSize(width: CGFloat(xe) - CGFloat(xs) , height: rc.size.height))
+                t.setFrameSize(NSSize(width: CGFloat(xe) , height: rc.size.height))
                 t.setNeedsDisplay(t.frame)
             }
         }

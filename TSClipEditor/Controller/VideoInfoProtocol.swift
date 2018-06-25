@@ -14,15 +14,18 @@ protocol VideoInfoProtocol {
     // callback for property to reflect multi-slider operation
     func updateClipThumbRange(index:Int, size:CGSize)
     // Save clip
-    func saveClipAtLocation(source : String, dest:String, r:NSPoint)
+    func saveSelectedClipAtLocation(dest:String, r:Duration)
     // Delete clip
     func deleteClipInfo(_ index: Int)
     //  Range of focused thumb is changed. Notify Property VC.    
-    func focusedClipChanged(_ index: Int,_ start: Int,_ end:Int)
+    func focusedClipChanged(_ start: Int,_ end:Int)
     
     func hasFocusedThumb() -> Bool
     
     //func playVideoWithClipRange()
     
     //func collapseClipViewController()
+}
+protocol ProgressInfoProtocol {
+    func progressUpdated(_ cur: Int, _ max: Int, _ finished:Bool)
 }

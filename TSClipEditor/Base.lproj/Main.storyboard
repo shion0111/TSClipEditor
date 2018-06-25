@@ -136,9 +136,26 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
+                                                                <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="o5O-HK-kLu">
+                                                                    <rect key="frame" x="230" y="14" width="16" height="16"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                </progressIndicator>
+                                                                <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-3N-QRY">
+                                                                    <rect key="frame" x="254" y="7" width="32" height="32"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="save" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="RZJ-VP-GLw">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="saveTS:" target="H3J-3F-bAg" id="uVT-nP-BTA"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <connections>
                                                                 <outlet property="endLabel" destination="OO9-P7-cWH" id="FcN-5s-0GH"/>
+                                                                <outlet property="progress" destination="o5O-HK-kLu" id="QAW-5r-kwY"/>
+                                                                <outlet property="save" destination="ZDW-3N-QRY" id="Nax-a1-pZb"/>
                                                                 <outlet property="startLabel" destination="dDk-KE-6MH" id="pVD-T5-ZDa"/>
                                                             </connections>
                                                         </customView>
@@ -214,14 +231,6 @@
                                     <action selector="delClipInfo:" target="H3J-3F-bAg" id="nQb-Rb-fHk"/>
                                 </connections>
                             </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5oD-z0-XDE">
-                                <rect key="frame" x="306" y="161" width="32" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="save" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="urQ-w0-wrR">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qSl-9x-vkM">
                                 <rect key="frame" x="102" y="330" width="117" height="24"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Tap to open" id="syl-1v-mlx">
@@ -258,7 +267,6 @@
                         <outlet property="clipSlider" destination="crB-is-ScQ" id="zq4-sp-dCS"/>
                         <outlet property="clipStartThumb" destination="vxL-6a-Ma8" id="HVG-rA-aP1"/>
                         <outlet property="discard" destination="qSN-Ah-Lne" id="6v5-s0-hhX"/>
-                        <outlet property="exportButton" destination="5oD-z0-XDE" id="gWm-OG-5QL"/>
                         <outlet property="tapLabel" destination="qSl-9x-vkM" id="N1D-Bh-C9G"/>
                     </connections>
                 </viewController>
