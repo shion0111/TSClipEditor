@@ -7,30 +7,55 @@
 //
 
 import Cocoa
-//
+// MARK: - NSProgressIndicator(Circular) with a checked mark -
+class ProgressCheckIndicator : NSProgressIndicator {
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        self.style = .spinning
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        //fatalError("init(coder:) has not been implemented")
+        super.init(coder: decoder)
+        self.style = .spinning
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+         super.draw(dirtyRect)
+    }
+}
+// MARK: - Row view of the clip list -
 class ClipRowView : NSTableRowView,ProgressInfoProtocol {
     @IBOutlet var startLabel : NSTextField?
     @IBOutlet var endLabel : NSTextField?
-    @IBOutlet var progress : NSProgressIndicator?
+    @IBOutlet var progress : ProgressCheckIndicator?
     @IBOutlet var save : NSButton?
     
+    
     override func drawBackground(in dirtyRect: NSRect) {
-        NSColor.secondarySelectedControlColor.setFill()
+        if self.isFocused {
+            NSColor.selectedControlColor.setFill()
+        } else {
+            NSColor.white.setFill()
+        }
+        
         let rect = NSRect(x: dirtyRect.origin.x+3, y: dirtyRect.origin.y+2, width: dirtyRect.size.width-6, height: dirtyRect.size.height-4)
         let path: NSBezierPath = NSBezierPath(roundedRect: rect, xRadius: 5.0, yRadius: 5.0)
         path.addClip()
         path.fill()
     }
     
-    override var isSelected: Bool {
+    var isFocused: Bool = false {
         willSet(newValue) {
-            super.isSelected = newValue;
+            
             needsDisplay = true
             
             progress?.isHidden = !newValue
             save?.isHidden = !newValue
             
         }
+        
     }
     
     func progressUpdated(_ cur: Int, _ max: Int, _ finished:Bool) {
@@ -45,7 +70,7 @@ class ClipRowView : NSTableRowView,ProgressInfoProtocol {
         }
     }
 }
-//MARK: -
+//MARK: - EditorViewController - 
 class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopoverDelegate,NSTableViewDelegate,NSTableViewDataSource {
     
     
@@ -97,6 +122,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
                 self.clipSlider.setSliderRange(start: 0, end: duration, calibration: st)
                 
             }
+            self.clipList.reloadData()
         }
     }
     
@@ -122,8 +148,8 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         
         if let vi = self.videoInfo {
             let w = (Int)(self.clipSlider.frame.width)
-            let s = start*Float(vi.tsduration/w)
-            let e = end*Float(vi.tsduration/w)
+            let s = Int(start)*vi.tsduration/w
+            let e = Int(end)*vi.tsduration/w
             
             //let se = //self.clipList.selectedRow
             //if se >= 0 {
@@ -185,9 +211,8 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         }
     }
     @IBAction func delClipInfo(_ sender: Any?) {
-        if let vi = videoInfo , self.clipList.selectedRow >= 0{
-            vi.deleteClipInfo(self.clipList.selectedRow)
-            self.clipList.selectRowIndexes(IndexSet(), byExtendingSelection: false)
+        if let vi = videoInfo {
+            vi.deleteFocusedClip()            
             self.clipList.reloadData()
         }
     }
@@ -205,11 +230,11 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         if let rv = rowView,let vi = videoInfo {
             if let info = vi.getClipWithIndex(row) {
                 rv.selectionHighlightStyle = .none
+                rv.isFocused = false
                 rv.startLabel?.stringValue = "\(info.duration.start) secs"
                 rv.endLabel?.stringValue = "\(info.duration.end) secs"
                 if info.isfocused {
-                    rv.isSelected = true
-                    rv.selectionHighlightStyle = .regular
+                    rv.isFocused = true
                     vi.progress = rv
                 }
             }
@@ -222,6 +247,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         if row >= 0 ,let vi = videoInfo {
             //  get selected ClipRowView
             if let rv = self.clipList.rowView(atRow: row, makeIfNecessary: false) as? ClipRowView {
+                rv.isFocused = true
                 vi.progress = rv
             }
             
@@ -230,6 +256,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
                 self.clipSlider.updateFocusedPosition(info.duration.start, info.duration.end)
                 self.loadFramesWithRange(info.duration.start, info.duration.end)
             }
+            self.clipList.reloadData()
         }
     }
     

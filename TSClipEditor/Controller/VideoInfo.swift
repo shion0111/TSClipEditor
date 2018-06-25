@@ -23,21 +23,25 @@ class ClipInfo :NSObject {
     
 }
 class VideoInfo: VideoInfoProtocol {
-    
-    //,CAAnimationDelegate {
+
     private var clips : [ClipInfo] = []
     var progress: ProgressInfoProtocol?
     var tsduration : Int = 0
     var videopath: String = ""
     var thumbViewHandler: ((CGImage, Bool) -> ())?
     
-    // callback for property to reflect multi-slider operation
-    func updateClipThumbRange(index:Int, size:CGSize){
-        
+    //  reset all properties
+    func cleanUp() {
+        clips.removeAll()
+        tsduration = 0
+        videopath = ""
+        thumbViewHandler = nil
     }
     
     //  retrieve video duration/metadata via ffmpeg
     func loadVideoWithPath(path: String) -> (Int,Int) {
+        
+        cleanUp()
         videopath = path
         cleanVideoContext()
         self.tsduration = Int(getVideoDurationWithLoc(path))
@@ -53,7 +57,9 @@ class VideoInfo: VideoInfoProtocol {
             c.setDuration(start, end)
         }
     }
-    // Save Clip
+    
+    
+    // MARK: - Save Clip -
     func saveSelectedClipAtLocation(dest:String, r:Duration) {
         
         let st = r.start-1
@@ -61,16 +67,16 @@ class VideoInfo: VideoInfoProtocol {
         
         let queue1 = DispatchQueue(label: "com.ioutil.save", qos: DispatchQoS.background)
         queue1.async {
-            // Void pointer to `self`:
+            
             let observer = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
             
             let result = SaveClipWithInfo(Float(st), Float(ed), dest,observer, { (observer, current, total) -> Void in
                 DispatchQueue.main.async {
+                    //  update progress
                     if let observer = observer {
                         let myself = Unmanaged<VideoInfo>.fromOpaque(observer).takeUnretainedValue()
                         
                         if let p = myself.progress {
-                            
                             p.progressUpdated(Int(current), Int(total), false)
                         }
                     }
@@ -89,7 +95,7 @@ class VideoInfo: VideoInfoProtocol {
                 }
             })
             
-            // MARK:  Plan B for FFmpeg clip failed
+            //  NOTE: Plan B for FFmpeg clip failed
             //  FFmpeg cannot copy streams that are detected but not correctly identified
 
             if result < 0 {
@@ -111,7 +117,7 @@ class VideoInfo: VideoInfoProtocol {
                 
                 clipexporter.saveClip(progress: { (current, max) in
                     DispatchQueue.main.async {
-                        
+                        //  update progress
                         if let p = self.progress {
                         
                             p.progressUpdated(current, max, false)
@@ -119,8 +125,7 @@ class VideoInfo: VideoInfoProtocol {
                     }
                 }) { (exporter) in
                     DispatchQueue.main.async {
-                        
-                        print("Finished")
+                    
                         if let p = self.progress {
                             
                             p.progressUpdated(1, 1, true)
@@ -129,10 +134,11 @@ class VideoInfo: VideoInfoProtocol {
                 }
             }
         }
-        
-        
-        
-        
+    }
+    
+    // MARK: - clips related -
+    func deleteFocusedClip() {
+        clips = clips.filter() { $0.isfocused != true }
     }
     // Delete Clip
     func deleteClipInfo(_ index:Int){
@@ -177,10 +183,6 @@ class VideoInfo: VideoInfoProtocol {
         return clips.count
     }
     
-    func hasFocusedThumb() -> Bool{
-        //let r = self.clipVC.getFocusedSliderRange()
-        return false//(r.y-r.x) > 0
-    }
     
     // MARK: - memory issue...
     func loadVideoThumbnails(tick:Int, isEnd:Bool) -> CGImage?{
