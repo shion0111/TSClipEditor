@@ -230,7 +230,12 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             thumb.setFrameOrigin(NSPoint(x:destx, y:rc.origin.y))
             thumb.setFrameSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))
             thumb.setBoundsSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))            
-            sliderDelegate?.focusedSliderChanged(focused:thumb, start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
+            //sliderDelegate?.focusedSliderChanged(focused:thumb, start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
+            let d = end - start
+            let p = self.getFocusedClipPortion()
+            let s0 = Float(start) + (p.ds*Float(d))
+            let e0 = Float(start) + (p.de*Float(d))
+            sliderDelegate?.focusedSliderChanged(focused: thumb, start:s0 , end: e0, view: (gesture.state == .ended))
         }
         
     }
@@ -260,7 +265,11 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             
             thumb.setFrameSize(NSSize(width: destx - rc.origin.x , height: rc.size.height))
             thumb.setBoundsSize(NSSize(width: destx - rc.origin.x , height: rc.size.height))
-            sliderDelegate?.focusedSliderChanged(focused: thumb, start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
+            let d = end - start
+            let p = self.getFocusedClipPortion()
+            let s0 = Float(start) + (p.ds*Float(d))
+            let e0 = Float(start) + (p.de*Float(d))
+            sliderDelegate?.focusedSliderChanged(focused: thumb, start:s0 , end: e0, view: (gesture.state == .ended))
         }
         
     }
@@ -274,32 +283,26 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         //print(thumb)
         sliderDelegate?.focusedSliderChanged(focused: thumb, start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view:true)
     }
-    func getFocusedClipPortion() -> NSPoint{
+    func getFocusedClipPortion() -> (ds: Float, de: Float){
         for t in self.thumbs{
             if t.Focused {
                 let x0 = t.frame.origin.x - xoffset
                 let x1 = t.frame.origin.x + t.frame.width - xoffset
                 print("x0: \(x0), x1: \(x1)")
-                return NSMakePoint(x0/horizontalline.frame.width , x1/horizontalline.frame.width)
+                return (Float(x0/horizontalline.frame.width) , Float(x1/horizontalline.frame.width))
             }
         }
-        return NSMakePoint(0,0)
+        return (0,0)
     }
     
     func updateFocusedPosition(_ s: Int, _ e: Int) {
         for t in self.thumbs{
             if t.Focused {
-                print("param \(s),\(e)")
+                print("param \(s),\(e),\(self.horizontalline.frame.width)")
                 let ss = self.end - self.start
                 let ww = Int(self.horizontalline.frame.width)
-                var xs = ww*s/ss
-                if CGFloat(xs) < xoffset {
-                    xs = Int(xoffset)
-                }
+                var xs = ww*s/ss + Int(xoffset)
                 var xe = ww*(e-s)/ss
-                if xe < Int(xoffset) {
-                    xe = Int(xoffset)
-                }
                 let rc = t.frame
                 print("param x \(xs),\(xe)")
                 t.setFrameOrigin(NSPoint(x:CGFloat(xs), y:rc.origin.y))

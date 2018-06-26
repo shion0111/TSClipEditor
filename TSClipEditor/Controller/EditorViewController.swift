@@ -9,20 +9,31 @@
 import Cocoa
 // MARK: - NSProgressIndicator(Circular) with a checked mark -
 class ProgressCheckIndicator : NSProgressIndicator {
-    
+    var finished : Bool = false
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         self.style = .spinning
     }
     
     required init?(coder decoder: NSCoder) {
-        //fatalError("init(coder:) has not been implemented")
         super.init(coder: decoder)
         self.style = .spinning
     }
     
     override func draw(_ dirtyRect: NSRect) {
-         super.draw(dirtyRect)
+        super.draw(dirtyRect)
+        if finished {
+            NSColor.purple.setStroke()
+            let path: NSBezierPath = NSBezierPath()
+            let o = dirtyRect.origin
+            let s = dirtyRect.size
+            path.move(to: NSPoint(x: o.x, y: o.y+s.height/2))
+            path.line(to: NSPoint(x: o.x+s.width/2, y: o.y+s.height-2))
+            path.line(to: NSPoint(x: o.x+s.width-2, y: o.y+2))
+            path.lineWidth = 2
+            path.lineJoinStyle = .roundLineJoinStyle
+            path.stroke()
+        }
     }
 }
 // MARK: - Row view of the clip list -
@@ -61,11 +72,17 @@ class ClipRowView : NSTableRowView,ProgressInfoProtocol {
     func progressUpdated(_ cur: Int, _ max: Int, _ finished:Bool) {
         if let p = self.progress {
             if !finished {
+                if p.finished {
+                    p.finished = false
+                    p.needsDisplay = true
+                }
                 p.maxValue = Double(max)
                 p.minValue = 0
                 p.doubleValue = Double(cur)
-            } else {
-            
+            }
+            if cur >= max {
+                p.finished = true
+                p.needsDisplay = true
             }
         }
     }
@@ -147,9 +164,9 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
     func focusedSliderChanged(focused:AnyObject?, start: Float, end: Float, view: Bool) {
         
         if let vi = self.videoInfo {
-            let w = (Int)(self.clipSlider.frame.width)
-            let s = Int(start)*vi.tsduration/w
-            let e = Int(end)*vi.tsduration/w
+            //let w = (Int)(self.clipSlider.frame.width)
+            let s = Int(start)//*vi.tsduration/w
+            let e = Int(end)//*vi.tsduration/w
             
             //let se = //self.clipList.selectedRow
             //if se >= 0 {
@@ -206,7 +223,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
     @IBAction func appendClipInfo(_ sender: Any?) {
         if let vi = videoInfo {
             
-            vi.addClipInfo(1, vi.tsduration/20)
+            vi.addClipInfo(0, vi.tsduration/20)
             self.clipList.reloadData()
         }
     }
