@@ -3,7 +3,7 @@
   <img src="https://github.com/shion0111/TSClipEditor/blob/master/screen/v1.jpg" width="720"/>
 </p>
 
-A TS clip exporter (mainly those huge MPEG2-TS files) on OSX. User can choose several ranges of a video on a customized slider by setting multiple thumbs and then save clips.
+A TS clip exporter (mainly for those huge MPEG2-TS files) on OS X. Clips can be exported from a list of desired ranges, and these ranges can be mofied by  a customized slider.
 
 ** A hobby project and a case-study of ffmpeg **
 
@@ -20,7 +20,7 @@ A TS clip exporter (mainly those huge MPEG2-TS files) on OSX. User can choose se
 ## Tasks in progress
 - ~~Issue: memory consuming when decoding video~~
 - ~~UI redesign~~ 
-- Clip preview 
+- ~~Clip preview~~ 
 
 ## To do
 - Support for other formats
