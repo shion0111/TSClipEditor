@@ -1,0 +1,632 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CB6483BF20F7443600C6E802 /* VidPlayerDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483B120F7443400C6E802 /* VidPlayerDecoder.m */; };
+		CB6483C020F7443600C6E802 /* VidPlayerLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483B220F7443400C6E802 /* VidPlayerLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CB6483C120F7443600C6E802 /* VidPlayerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483B320F7443400C6E802 /* VidPlayerLayer.m */; };
+		CB6483C220F7443600C6E802 /* VidPlayerCore.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483B420F7443400C6E802 /* VidPlayerCore.m */; };
+		CB6483C320F7443600C6E802 /* VidPlayerVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483B520F7443500C6E802 /* VidPlayerVideo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CB6483C420F7443600C6E802 /* video_Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483B620F7443500C6E802 /* video_Internal.m */; };
+		CB6483C520F7443600C6E802 /* VidPlayerVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483B720F7443500C6E802 /* VidPlayerVideo.m */; };
+		CB6483C620F7443600C6E802 /* VidPlayerVideo+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483B820F7443500C6E802 /* VidPlayerVideo+Internal.h */; };
+		CB6483C720F7443600C6E802 /* VidPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483B920F7443500C6E802 /* VidPlayerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CB6483C820F7443600C6E802 /* VideoState.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483BA20F7443500C6E802 /* VideoState.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CB6483C920F7443600C6E802 /* VidPlayerAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483BB20F7443500C6E802 /* VidPlayerAudio.m */; };
+		CB6483CA20F7443600C6E802 /* VideoState.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483BC20F7443500C6E802 /* VideoState.m */; };
+		CB6483CB20F7443600C6E802 /* VidPlayerDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483BD20F7443500C6E802 /* VidPlayerDecoder.h */; };
+		CB6483CC20F7443600C6E802 /* VidPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483BE20F7443500C6E802 /* VidPlayerView.m */; };
+		CB6483D120F74E2A00C6E802 /* VidPlayerMLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483CF20F74E2A00C6E802 /* VidPlayerMLayer.h */; };
+		CB6483D220F74E2A00C6E802 /* VidPlayerMLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483D020F74E2A00C6E802 /* VidPlayerMLayer.m */; };
+		CB6483D420F7501F00C6E802 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6483D320F7501F00C6E802 /* Metal.framework */; };
+		CB6483D620F7502600C6E802 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6483D520F7502600C6E802 /* MetalKit.framework */; };
+		CB887C5D20F34A3A0099007E /* libVidPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB887C5320F34A3A0099007E /* libVidPlayer.framework */; };
+		CB887C6220F34A3A0099007E /* libVidPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB887C6120F34A3A0099007E /* libVidPlayerTests.m */; };
+		CB887C6420F34A3A0099007E /* libVidPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = CB887C5620F34A3A0099007E /* libVidPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CB887C7820F34C8B0099007E /* libVidPlayer_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CB887C7720F34C8B0099007E /* libVidPlayer_Prefix.pch */; };
+		CB887C7D20F34CCD0099007E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB887C7C20F34CCD0099007E /* OpenGL.framework */; };
+		CB887C7F20F34CE10099007E /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB887C7E20F34CE10099007E /* CoreVideo.framework */; };
+		CB887C8120F34CE80099007E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB887C8020F34CE80099007E /* QuartzCore.framework */; };
+		CB887C8320F34CEE0099007E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB887C8220F34CEE0099007E /* AudioToolbox.framework */; };
+		CBC396E820F5D69800749899 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396E720F5D69800749899 /* Cocoa.framework */; };
+		CBC396EB20F5D71400749899 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396EA20F5D71400749899 /* libz.tbd */; };
+		CBC396ED20F5D72100749899 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396EC20F5D72100749899 /* libbz2.tbd */; };
+		CBC396EF20F5D73200749899 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396EE20F5D73200749899 /* libiconv.tbd */; };
+		CBC396F220F5D76800749899 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396F120F5D76800749899 /* libavfilter.a */; };
+		CBC396F420F5D76800749899 /* libavresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396F320F5D76800749899 /* libavresample.a */; };
+		CBC396F620F5D76800749899 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396F520F5D76800749899 /* libavutil.a */; };
+		CBC396F820F5D76800749899 /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396F720F5D76800749899 /* libpostproc.a */; };
+		CBC396FA20F5D76800749899 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396F920F5D76800749899 /* libswresample.a */; };
+		CBC396FC20F5D76800749899 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396FB20F5D76800749899 /* libswscale.a */; };
+		CBC396FE20F5D76800749899 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396FD20F5D76800749899 /* libavcodec.a */; };
+		CBC3970020F5D76800749899 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC396FF20F5D76800749899 /* libavdevice.a */; };
+		CBC3970220F5D76800749899 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC3970120F5D76800749899 /* libavformat.a */; };
+		CBC3970420F5D85D00749899 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC3970320F5D85D00749899 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CB887C5E20F34A3A0099007E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB887C4A20F34A3A0099007E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB887C5220F34A3A0099007E;
+			remoteInfo = libVidPlayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CB6483B120F7443400C6E802 /* VidPlayerDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VidPlayerDecoder.m; sourceTree = "<group>"; };
+		CB6483B220F7443400C6E802 /* VidPlayerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidPlayerLayer.h; sourceTree = "<group>"; };
+		CB6483B320F7443400C6E802 /* VidPlayerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VidPlayerLayer.m; sourceTree = "<group>"; };
+		CB6483B420F7443400C6E802 /* VidPlayerCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VidPlayerCore.m; sourceTree = "<group>"; };
+		CB6483B520F7443500C6E802 /* VidPlayerVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidPlayerVideo.h; sourceTree = "<group>"; };
+		CB6483B620F7443500C6E802 /* video_Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = video_Internal.m; sourceTree = "<group>"; };
+		CB6483B720F7443500C6E802 /* VidPlayerVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VidPlayerVideo.m; sourceTree = "<group>"; };
+		CB6483B820F7443500C6E802 /* VidPlayerVideo+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VidPlayerVideo+Internal.h"; sourceTree = "<group>"; };
+		CB6483B920F7443500C6E802 /* VidPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidPlayerView.h; sourceTree = "<group>"; };
+		CB6483BA20F7443500C6E802 /* VideoState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoState.h; sourceTree = "<group>"; };
+		CB6483BB20F7443500C6E802 /* VidPlayerAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VidPlayerAudio.m; sourceTree = "<group>"; };
+		CB6483BC20F7443500C6E802 /* VideoState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoState.m; sourceTree = "<group>"; };
+		CB6483BD20F7443500C6E802 /* VidPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidPlayerDecoder.h; sourceTree = "<group>"; };
+		CB6483BE20F7443500C6E802 /* VidPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VidPlayerView.m; sourceTree = "<group>"; };
+		CB6483CF20F74E2A00C6E802 /* VidPlayerMLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VidPlayerMLayer.h; sourceTree = "<group>"; };
+		CB6483D020F74E2A00C6E802 /* VidPlayerMLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VidPlayerMLayer.m; sourceTree = "<group>"; };
+		CB6483D320F7501F00C6E802 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		CB6483D520F7502600C6E802 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		CB887C5320F34A3A0099007E /* libVidPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libVidPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB887C5620F34A3A0099007E /* libVidPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libVidPlayer.h; sourceTree = "<group>"; };
+		CB887C5720F34A3A0099007E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB887C5C20F34A3A0099007E /* libVidPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libVidPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB887C6120F34A3A0099007E /* libVidPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libVidPlayerTests.m; sourceTree = "<group>"; };
+		CB887C6320F34A3A0099007E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB887C7720F34C8B0099007E /* libVidPlayer_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libVidPlayer_Prefix.pch; sourceTree = "<group>"; };
+		CB887C7C20F34CCD0099007E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		CB887C7E20F34CE10099007E /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		CB887C8020F34CE80099007E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CB887C8220F34CEE0099007E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		CBC396E720F5D69800749899 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		CBC396EA20F5D71400749899 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		CBC396EC20F5D72100749899 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		CBC396EE20F5D73200749899 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		CBC396F120F5D76800749899 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libavfilter.a; sourceTree = "<absolute>"; };
+		CBC396F320F5D76800749899 /* libavresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavresample.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libavresample.a; sourceTree = "<absolute>"; };
+		CBC396F520F5D76800749899 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libavutil.a; sourceTree = "<absolute>"; };
+		CBC396F720F5D76800749899 /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libpostproc.a; sourceTree = "<absolute>"; };
+		CBC396F920F5D76800749899 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libswresample.a; sourceTree = "<absolute>"; };
+		CBC396FB20F5D76800749899 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libswscale.a; sourceTree = "<absolute>"; };
+		CBC396FD20F5D76800749899 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libavcodec.a; sourceTree = "<absolute>"; };
+		CBC396FF20F5D76800749899 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libavdevice.a; sourceTree = "<absolute>"; };
+		CBC3970120F5D76800749899 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = /Users/antelis/Documents/DevProjects/Github/TSClipEditor/../../../../../usr/local/lib/libavformat.a; sourceTree = "<absolute>"; };
+		CBC3970320F5D85D00749899 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CB887C5020F34A3A0099007E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6483D620F7502600C6E802 /* MetalKit.framework in Frameworks */,
+				CB6483D420F7501F00C6E802 /* Metal.framework in Frameworks */,
+				CBC3970420F5D85D00749899 /* Foundation.framework in Frameworks */,
+				CBC396EF20F5D73200749899 /* libiconv.tbd in Frameworks */,
+				CBC396ED20F5D72100749899 /* libbz2.tbd in Frameworks */,
+				CBC396EB20F5D71400749899 /* libz.tbd in Frameworks */,
+				CBC396E820F5D69800749899 /* Cocoa.framework in Frameworks */,
+				CB887C8320F34CEE0099007E /* AudioToolbox.framework in Frameworks */,
+				CB887C8120F34CE80099007E /* QuartzCore.framework in Frameworks */,
+				CBC396F220F5D76800749899 /* libavfilter.a in Frameworks */,
+				CBC396F420F5D76800749899 /* libavresample.a in Frameworks */,
+				CBC396F620F5D76800749899 /* libavutil.a in Frameworks */,
+				CBC396F820F5D76800749899 /* libpostproc.a in Frameworks */,
+				CBC396FA20F5D76800749899 /* libswresample.a in Frameworks */,
+				CBC396FC20F5D76800749899 /* libswscale.a in Frameworks */,
+				CBC396FE20F5D76800749899 /* libavcodec.a in Frameworks */,
+				CBC3970020F5D76800749899 /* libavdevice.a in Frameworks */,
+				CBC3970220F5D76800749899 /* libavformat.a in Frameworks */,
+				CB887C7F20F34CE10099007E /* CoreVideo.framework in Frameworks */,
+				CB887C7D20F34CCD0099007E /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB887C5920F34A3A0099007E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB887C5D20F34A3A0099007E /* libVidPlayer.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CB887C4920F34A3A0099007E = {
+			isa = PBXGroup;
+			children = (
+				CB887C5520F34A3A0099007E /* libVidPlayer */,
+				CB887C6020F34A3A0099007E /* libVidPlayerTests */,
+				CB887C5420F34A3A0099007E /* Products */,
+				CB887C7920F34CBE0099007E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		CB887C5420F34A3A0099007E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB887C5320F34A3A0099007E /* libVidPlayer.framework */,
+				CB887C5C20F34A3A0099007E /* libVidPlayerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CB887C5520F34A3A0099007E /* libVidPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				CB6483BB20F7443500C6E802 /* VidPlayerAudio.m */,
+				CB6483B420F7443400C6E802 /* VidPlayerCore.m */,
+				CB6483BD20F7443500C6E802 /* VidPlayerDecoder.h */,
+				CB6483B120F7443400C6E802 /* VidPlayerDecoder.m */,
+				CB6483B220F7443400C6E802 /* VidPlayerLayer.h */,
+				CB6483B320F7443400C6E802 /* VidPlayerLayer.m */,
+				CB6483B520F7443500C6E802 /* VidPlayerVideo.h */,
+				CB6483B720F7443500C6E802 /* VidPlayerVideo.m */,
+				CB6483B820F7443500C6E802 /* VidPlayerVideo+Internal.h */,
+				CB6483B920F7443500C6E802 /* VidPlayerView.h */,
+				CB6483BE20F7443500C6E802 /* VidPlayerView.m */,
+				CB6483B620F7443500C6E802 /* video_Internal.m */,
+				CB6483BA20F7443500C6E802 /* VideoState.h */,
+				CB6483BC20F7443500C6E802 /* VideoState.m */,
+				CB887C5620F34A3A0099007E /* libVidPlayer.h */,
+				CB887C5720F34A3A0099007E /* Info.plist */,
+				CB887C7720F34C8B0099007E /* libVidPlayer_Prefix.pch */,
+				CB6483CF20F74E2A00C6E802 /* VidPlayerMLayer.h */,
+				CB6483D020F74E2A00C6E802 /* VidPlayerMLayer.m */,
+			);
+			path = libVidPlayer;
+			sourceTree = "<group>";
+		};
+		CB887C6020F34A3A0099007E /* libVidPlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				CB887C6120F34A3A0099007E /* libVidPlayerTests.m */,
+				CB887C6320F34A3A0099007E /* Info.plist */,
+			);
+			path = libVidPlayerTests;
+			sourceTree = "<group>";
+		};
+		CB887C7920F34CBE0099007E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB6483D520F7502600C6E802 /* MetalKit.framework */,
+				CB6483D320F7501F00C6E802 /* Metal.framework */,
+				CBC3970320F5D85D00749899 /* Foundation.framework */,
+				CBC396EE20F5D73200749899 /* libiconv.tbd */,
+				CBC396EC20F5D72100749899 /* libbz2.tbd */,
+				CBC396EA20F5D71400749899 /* libz.tbd */,
+				CBC396E720F5D69800749899 /* Cocoa.framework */,
+				CB887C8220F34CEE0099007E /* AudioToolbox.framework */,
+				CB887C8020F34CE80099007E /* QuartzCore.framework */,
+				CB887C7E20F34CE10099007E /* CoreVideo.framework */,
+				CB887C7C20F34CCD0099007E /* OpenGL.framework */,
+				CBC396F120F5D76800749899 /* libavfilter.a */,
+				CBC396F320F5D76800749899 /* libavresample.a */,
+				CBC396F520F5D76800749899 /* libavutil.a */,
+				CBC396F720F5D76800749899 /* libpostproc.a */,
+				CBC396F920F5D76800749899 /* libswresample.a */,
+				CBC396FB20F5D76800749899 /* libswscale.a */,
+				CBC396FD20F5D76800749899 /* libavcodec.a */,
+				CBC396FF20F5D76800749899 /* libavdevice.a */,
+				CBC3970120F5D76800749899 /* libavformat.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		CB887C4E20F34A3A0099007E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6483CB20F7443600C6E802 /* VidPlayerDecoder.h in Headers */,
+				CB6483C020F7443600C6E802 /* VidPlayerLayer.h in Headers */,
+				CB6483C720F7443600C6E802 /* VidPlayerView.h in Headers */,
+				CB6483C820F7443600C6E802 /* VideoState.h in Headers */,
+				CB6483C320F7443600C6E802 /* VidPlayerVideo.h in Headers */,
+				CB887C6420F34A3A0099007E /* libVidPlayer.h in Headers */,
+				CB6483C620F7443600C6E802 /* VidPlayerVideo+Internal.h in Headers */,
+				CB887C7820F34C8B0099007E /* libVidPlayer_Prefix.pch in Headers */,
+				CB6483D120F74E2A00C6E802 /* VidPlayerMLayer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		CB887C5220F34A3A0099007E /* libVidPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB887C6720F34A3A0099007E /* Build configuration list for PBXNativeTarget "libVidPlayer" */;
+			buildPhases = (
+				CB887C4E20F34A3A0099007E /* Headers */,
+				CB887C4F20F34A3A0099007E /* Sources */,
+				CB887C5020F34A3A0099007E /* Frameworks */,
+				CB887C5120F34A3A0099007E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libVidPlayer;
+			productName = libVidPlayer;
+			productReference = CB887C5320F34A3A0099007E /* libVidPlayer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CB887C5B20F34A3A0099007E /* libVidPlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB887C6A20F34A3A0099007E /* Build configuration list for PBXNativeTarget "libVidPlayerTests" */;
+			buildPhases = (
+				CB887C5820F34A3A0099007E /* Sources */,
+				CB887C5920F34A3A0099007E /* Frameworks */,
+				CB887C5A20F34A3A0099007E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CB887C5F20F34A3A0099007E /* PBXTargetDependency */,
+			);
+			name = libVidPlayerTests;
+			productName = libVidPlayerTests;
+			productReference = CB887C5C20F34A3A0099007E /* libVidPlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CB887C4A20F34A3A0099007E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = Antelis;
+				TargetAttributes = {
+					CB887C5220F34A3A0099007E = {
+						CreatedOnToolsVersion = 10.0;
+					};
+					CB887C5B20F34A3A0099007E = {
+						CreatedOnToolsVersion = 10.0;
+					};
+				};
+			};
+			buildConfigurationList = CB887C4D20F34A3A0099007E /* Build configuration list for PBXProject "libVidPlayer" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CB887C4920F34A3A0099007E;
+			productRefGroup = CB887C5420F34A3A0099007E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CB887C5220F34A3A0099007E /* libVidPlayer */,
+				CB887C5B20F34A3A0099007E /* libVidPlayerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CB887C5120F34A3A0099007E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB887C5A20F34A3A0099007E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CB887C4F20F34A3A0099007E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6483C520F7443600C6E802 /* VidPlayerVideo.m in Sources */,
+				CB6483CA20F7443600C6E802 /* VideoState.m in Sources */,
+				CB6483D220F74E2A00C6E802 /* VidPlayerMLayer.m in Sources */,
+				CB6483C920F7443600C6E802 /* VidPlayerAudio.m in Sources */,
+				CB6483C120F7443600C6E802 /* VidPlayerLayer.m in Sources */,
+				CB6483BF20F7443600C6E802 /* VidPlayerDecoder.m in Sources */,
+				CB6483C420F7443600C6E802 /* video_Internal.m in Sources */,
+				CB6483C220F7443600C6E802 /* VidPlayerCore.m in Sources */,
+				CB6483CC20F7443600C6E802 /* VidPlayerView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB887C5820F34A3A0099007E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB887C6220F34A3A0099007E /* libVidPlayerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CB887C5F20F34A3A0099007E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB887C5220F34A3A0099007E /* libVidPlayer */;
+			targetProxy = CB887C5E20F34A3A0099007E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CB887C6520F34A3A0099007E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		CB887C6620F34A3A0099007E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CB887C6820F34A3A0099007E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 392DCPHLMM;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
+				FRAMEWORK_VERSION = A;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = libVidPlayer/libVidPlayer_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					../libVidPlayer,
+				);
+				INFOPLIST_FILE = libVidPlayer/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shion.libVidPlayer;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CB887C6920F34A3A0099007E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 392DCPHLMM;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
+				FRAMEWORK_VERSION = A;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = libVidPlayer/libVidPlayer_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					../libVidPlayer,
+				);
+				INFOPLIST_FILE = libVidPlayer/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shion.libVidPlayer;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		CB887C6B20F34A3A0099007E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 392DCPHLMM;
+				INFOPLIST_FILE = libVidPlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shion.libVidPlayerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CB887C6C20F34A3A0099007E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 392DCPHLMM;
+				INFOPLIST_FILE = libVidPlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shion.libVidPlayerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CB887C4D20F34A3A0099007E /* Build configuration list for PBXProject "libVidPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB887C6520F34A3A0099007E /* Debug */,
+				CB887C6620F34A3A0099007E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB887C6720F34A3A0099007E /* Build configuration list for PBXNativeTarget "libVidPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB887C6820F34A3A0099007E /* Debug */,
+				CB887C6920F34A3A0099007E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB887C6A20F34A3A0099007E /* Build configuration list for PBXNativeTarget "libVidPlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB887C6B20F34A3A0099007E /* Debug */,
+				CB887C6C20F34A3A0099007E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CB887C4A20F34A3A0099007E /* Project object */;
+}

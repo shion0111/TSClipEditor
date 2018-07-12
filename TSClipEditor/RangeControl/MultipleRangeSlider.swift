@@ -301,8 +301,8 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
                 print("param \(s),\(e),\(self.horizontalline.frame.width)")
                 let ss = self.end - self.start
                 let ww = Int(self.horizontalline.frame.width)
-                var xs = ww*s/ss + Int(xoffset)
-                var xe = ww*(e-s)/ss
+                let xs = ww*s/ss + Int(xoffset)
+                let xe = ww*(e-s)/ss
                 let rc = t.frame
                 print("param x \(xs),\(xe)")
                 t.setFrameOrigin(NSPoint(x:CGFloat(xs), y:rc.origin.y))

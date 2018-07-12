@@ -37,9 +37,9 @@ public class ClipExporter : NSObject, StreamDelegate {
     func closeExporter(){
         if inputstream != nil {
             inputstream.close()
-            inputstream.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+            inputstream.remove(from: RunLoop.current, forMode: RunLoop.Mode.default)
             outputstream.close()
-            outputstream.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+            outputstream.remove(from: RunLoop.current, forMode: RunLoop.Mode.default)
             inputstream = nil
             outputstream = nil
             currentWritten = 0
@@ -57,14 +57,14 @@ public class ClipExporter : NSObject, StreamDelegate {
         self.finishBlock = finish
         
         self.inputstream!.delegate = self
-        self.inputstream!.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+        self.inputstream!.schedule(in: RunLoop.current, forMode: RunLoop.Mode.default)
         //  set file offsest in inputstream
         self.inputstream.setProperty(clipStart , forKey: .fileCurrentOffsetKey)
         self.inputstream!.open()
         
         
         self.outputstream!.delegate = self
-        self.outputstream!.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+        self.outputstream!.schedule(in: RunLoop.current, forMode: RunLoop.Mode.default)
         self.outputstream!.open()
         
         let total = self.clipEnd-self.clipStart

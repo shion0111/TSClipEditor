@@ -31,7 +31,7 @@ class ProgressCheckIndicator : NSProgressIndicator {
             path.line(to: NSPoint(x: o.x+s.width/2, y: o.y+s.height-2))
             path.line(to: NSPoint(x: o.x+s.width-2, y: o.y+2))
             path.lineWidth = 2
-            path.lineJoinStyle = .roundLineJoinStyle
+            path.lineJoinStyle = .round
             path.stroke()
         }
     }
@@ -42,7 +42,7 @@ class ClipRowView : NSTableRowView,ProgressInfoProtocol {
     @IBOutlet var endLabel : NSTextField?
     @IBOutlet var progress : ProgressCheckIndicator?
     @IBOutlet var save : NSButton?
-    
+    @IBOutlet var preview : NSButton?
     
     override func drawBackground(in dirtyRect: NSRect) {
         if self.isFocused {
@@ -64,6 +64,7 @@ class ClipRowView : NSTableRowView,ProgressInfoProtocol {
             
             progress?.isHidden = !newValue
             save?.isHidden = !newValue
+            preview?.isHidden = !newValue
             
         }
         

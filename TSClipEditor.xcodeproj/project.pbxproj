@@ -27,6 +27,7 @@
 		CB3A438B1F0027020006BC46 /* ffmpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = CB3A438A1F0027020006BC46 /* ffmpeg.c */; };
 		CB525CF320C5A1010032CF90 /* NSOpenPanel-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF120C5A1010032CF90 /* NSOpenPanel-Extension.swift */; };
 		CB525CF420C5A1010032CF90 /* VideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF220C5A1010032CF90 /* VideoInfo.swift */; };
+		CBEADF3C20F5F28A00BF4918 /* libVidPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEADF3920F5F0EC00BF4918 /* libVidPlayer.framework */; };
 		CBF5DE641F04A15600BC0D4A /* MultipleRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5DE611F049F4F00BC0D4A /* MultipleRangeSlider.swift */; };
 		CBF5DE651F04A16C00BC0D4A /* RangeSliderThumbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5DE601F049F4F00BC0D4A /* RangeSliderThumbView.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = CB00F2F51EFA569E00D72D8B;
 			remoteInfo = TSClipEditor;
+		};
+		CBEADF3820F5F0EC00BF4918 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBEADF3320F5F0EC00BF4918 /* libVidPlayer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CB887C5320F34A3A0099007E;
+			remoteInfo = libVidPlayer;
+		};
+		CBEADF3A20F5F0EC00BF4918 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBEADF3320F5F0EC00BF4918 /* libVidPlayer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CB887C5C20F34A3A0099007E;
+			remoteInfo = libVidPlayerTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -72,6 +87,7 @@
 		CB3B12F31F0022B2004E5879 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../../usr/local/lib/libavformat.a; sourceTree = "<group>"; };
 		CB525CF120C5A1010032CF90 /* NSOpenPanel-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSOpenPanel-Extension.swift"; sourceTree = "<group>"; };
 		CB525CF220C5A1010032CF90 /* VideoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoInfo.swift; sourceTree = "<group>"; };
+		CBEADF3320F5F0EC00BF4918 /* libVidPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libVidPlayer.xcodeproj; path = libVidPlayer/libVidPlayer.xcodeproj; sourceTree = "<group>"; };
 		CBF5DE601F049F4F00BC0D4A /* RangeSliderThumbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSliderThumbView.swift; sourceTree = "<group>"; };
 		CBF5DE611F049F4F00BC0D4A /* MultipleRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRangeSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBEADF3C20F5F28A00BF4918 /* libVidPlayer.framework in Frameworks */,
 				CB3A43741F0023FE0006BC46 /* libswresample.a in Frameworks */,
 				CB3A43751F0023FE0006BC46 /* libpostproc.a in Frameworks */,
 				CB3A43761F0023FE0006BC46 /* libswscale.a in Frameworks */,
@@ -106,6 +123,7 @@
 		CB00F2ED1EFA569E00D72D8B = {
 			isa = PBXGroup;
 			children = (
+				CBEADF3320F5F0EC00BF4918 /* libVidPlayer.xcodeproj */,
 				CB3A43881F0027020006BC46 /* TSClipEditor-Bridging-Header.h */,
 				CB3A437D1F0026E50006BC46 /* ffmpeg */,
 				CB00F2F81EFA569E00D72D8B /* TSClipEditor */,
@@ -184,6 +202,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CBEADF3420F5F0EC00BF4918 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CBEADF3920F5F0EC00BF4918 /* libVidPlayer.framework */,
+				CBEADF3B20F5F0EC00BF4918 /* libVidPlayerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		CBF5DE621F049F5900BC0D4A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,11 +282,12 @@
 				TargetAttributes = {
 					CB00F2F51EFA569E00D72D8B = {
 						CreatedOnToolsVersion = 9.0;
-						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						LastSwiftMigration = 1000;
+						ProvisioningStyle = Automatic;
 					};
 					CB00F3071EFA569E00D72D8B = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 1000;
 						TestTargetID = CB00F2F51EFA569E00D72D8B;
 					};
 				};
@@ -275,6 +303,12 @@
 			mainGroup = CB00F2ED1EFA569E00D72D8B;
 			productRefGroup = CB00F2F71EFA569E00D72D8B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CBEADF3420F5F0EC00BF4918 /* Products */;
+					ProjectRef = CBEADF3320F5F0EC00BF4918 /* libVidPlayer.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				CB00F2F51EFA569E00D72D8B /* TSClipEditor */,
@@ -282,6 +316,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CBEADF3920F5F0EC00BF4918 /* libVidPlayer.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = libVidPlayer.framework;
+			remoteRef = CBEADF3820F5F0EC00BF4918 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBEADF3B20F5F0EC00BF4918 /* libVidPlayerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = libVidPlayerTests.xctest;
+			remoteRef = CBEADF3A20F5F0EC00BF4918 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		CB00F2F41EFA569E00D72D8B /* Resources */ = {
@@ -366,7 +417,7 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -426,7 +477,7 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -467,11 +518,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = TSClipEditor/TSClipEditor.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 392DCPHLMM;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
@@ -489,7 +541,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TSClipEditor-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -498,11 +550,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = TSClipEditor/TSClipEditor.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 392DCPHLMM;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
@@ -519,7 +572,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TSClipEditor-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -528,13 +581,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 392DCPHLMM;
 				INFOPLIST_FILE = TSClipEditorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.shion.TSClipEditorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TSClipEditor.app/Contents/MacOS/TSClipEditor";
 			};
 			name = Debug;
@@ -544,13 +598,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 392DCPHLMM;
 				INFOPLIST_FILE = TSClipEditorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.shion.TSClipEditorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TSClipEditor.app/Contents/MacOS/TSClipEditor";
 			};
 			name = Release;
