@@ -10,7 +10,7 @@
 
 @implementation VidPlayerView
 
--(void) setMovie:(VidPlayerVideo *)movie {
+-(void) setVideo:(VidPlayerVideo *)video {
     if(!_videoLayer) {
         [self setWantsLayer:YES];
         CALayer *rootLayer = self.layer;
@@ -24,7 +24,7 @@
         
         [rootLayer addSublayer:_videoLayer];
     }
-    _videoLayer.movie = movie;
+    _videoLayer.video = video;
 }
 
 @end

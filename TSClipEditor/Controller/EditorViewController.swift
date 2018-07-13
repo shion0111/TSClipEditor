@@ -277,6 +277,16 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
             self.clipList.reloadData()
         }
     }
-    
+    // MARK: -
+    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showPreview", let w = segue.destinationController as? NSWindowController,
+            let t = w.contentViewController as? TSPreviewViewController,
+            let v = videoInfo ,let info = v.getFocusedClip() {
+            
+            t.loadVideo(with: URL(fileURLWithPath: v.videopath) , start: Int32(info.duration.start) , end:Int32(info.duration.end) )
+        }
+        
+    }
 }
+
 

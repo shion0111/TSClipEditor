@@ -11,7 +11,7 @@
 
 @interface VidPlayerLayer : CAOpenGLLayer <VidPlayerVideoOutput>
 {
-    VidPlayerVideo *_movie;
+    VidPlayerVideo *_video;
 
 @private
     NSLock *_lock;
@@ -27,7 +27,7 @@
     GLuint _textures[3]; // in Y U V order
 }
 
-@property (retain) VidPlayerVideo *movie;
+@property (retain) VidPlayerVideo *video;
 
 -(void) invalidate;
 

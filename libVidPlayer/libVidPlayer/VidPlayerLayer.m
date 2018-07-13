@@ -39,9 +39,9 @@ void displayReconfigurationCallBack(CGDirectDisplayID display,
     CGDisplayRemoveReconfigurationCallback(displayReconfigurationCallBack, (__bridge void *)(self));
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (_movie) {
-        [_movie invalidate];
-        _movie = NULL;
+    if (_video) {
+        [_video invalidate];
+        _video = NULL;
     }
     if (_lock) _lock = NULL;
 }
@@ -92,7 +92,7 @@ void displayReconfigurationCallBack(CGDirectDisplayID display,
                 forLayerTime:(CFTimeInterval)timeInterval
                  displayTime:(const CVTimeStamp *)timeStamp
 {
-    return _movie && !NSEqualSizes(_movie.naturalSize, NSZeroSize);
+    return _video && !NSEqualSizes(_video.naturalSize, NSZeroSize);
 }
 
 -(void) drawInCGLContext:(CGLContextObj)glContext
@@ -118,23 +118,23 @@ void displayReconfigurationCallBack(CGDirectDisplayID display,
 #pragma mark -
 #pragma mark public
 
--(VidPlayerVideo*) movie {
-    return _movie;
+-(VidPlayerVideo*) video {
+    return _video;
 }
 
--(void) setMovie:(VidPlayerVideo*)movie {
+-(void) setVideo:(VidPlayerVideo*)video {
     self.asynchronous = NO;
     [_lock lock];
 
-    if(_movie) [_movie invalidate];
-    _movie = movie;
-    if(_movie) {
-        [_movie setOutput:self];
+    if(_video) [_video invalidate];
+    _video = video;
+    if(_video) {
+        [_video setOutput:self];
         [self setNeedsDisplay];
     }
 
     [_lock unlock];
-    self.asynchronous = movie ? !movie.paused : false;
+    self.asynchronous = video ? !video.paused : false;
 }
 
 
@@ -281,12 +281,12 @@ GLuint init_shader(GLenum kind, const char* code) {
     [_lock lock];
 
     // We always need to re-render, but if the frame is unchanged we don't upload new texture data).
-    [_movie ifNewVideoFrameIsAvailableThenRun:^(AVFrame *fr) {
+    [_video ifNewVideoFrameIsAvailableThenRun:^(AVFrame *fr) {
         // Pixel formats other than AV_PIX_FMT_YUV420P are vanishingly rare, so don't bother with them, at least for now.
         // If we ever do handle them, ideally it'd be here in VidPlayerLayer, by using different shaders.
         if (fr->format != AV_PIX_FMT_YUV420P) return;
 
-        IntSize sz = [self->_movie sizeForGLTextures];
+        IntSize sz = [self->_video sizeForGLTextures];
         glBindTexture(GL_TEXTURE_2D, self->_textures[0]);
         glPixelStorei(GL_UNPACK_ROW_LENGTH, fr->linesize[0]);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, sz.width, sz.height, 0, GL_RED, GL_UNSIGNED_BYTE, fr->data[0]);

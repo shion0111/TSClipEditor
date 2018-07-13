@@ -25,6 +25,7 @@
 		CB3A43781F0023FE0006BC46 /* libavresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3A43721F0023FE0006BC46 /* libavresample.a */; };
 		CB3A43791F0023FE0006BC46 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB3A43731F0023FE0006BC46 /* libavfilter.a */; };
 		CB3A438B1F0027020006BC46 /* ffmpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = CB3A438A1F0027020006BC46 /* ffmpeg.c */; };
+		CB41550220F84D8800316A93 /* TSPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB41550120F84D8800316A93 /* TSPreviewViewController.m */; };
 		CB525CF320C5A1010032CF90 /* NSOpenPanel-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF120C5A1010032CF90 /* NSOpenPanel-Extension.swift */; };
 		CB525CF420C5A1010032CF90 /* VideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB525CF220C5A1010032CF90 /* VideoInfo.swift */; };
 		CBEADF3C20F5F28A00BF4918 /* libVidPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEADF3920F5F0EC00BF4918 /* libVidPlayer.framework */; };
@@ -85,6 +86,8 @@
 		CB3B12F11F0022B2004E5879 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../../../usr/local/lib/libavdevice.a; sourceTree = "<group>"; };
 		CB3B12F21F0022B2004E5879 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../../usr/local/lib/libavcodec.a; sourceTree = "<group>"; };
 		CB3B12F31F0022B2004E5879 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../../usr/local/lib/libavformat.a; sourceTree = "<group>"; };
+		CB41550020F84D8800316A93 /* TSPreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSPreviewViewController.h; sourceTree = "<group>"; };
+		CB41550120F84D8800316A93 /* TSPreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSPreviewViewController.m; sourceTree = "<group>"; };
 		CB525CF120C5A1010032CF90 /* NSOpenPanel-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSOpenPanel-Extension.swift"; sourceTree = "<group>"; };
 		CB525CF220C5A1010032CF90 /* VideoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoInfo.swift; sourceTree = "<group>"; };
 		CBEADF3320F5F0EC00BF4918 /* libVidPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libVidPlayer.xcodeproj; path = libVidPlayer/libVidPlayer.xcodeproj; sourceTree = "<group>"; };
@@ -219,6 +222,8 @@
 				CB319FD820C449F700AF5660 /* EditorWindowController.swift */,
 				CB319FD120C3D47E00AF5660 /* EditorViewController.swift */,
 				CB319FD320C42F2D00AF5660 /* VideoInfoProtocol.swift */,
+				CB41550020F84D8800316A93 /* TSPreviewViewController.h */,
+				CB41550120F84D8800316A93 /* TSPreviewViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 				CB3A438B1F0027020006BC46 /* ffmpeg.c in Sources */,
 				CB525CF420C5A1010032CF90 /* VideoInfo.swift in Sources */,
 				CB00F2FA1EFA569E00D72D8B /* AppDelegate.swift in Sources */,
+				CB41550220F84D8800316A93 /* TSPreviewViewController.m in Sources */,
 				CB319FD920C449F700AF5660 /* EditorWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

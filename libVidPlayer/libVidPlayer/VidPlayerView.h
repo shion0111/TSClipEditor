@@ -15,6 +15,6 @@
     VidPlayerLayer* _videoLayer;
 }
 
--(void) setMovie:(VidPlayerVideo *)movie;
+-(void) setVideo:(VidPlayerVideo *)video;
 
 @end

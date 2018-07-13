@@ -21,7 +21,7 @@
 		CB6483CA20F7443600C6E802 /* VideoState.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483BC20F7443500C6E802 /* VideoState.m */; };
 		CB6483CB20F7443600C6E802 /* VidPlayerDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483BD20F7443500C6E802 /* VidPlayerDecoder.h */; };
 		CB6483CC20F7443600C6E802 /* VidPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483BE20F7443500C6E802 /* VidPlayerView.m */; };
-		CB6483D120F74E2A00C6E802 /* VidPlayerMLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483CF20F74E2A00C6E802 /* VidPlayerMLayer.h */; };
+		CB6483D120F74E2A00C6E802 /* VidPlayerMLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6483CF20F74E2A00C6E802 /* VidPlayerMLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CB6483D220F74E2A00C6E802 /* VidPlayerMLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB6483D020F74E2A00C6E802 /* VidPlayerMLayer.m */; };
 		CB6483D420F7501F00C6E802 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6483D320F7501F00C6E802 /* Metal.framework */; };
 		CB6483D620F7502600C6E802 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6483D520F7502600C6E802 /* MetalKit.framework */; };
@@ -235,12 +235,12 @@
 				CB6483CB20F7443600C6E802 /* VidPlayerDecoder.h in Headers */,
 				CB6483C020F7443600C6E802 /* VidPlayerLayer.h in Headers */,
 				CB6483C720F7443600C6E802 /* VidPlayerView.h in Headers */,
+				CB6483D120F74E2A00C6E802 /* VidPlayerMLayer.h in Headers */,
 				CB6483C820F7443600C6E802 /* VideoState.h in Headers */,
 				CB6483C320F7443600C6E802 /* VidPlayerVideo.h in Headers */,
 				CB887C6420F34A3A0099007E /* libVidPlayer.h in Headers */,
 				CB6483C620F7443600C6E802 /* VidPlayerVideo+Internal.h in Headers */,
 				CB887C7820F34C8B0099007E /* libVidPlayer_Prefix.pch in Headers */,
-				CB6483D120F74E2A00C6E802 /* VidPlayerMLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
