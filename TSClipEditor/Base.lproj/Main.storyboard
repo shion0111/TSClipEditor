@@ -330,7 +330,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R40-Am-uHX">
                                 <rect key="frame" x="40" y="4" width="28" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSTouchBarPlayTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="I6V-T2-WA7">
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="pplay" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="I6V-T2-WA7">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -359,6 +359,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="vidPlay" destination="R40-Am-uHX" id="iTl-5A-yIW"/>
                         <outlet property="vidTick" destination="1Vx-BZ-X37" id="M3O-Hf-QQ9"/>
                         <outlet property="vidView" destination="dYO-oZ-mFc" id="i08-QS-Vvb"/>
                     </connections>
@@ -369,11 +370,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSTouchBarPlayTemplate" width="14" height="30"/>
         <image name="add" width="184" height="184"/>
         <image name="delete" width="184" height="184"/>
         <image name="open" width="184" height="184"/>
         <image name="play" width="184" height="184"/>
+        <image name="pplay" width="67.5" height="67.5"/>
         <image name="save" width="184" height="184"/>
     </resources>
 </document>

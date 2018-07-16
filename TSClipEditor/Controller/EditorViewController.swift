@@ -282,8 +282,10 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         if segue.identifier == "showPreview", let w = segue.destinationController as? NSWindowController,
             let t = w.contentViewController as? TSPreviewViewController,
             let v = videoInfo ,let info = v.getFocusedClip() {
-            
-            t.loadVideo(with: URL(fileURLWithPath: v.videopath) , start: Int32(info.duration.start) , end:Int32(info.duration.end) )
+            let tt = Float(v.tsduration)
+            let s0 = Float(info.duration.start)
+            let s1 = Float(info.duration.end)
+            t.loadVideo(with: URL(fileURLWithPath: v.videopath) , start: s0/tt , end:s1/tt )
         }
         
     }

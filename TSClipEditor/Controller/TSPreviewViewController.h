@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TSPreviewViewController : NSViewController
-- (void)loadVideoWithURL:(NSURL *)url start:(int)start end:(int)end;
+- (void)loadVideoWithURL:(NSURL *)url start:(float)start end:(float)end;
 @end
 
 NS_ASSUME_NONNULL_END

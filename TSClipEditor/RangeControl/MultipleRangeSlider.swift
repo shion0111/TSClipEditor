@@ -288,7 +288,7 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             if t.Focused {
                 let x0 = t.frame.origin.x - xoffset
                 let x1 = t.frame.origin.x + t.frame.width - xoffset
-                print("x0: \(x0), x1: \(x1)")
+                //print("x0: \(x0), x1: \(x1)")
                 return (Float(x0/horizontalline.frame.width) , Float(x1/horizontalline.frame.width))
             }
         }
@@ -298,13 +298,13 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
     func updateFocusedPosition(_ s: Int, _ e: Int) {
         for t in self.thumbs{
             if t.Focused {
-                print("param \(s),\(e),\(self.horizontalline.frame.width)")
+                //print("param \(s),\(e),\(self.horizontalline.frame.width)")
                 let ss = self.end - self.start
                 let ww = Int(self.horizontalline.frame.width)
                 let xs = ww*s/ss + Int(xoffset)
                 let xe = ww*(e-s)/ss
                 let rc = t.frame
-                print("param x \(xs),\(xe)")
+                //print("param x \(xs),\(xe)")
                 t.setFrameOrigin(NSPoint(x:CGFloat(xs), y:rc.origin.y))
                 t.setFrameSize(NSSize(width: CGFloat(xe) , height: rc.size.height))
                 t.setNeedsDisplay(t.frame)
