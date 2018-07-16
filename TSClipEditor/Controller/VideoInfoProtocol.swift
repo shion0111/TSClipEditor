@@ -12,7 +12,7 @@ protocol VideoInfoProtocol {
     //  retrieve video  metadata via ffmpeg
     func loadVideoWithPath(path : String) -> (Int,Int)
     // Save clip
-    func saveSelectedClipAtLocation(dest:String, r:Duration)
+    func saveSelectedClipAtLocation(dest:String, d:ClipInfo)
     // Delete clip
     func deleteClipInfo(_ index: Int)
     //  Range of focused thumb is changed. Notify Property VC.    

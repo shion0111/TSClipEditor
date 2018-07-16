@@ -75,12 +75,13 @@ class ClipRowView : NSTableRowView,ProgressInfoProtocol {
             if !finished {
                 if p.finished {
                     p.finished = false
-                    p.needsDisplay = true
+                    
                 }
                 p.maxValue = Double(max)
                 p.minValue = 0
                 p.doubleValue = Double(cur)
             }
+            p.needsDisplay = true
             if cur >= max {
                 p.finished = true
                 p.needsDisplay = true
@@ -217,7 +218,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         //  get clip range
         
         if let vi = videoInfo, let info = vi.getFocusedClip() {
-            vi.saveSelectedClipAtLocation(dest: dest.path, r: info.duration)
+            vi.saveSelectedClipAtLocation(dest: dest.path, d: info)//info.duration)
         }
     }
     
@@ -254,6 +255,10 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
                 if info.isfocused {
                     rv.isFocused = true
                     vi.progress = rv
+                    if info.status == 0 {
+                        rowView?.progressUpdated(0, 1, false)
+                        
+                    }
                 }
             }
         }

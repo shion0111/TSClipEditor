@@ -60,8 +60,8 @@ class VideoInfo: VideoInfoProtocol {
     
     
     // MARK: - Save Clip -
-    func saveSelectedClipAtLocation(dest:String, r:Duration) {
-        
+    func saveSelectedClipAtLocation(dest:String, d:ClipInfo){//r:Duration) {
+        let r = d.duration
         let st = r.start-1
         let ed = r.end+1
         
@@ -84,10 +84,13 @@ class VideoInfo: VideoInfoProtocol {
             }, { (observer) -> Void in
                 DispatchQueue.main.async {
                     if let observer = observer {
+                        
                         let myself = Unmanaged<VideoInfo>.fromOpaque(observer).takeUnretainedValue()
                         
                         if let p = myself.progress {
-                            
+                            if let t = myself.getFocusedClip() {
+                                t.status = 1
+                            }
                             p.progressUpdated(1, 1, true)
                         }
                     }
