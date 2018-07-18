@@ -230,7 +230,6 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
             thumb.setFrameOrigin(NSPoint(x:destx, y:rc.origin.y))
             thumb.setFrameSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))
             thumb.setBoundsSize(NSSize(width: rc.origin.x+rc.width - destx , height: rc.size.height))            
-            //sliderDelegate?.focusedSliderChanged(focused:thumb, start:Float(thumb.frame.origin.x - xoffset) , end: Float(thumb.frame.origin.x + thumb.frame.width - xoffset), view: (gesture.state == .ended))
             let d = end - start
             let p = self.getFocusedClipPortion()
             let s0 = Float(start) + (p.ds*Float(d))
@@ -243,9 +242,6 @@ class MultipleRangeSlider: NSView,ThumbPanDelegate {
         
         if thumb.Focused {
             
-//            if isPointInOtherThumb(p: gesture.location(in: self),thumb: thumb) {
-//                return
-//            }
             
             var destx = gesture.location(in: self).x
             let rc = thumb.frame

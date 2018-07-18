@@ -139,7 +139,10 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
             if let vi = self.videoInfo {
                 let (duration, st) = vi.loadVideoWithPath(path: url.path)
                 self.clipSlider.setSliderRange(start: 0, end: duration, calibration: st)
-                
+                //
+                if let w = NSApplication.shared.keyWindow {
+                    w.title = url.lastPathComponent
+                }
             }
             self.clipList.reloadData()
         }
@@ -151,7 +154,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
             self.saveClipWithDestDirectory(destdir: url.path)
         }
     }
-    
+    //  change thumbnail images after slider is moved
     func setThumbnailImage(image : CGImage, isEnd: Bool){
         
         if isEnd {
@@ -162,31 +165,26 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
             self.clipStartThumb.image = NSImage(cgImage: image, size: self.clipStartThumb.frame.size)
         }
     }
-    
+    //  the focused cell in clip list is changed
     func focusedSliderChanged(focused:AnyObject?, start: Float, end: Float, view: Bool) {
         
         if let vi = self.videoInfo {
-            //let w = (Int)(self.clipSlider.frame.width)
-            let s = Int(start)//*vi.tsduration/w
-            let e = Int(end)//*vi.tsduration/w
             
-            //let se = //self.clipList.selectedRow
-            //if se >= 0 {
-                
-                vi.focusedClipChanged(Int(s),Int(e))
-                self.clipList.reloadData()
-                //self.clipList.selectRowIndexes(IndexSet(integer: se), byExtendingSelection: false)
-            //}
+            let s = Int(start)
+            let e = Int(end)
+            
+            vi.focusedClipChanged(Int(s),Int(e))
+            self.clipList.reloadData()
             
             self.loadFramesWithRange(Int(s), Int(e))
         }
     }
+    
     func loadFramesWithRange(_ start: Int, _ end: Int) {
         if let vi = self.videoInfo {
             if let cgimage = vi.loadVideoThumbnails(tick: start, isEnd: false) {
                 setThumbnailImage(image: cgimage, isEnd: false)
             }
-            
             
             unowned let unownedSelf = self
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
@@ -201,10 +199,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         
         
     }
-    
-    func discardTheThumb() {
-        
-    }
+    //  name the clip with the current tick
     private func getClipNameWithTick() -> String{
         
         let tick = llround(Date().timeIntervalSince1970)
@@ -221,7 +216,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
             vi.saveSelectedClipAtLocation(dest: dest.path, d: info)//info.duration)
         }
     }
-    
+    //  add new clip info
     @IBAction func appendClipInfo(_ sender: Any?) {
         if let vi = videoInfo {
             
@@ -229,13 +224,14 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
             self.clipList.reloadData()
         }
     }
+    //  delete the focused clip info
     @IBAction func delClipInfo(_ sender: Any?) {
         if let vi = videoInfo {
             vi.deleteFocusedClip()            
             self.clipList.reloadData()
         }
     }
-    
+    //  MARK: - NSTableViewDelegate,NSTableViewDataSource -
     func numberOfRows(in tableView: NSTableView) -> Int {
         if let vi = videoInfo {
             return vi.getClipsCount()
@@ -284,6 +280,7 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
     }
     // MARK: -
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+        // send clip info to the clip preview VC 
         if segue.identifier == "showPreview", let w = segue.destinationController as? NSWindowController,
             let t = w.contentViewController as? TSPreviewViewController,
             let v = videoInfo ,let info = v.getFocusedClip() {
