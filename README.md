@@ -22,7 +22,5 @@
 - ~~UI redesign~~ 
 - ~~Clip preview~~ 
 
-## To do
-- Support for other formats
 
 
