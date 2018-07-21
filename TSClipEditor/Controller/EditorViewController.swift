@@ -40,6 +40,7 @@ class ProgressCheckIndicator : NSProgressIndicator {
 class ClipRowView : NSTableRowView,ProgressInfoProtocol {
     @IBOutlet var startLabel : NSTextField?
     @IBOutlet var endLabel : NSTextField?
+    @IBOutlet var destLabel : NSTextField?
     @IBOutlet var progress : ProgressCheckIndicator?
     @IBOutlet var save : NSButton?
     @IBOutlet var preview : NSButton?
@@ -213,7 +214,9 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
         //  get clip range
         
         if let vi = videoInfo, let info = vi.getFocusedClip() {
+            info.dest = dest.path
             vi.saveSelectedClipAtLocation(dest: dest.path, d: info)//info.duration)
+            self.clipList.reloadData()
         }
     }
     //  add new clip info
@@ -248,6 +251,11 @@ class EditorViewController: NSViewController,MultipleRangeSliderDelegate,NSPopov
                 rv.isFocused = false
                 rv.startLabel?.stringValue = "\(info.duration.start) secs"
                 rv.endLabel?.stringValue = "\(info.duration.end) secs"
+                if let dest = info.dest {
+                    rv.destLabel?.stringValue = URL(fileURLWithPath: dest).lastPathComponent
+                } else {
+                    rv.destLabel?.stringValue = ""
+                }
                 if info.isfocused {
                     rv.isFocused = true
                     vi.progress = rv

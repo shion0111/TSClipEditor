@@ -76,7 +76,8 @@
         
         self.vidTick.stringValue = [NSString stringWithFormat:@"%.0f",self.previewStart];
         if (self.previewStart > self.previewEnd){
-            self.video.paused = true;
+            //self.video.paused = true;
+            [self playPause:self.vidPlay];
             
         }
         self.previewStart += 0.5;

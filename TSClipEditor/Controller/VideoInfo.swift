@@ -15,11 +15,13 @@ class ClipInfo :NSObject {
     var index: Int = 0
     var isfocused: Bool = false
     var status : Int = 0
+    var dest: String?
     
     func setDuration(_ s: Int, _ e: Int) {
         self.duration.start = s
         self.duration.end = e
     }
+    
     
 }
 class VideoInfo: VideoInfoProtocol {
