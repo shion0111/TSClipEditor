@@ -64,7 +64,7 @@ int audio_open(VideoState *mov, AVCodecContext *avctx)
     if (0 != AudioQueueSetProperty(mov->audio_queue, kAudioQueueProperty_TimePitchAlgorithm, &prop_value, sizeof(prop_value)))
         return -1;
 
-    unsigned int buf_size = ((int) asbd.mSampleRate / 50) * asbd.mBytesPerFrame; // perform callback 50 times per sec
+    unsigned int buf_size = ((int) asbd.mSampleRate / 60) * asbd.mBytesPerFrame; // perform callback 60 times per sec
     for (int i = 0; i < 3; i++) {
         AudioQueueBufferRef out_buf = NULL;
         err = AudioQueueAllocateBuffer(mov->audio_queue, buf_size, &out_buf);
@@ -176,7 +176,7 @@ static void audio_callback(VideoState *mov, AudioQueueRef aq, AudioQueueBufferRe
 
         // We set it to -1 to mark that we've already made some use of this frame.
         if (fr->frm_pts_usec > 0) {
-            // Obviously this isn't really correct (it doesn't take account of the audio already buffered but not yet played), but with our callback running at 50Hz ish, it ought to be only ~20ms out, which should be OK.
+            // Obviously this isn't really correct (it doesn't take account of the audio already buffered but not yet played), but with our callback running at 60Hz ish, it ought to be only ~20ms out, which should be OK.
             // Note: I tried using AudioQueueGetCurrentTime(), but it seemed to be running faster than it should, leading to ~500ms desync after only a minute or two of playing.  Also, it's a pain to handle seeking for (as it doesn't reset the time on seek, even if flushed), and according to random internet sources has other gotchas like the time resetting if someone plugs/unplugs headphones.
             if (!mov->paused) clock_set(mov, fr->frm_pts_usec);
 

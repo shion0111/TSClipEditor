@@ -22,4 +22,4 @@ FOUNDATION_EXPORT const unsigned char libVidPlayerVersionString[];
 #import <libVidPlayer/VidPlayerView.h>
 #import <libVidPlayer/VidPlayerVideo.h>
 #import <libVidPlayer/VidPlayerLayer.h>
-#import <libVidPlayer/VidPlayerMLayer.h>
+
